@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { NextPage } from "next";
-import { ContractUI } from "~~/components/scaffold-eth";
+import { ContractUI, RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
 import { ContractName } from "~~/utils/scaffold-eth/contract";
 import { getContractNames } from "~~/utils/scaffold-eth/contractNames";
 
@@ -10,6 +10,9 @@ const Debug: NextPage = () => {
 
   return (
     <>
+      <div className="m-8">
+        <RainbowKitCustomConnectButton />
+      </div>
       <div className="flex flex-col gap-y-6 lg:gap-y-8 py-8 lg:py-12 justify-center items-center">
         {contractNames.length === 0 ? (
           <p className="text-3xl mt-14">No contracts found!</p>

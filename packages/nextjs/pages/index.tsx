@@ -77,10 +77,7 @@ const Home: NextPage = () => {
                   <Modal
                     id="receive"
                     button={
-                      <label
-                        htmlFor={"receive"}
-                        className={`btn btn-secondary w-full mt-4 ${isMining ? "loading" : ""}`}
-                      >
+                      <label htmlFor={"receive"} className={`btn btn-secondary w-full mt-4`}>
                         <ArrowDownTrayIcon className="h-5 w-5 mr-2" aria-hidden="true" />
                         Receive
                       </label>
