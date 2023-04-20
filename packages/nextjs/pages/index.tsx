@@ -1,9 +1,35 @@
+import { useState } from "react";
 import Head from "next/head";
-import Link from "next/link";
+import { ethers } from "ethers";
 import type { NextPage } from "next";
-import { BugAntIcon, SparklesIcon } from "@heroicons/react/24/outline";
+import QRCode from "react-qr-code";
+import { useAccount } from "wagmi";
+import { ArrowDownTrayIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
+import { Address, AddressInput, InputBase } from "~~/components/scaffold-eth";
+import { Modal } from "~~/components/scaffold-eth/Modal";
+import { TokenBalance } from "~~/components/scaffold-eth/TokenBalance";
+import { useAutoConnect, useScaffoldContractRead, useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
+import scaffoldConfig from "~~/scaffold.config";
 
 const Home: NextPage = () => {
+  useAutoConnect();
+
+  const { address, isConnected } = useAccount();
+  const { data: balance } = useScaffoldContractRead({
+    contractName: "YourContract",
+    functionName: "balanceOf",
+    args: [address],
+  });
+
+  const [toAddress, setToAddress] = useState("");
+  const [amount, setAmount] = useState("");
+
+  const { writeAsync: transfer, isMining } = useScaffoldContractWrite({
+    contractName: "YourContract",
+    functionName: "transfer",
+    args: [toAddress, ethers.utils.parseEther(amount || "0")],
+  });
+
   return (
     <>
       <Head>
@@ -11,44 +37,73 @@ const Home: NextPage = () => {
         <meta name="description" content="Created with 🏗 scaffold-eth" />
       </Head>
 
-      <div className="flex items-center flex-col flex-grow pt-10">
-        <div className="px-5">
-          <h1 className="text-center mb-8">
-            <span className="block text-2xl mb-2">Welcome to</span>
-            <span className="block text-4xl font-bold">scaffold-eth 2</span>
-          </h1>
-          <p className="text-center text-lg">
-            Get started by editing{" "}
-            <code className="italic bg-base-300 text-base font-bold">packages/nextjs/pages/index.tsx</code>
-          </p>
-          <p className="text-center text-lg">
-            Edit your smart contract <code className="italic bg-base-300 text-base font-bold">YourContract.sol</code> in{" "}
-            <code className="italic bg-base-300 text-base font-bold">packages/hardhat/contracts</code>
-          </p>
-        </div>
+      <div className="flex flex-col items-center justify-center mt-8 py-2">
+        <div className="card w-96 bg-base-100 shadow-xl p-8">
+          <figure>
+            <img src="https://edcon.io/_nuxt/img/edcon-banner.80a1b17.png" alt="EDCON WALLET" />
+          </figure>
+          <h2 className="card-title">EVENT WALLET PROTOTYPE</h2>
+          <div className="card-body">
+            {!isConnected ? (
+              <div className="flex flex-col items-center justify-center my-16">
+                <span className="animate-bounce text-8xl">{scaffoldConfig.tokenEmoji}</span>
+              </div>
+            ) : (
+              <>
+                <div className="flex mb-8">
+                  <Address address={address} />
+                  <TokenBalance amount={balance} />
+                </div>
 
-        <div className="flex-grow bg-base-300 w-full mt-16 px-8 py-12">
-          <div className="flex justify-center items-center gap-12 flex-col sm:flex-row">
-            <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-              <BugAntIcon className="h-8 w-8 fill-secondary" />
-              <p>
-                Tinker with your smart contract using the{" "}
-                <Link href="/debug" passHref className="link">
-                  Debug Contract
-                </Link>{" "}
-                tab.
-              </p>
-            </div>
-            <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-              <SparklesIcon className="h-8 w-8 fill-secondary" />
-              <p>
-                Experiment with{" "}
-                <Link href="/example-ui" passHref className="link">
-                  Example UI
-                </Link>{" "}
-                to build your own UI.
-              </p>
-            </div>
+                <div>
+                  <AddressInput value={toAddress} onChange={v => setToAddress(v)} placeholder="To Address" />
+                </div>
+                <div>
+                  <InputBase type="number" value={amount} onChange={v => setAmount(v)} placeholder="Amount" />
+                </div>
+                <div className="card-actions">
+                  <button
+                    onClick={async () => {
+                      await transfer();
+                      setAmount("");
+                    }}
+                    className={`btn btn-primary w-full mt-4 ${isMining ? "loading" : ""}`}
+                  >
+                    <PaperAirplaneIcon className="h-5 w-5 mr-2" aria-hidden="true" />
+                    Send
+                  </button>
+                </div>
+                <div className="card-actions block">
+                  <Modal
+                    id="receive"
+                    button={
+                      <label
+                        htmlFor={"receive"}
+                        className={`btn btn-secondary w-full mt-4 ${isMining ? "loading" : ""}`}
+                      >
+                        <ArrowDownTrayIcon className="h-5 w-5 mr-2" aria-hidden="true" />
+                        Receive
+                      </label>
+                    }
+                    content={
+                      <div className="flex flex-col items-center justify-center p-8">
+                        {address && (
+                          <QRCode
+                            size={256}
+                            style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+                            value={address}
+                            viewBox={`0 0 256 256`}
+                          />
+                        )}
+                        <div className="mt-4">
+                          <Address address={address} />
+                        </div>
+                      </div>
+                    }
+                  />
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>
