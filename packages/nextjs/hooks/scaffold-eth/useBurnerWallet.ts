@@ -4,7 +4,7 @@ import { useDebounce } from "use-debounce";
 import { useLocalStorage } from "usehooks-ts";
 import { useProvider } from "wagmi";
 
-const burnerStorageKey = "scaffoldEth2.burnerWallet.sk";
+export const burnerStorageKey = "scaffoldEth2.burnerWallet.sk";
 
 /**
  * Is the private key valid
