@@ -1,5 +1,5 @@
-import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
+import { HardhatRuntimeEnvironment } from "hardhat/types";
 
 /**
  * Deploys a contract named "YourContract" using the deployer account and
@@ -21,7 +21,7 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   const { deployer } = await hre.getNamedAccounts();
   const { deploy } = hre.deployments;
 
-  await deploy("YourContract", {
+  await deploy("EventGems", {
     from: deployer,
     // Contract constructor arguments
     args: ["0x34aA3F359A9D614239015126635CE7732c18fDF3"],
@@ -39,4 +39,4 @@ export default deployYourContract;
 
 // Tags are useful if you have multiple deploy files and only want to run one of them.
 // e.g. yarn deploy --tags YourContract
-deployYourContract.tags = ["YourContract"];
+deployYourContract.tags = ["EventGems"];

@@ -16,7 +16,7 @@ const Home: NextPage = () => {
 
   const { address, isConnected } = useAccount();
   const { data: balance } = useScaffoldContractRead({
-    contractName: "YourContract",
+    contractName: "EventGems",
     functionName: "balanceOf",
     args: [address],
   });
@@ -25,7 +25,7 @@ const Home: NextPage = () => {
   const [amount, setAmount] = useState("");
 
   const { writeAsync: transfer, isMining } = useScaffoldContractWrite({
-    contractName: "YourContract",
+    contractName: "EventGems",
     functionName: "transfer",
     args: [toAddress, ethers.utils.parseEther(amount || "0")],
   });
