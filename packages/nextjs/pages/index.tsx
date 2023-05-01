@@ -6,6 +6,7 @@ import QRCode from "react-qr-code";
 import { useAccount } from "wagmi";
 import { ArrowDownTrayIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import { Address, AddressInput, InputBase } from "~~/components/scaffold-eth";
+import { AddressMain } from "~~/components/scaffold-eth/AddressMain";
 import { Modal } from "~~/components/scaffold-eth/Modal";
 import { TokenBalance } from "~~/components/scaffold-eth/TokenBalance";
 import { useAutoConnect, useScaffoldContractRead, useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
@@ -42,16 +43,15 @@ const Home: NextPage = () => {
           <figure>
             <img src="https://edcon.io/_nuxt/img/edcon-banner.80a1b17.png" alt="EDCON WALLET" />
           </figure>
-          <h2 className="card-title">EVENT WALLET PROTOTYPE</h2>
-          <div className="card-body">
+          <div className="card-body pt-2">
             {!isConnected ? (
               <div className="flex flex-col items-center justify-center my-16">
                 <span className="animate-bounce text-8xl">{scaffoldConfig.tokenEmoji}</span>
               </div>
             ) : (
               <>
-                <div className="flex mb-8">
-                  <Address address={address} />
+                <div className="flex flex-col items-center mb-8 gap-4">
+                  <AddressMain address={address} />
                   <TokenBalance amount={balance} />
                 </div>
 
