@@ -38,16 +38,14 @@ const Home: NextPage = () => {
         <meta name="description" content="Created with 🏗 scaffold-eth" />
       </Head>
 
-      <div className="flex flex-col items-center justify-center mt-8 py-2">
-        <div className="card w-96 bg-base-100 shadow-xl p-8">
-          <figure>
-            <img
-              src="https://edcon.io/_nuxt/img/edcon-banner.80a1b17.png"
-              alt="EDCON WALLET"
-              className="max-w-[150px]"
-            />
-          </figure>
-          <div className="card-body pt-2">
+      <div className="flex flex-col items-center justify-center py-2">
+        <div className="max-w-96 bg-base-100 p-8">
+          <img
+            src="https://ueth.org/_nuxt/img/logo.7b7e59b.png"
+            alt="EDCON WALLET"
+            className="max-w-[40px] absolute top-0 left-0 m-5"
+          />
+          <div className="flex flex-col gap-2 pt-2">
             {!isConnected ? (
               <div className="flex flex-col items-center justify-center my-16">
                 <span className="animate-bounce text-8xl">{scaffoldConfig.tokenEmoji}</span>
@@ -65,7 +63,7 @@ const Home: NextPage = () => {
                 <div>
                   <InputBase type="number" value={amount} onChange={v => setAmount(v)} placeholder="Amount" />
                 </div>
-                <div className="card-actions">
+                <div>
                   <button
                     onClick={async () => {
                       await transfer();
@@ -77,7 +75,7 @@ const Home: NextPage = () => {
                     Send
                   </button>
                 </div>
-                <div className="card-actions block">
+                <div className="block">
                   <Modal
                     id="receive"
                     button={
