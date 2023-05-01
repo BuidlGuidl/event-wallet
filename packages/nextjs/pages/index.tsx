@@ -41,7 +41,11 @@ const Home: NextPage = () => {
       <div className="flex flex-col items-center justify-center mt-8 py-2">
         <div className="card w-96 bg-base-100 shadow-xl p-8">
           <figure>
-            <img src="https://edcon.io/_nuxt/img/edcon-banner.80a1b17.png" alt="EDCON WALLET" />
+            <img
+              src="https://edcon.io/_nuxt/img/edcon-banner.80a1b17.png"
+              alt="EDCON WALLET"
+              className="max-w-[150px]"
+            />
           </figure>
           <div className="card-body pt-2">
             {!isConnected ? (
