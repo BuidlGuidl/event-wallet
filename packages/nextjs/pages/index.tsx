@@ -1,19 +1,21 @@
-import { useState } from "react";
 import Head from "next/head";
-import { ethers } from "ethers";
 import type { NextPage } from "next";
-import QRCode from "react-qr-code";
 import { useAccount } from "wagmi";
-import { ArrowDownTrayIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
-import { Address, AddressInput, InputBase } from "~~/components/scaffold-eth";
+import { ArrowDownTrayIcon, HomeIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import { AddressMain } from "~~/components/scaffold-eth/AddressMain";
-import { Modal } from "~~/components/scaffold-eth/Modal";
 import { TokenBalance } from "~~/components/scaffold-eth/TokenBalance";
-import { useAutoConnect, useScaffoldContractRead, useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
+import { Main } from "~~/components/screens/Main";
+import { Receive } from "~~/components/screens/Receive";
+import { Send } from "~~/components/screens/Send";
+import { useAutoConnect, useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 import scaffoldConfig from "~~/scaffold.config";
+import { useAppStore } from "~~/services/store/store";
 
 const Home: NextPage = () => {
   useAutoConnect();
+
+  const screen = useAppStore(state => state.screen);
+  const setScreen = useAppStore(state => state.setScreen);
 
   const { address, isConnected } = useAccount();
   const { data: balance } = useScaffoldContractRead({
@@ -22,14 +24,18 @@ const Home: NextPage = () => {
     args: [address],
   });
 
-  const [toAddress, setToAddress] = useState("");
-  const [amount, setAmount] = useState("");
-
-  const { writeAsync: transfer, isMining } = useScaffoldContractWrite({
-    contractName: "EventGems",
-    functionName: "transfer",
-    args: [toAddress, ethers.utils.parseEther(amount || "0")],
-  });
+  let screenRender = <></>;
+  switch (screen) {
+    case "main":
+      screenRender = <Main />;
+      break;
+    case "send":
+      screenRender = <Send />;
+      break;
+    case "receive":
+      screenRender = <Receive />;
+      break;
+  }
 
   return (
     <>
@@ -39,7 +45,7 @@ const Home: NextPage = () => {
       </Head>
 
       <div className="flex flex-col items-center justify-center py-2">
-        <div className="max-w-96 bg-base-100 p-8">
+        <div className="max-w-96 p-8">
           <img
             src="https://ueth.org/_nuxt/img/logo.7b7e59b.png"
             alt="EDCON WALLET"
@@ -52,58 +58,26 @@ const Home: NextPage = () => {
               </div>
             ) : (
               <>
-                <div className="flex flex-col items-center mb-8 gap-4">
+                <div className="flex flex-col items-center mb-2 gap-4">
                   <AddressMain address={address} />
                   <TokenBalance amount={balance} />
                 </div>
-
-                <div>
-                  <AddressInput value={toAddress} onChange={v => setToAddress(v)} placeholder="To Address" />
-                </div>
-                <div>
-                  <InputBase type="number" value={amount} onChange={v => setAmount(v)} placeholder="Amount" />
-                </div>
-                <div>
-                  <button
-                    onClick={async () => {
-                      await transfer();
-                      setAmount("");
-                    }}
-                    className={`btn btn-primary w-full mt-4 ${isMining ? "loading" : ""}`}
-                  >
-                    <PaperAirplaneIcon className="h-5 w-5 mr-2" aria-hidden="true" />
-                    Send
+                <div className="flex gap-6 justify-center mb-8">
+                  <button className="bg-secondary text-white rounded-full p-3" onClick={() => setScreen("main")}>
+                    <HomeIcon className="w-8" />
                   </button>
-                </div>
-                <div className="block">
-                  <Modal
-                    id="receive"
-                    button={
-                      <label htmlFor={"receive"} className={`btn btn-secondary w-full mt-4`}>
-                        <ArrowDownTrayIcon className="h-5 w-5 mr-2" aria-hidden="true" />
-                        Receive
-                      </label>
-                    }
-                    content={
-                      <div className="flex flex-col items-center justify-center p-8">
-                        {address && (
-                          <QRCode
-                            size={256}
-                            style={{ height: "auto", maxWidth: "100%", width: "100%" }}
-                            value={address}
-                            viewBox={`0 0 256 256`}
-                          />
-                        )}
-                        <div className="mt-4">
-                          <Address address={address} />
-                        </div>
-                      </div>
-                    }
-                  />
+                  <button className="bg-secondary text-white rounded-full p-3" onClick={() => setScreen("receive")}>
+                    <ArrowDownTrayIcon className="w-8" />
+                  </button>
+                  <button className="bg-secondary text-white rounded-full p-3" onClick={() => setScreen("send")}>
+                    <PaperAirplaneIcon className="w-8" />
+                  </button>
                 </div>
               </>
             )}
           </div>
+
+          <div>{screenRender}</div>
         </div>
       </div>
     </>
