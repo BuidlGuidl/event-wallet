@@ -9,7 +9,7 @@ export const Receive = () => {
   const { address } = useAccount();
 
   return (
-    <div className="flex flex-col items-center justify-center p-8">
+    <div className="flex flex-col items-center justify-center p-8 pt-0">
       {address && (
         <QRCode
           size={256}

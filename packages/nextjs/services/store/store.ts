@@ -11,13 +11,18 @@ import create from "zustand";
 
 type TWalletScreens = "main" | "send" | "receive";
 
+type TScreenPayload = {
+  toAddress?: string;
+};
+
 type TAppStore = {
   ethPrice: number;
   setEthPrice: (newEthPriceState: number) => void;
   isQrReaderOpen: boolean;
   setIsQrReaderOpen: (newValue: boolean) => void;
   screen: TWalletScreens;
-  setScreen: (newValue: TWalletScreens) => void;
+  setScreen: (newValue: TWalletScreens, payload?: TScreenPayload | null) => void;
+  screenPayload: TScreenPayload | null | undefined;
 };
 
 export const useAppStore = create<TAppStore>(set => ({
@@ -26,5 +31,7 @@ export const useAppStore = create<TAppStore>(set => ({
   isQrReaderOpen: false,
   setIsQrReaderOpen: (newValue: boolean): void => set(() => ({ isQrReaderOpen: newValue })),
   screen: "main",
-  setScreen: (newValue: TWalletScreens): void => set(() => ({ screen: newValue })),
+  setScreen: (newValue: TWalletScreens, payload: TScreenPayload | null | undefined): void =>
+    set(() => ({ screen: newValue, screenPayload: payload })),
+  screenPayload: null,
 }));

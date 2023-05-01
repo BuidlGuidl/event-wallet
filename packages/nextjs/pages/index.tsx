@@ -2,6 +2,7 @@ import Head from "next/head";
 import type { NextPage } from "next";
 import { useAccount } from "wagmi";
 import { ArrowDownTrayIcon, HomeIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
+import { Balance, FaucetButton } from "~~/components/scaffold-eth";
 import { AddressMain } from "~~/components/scaffold-eth/AddressMain";
 import { TokenBalance } from "~~/components/scaffold-eth/TokenBalance";
 import { Main } from "~~/components/screens/Main";
@@ -51,6 +52,12 @@ const Home: NextPage = () => {
             alt="EDCON WALLET"
             className="max-w-[40px] absolute top-0 left-0 m-5"
           />
+          <div className="absolute top-0 right-0 m-5">
+            <div className="flex items-center">
+              <Balance address={address} />
+              <FaucetButton />
+            </div>
+          </div>
           <div className="flex flex-col gap-2 pt-2">
             {!isConnected ? (
               <div className="flex flex-col items-center justify-center my-16">
@@ -58,7 +65,7 @@ const Home: NextPage = () => {
               </div>
             ) : (
               <>
-                <div className="flex flex-col items-center mb-2 gap-4">
+                <div className="flex flex-col items-center mb-6 gap-4">
                   <AddressMain address={address} />
                   <TokenBalance amount={balance} />
                 </div>

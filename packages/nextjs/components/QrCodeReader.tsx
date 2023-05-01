@@ -11,9 +11,8 @@ const QrCodeReader = () => {
   const setScreen = useAppStore(state => state.setScreen);
 
   const handelScanRead = (result: string) => {
-    // ToDo. Parse result before sending it to the callback (address, internal link, etc)
     if (ethers.utils.isAddress(result)) {
-      setScreen("send");
+      setScreen("send", { toAddress: result });
       return;
     }
   };
@@ -26,8 +25,7 @@ const QrCodeReader = () => {
             // @ts-ignore
             onScan={(result: string) => {
               if (!!result) {
-                // ToDo. Parse result before sending it to the callback (address, internal link, etc)
-                console.log(result);
+                console.info("Scan result", result);
                 handelScanRead(result);
                 setIsQrReaderOpen(false);
               }

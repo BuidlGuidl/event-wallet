@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import { AddressInput, InputBase } from "~~/components/scaffold-eth";
 import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
+import { useAppStore } from "~~/services/store/store";
 
 /**
  * Send Screen
@@ -10,6 +11,13 @@ import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 export const Send = () => {
   const [toAddress, setToAddress] = useState("");
   const [amount, setAmount] = useState("");
+  const payload = useAppStore(state => state.screenPayload);
+
+  useEffect(() => {
+    if (payload?.toAddress) {
+      setToAddress(payload?.toAddress);
+    }
+  }, [payload]);
 
   const { writeAsync: transfer, isMining } = useScaffoldContractWrite({
     contractName: "EventGems",
