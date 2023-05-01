@@ -2,7 +2,9 @@ import { useCallback, useEffect, useState } from "react";
 import { isAddress } from "ethers/lib/utils";
 import Blockies from "react-blockies";
 import { useEnsAddress, useEnsAvatar, useEnsName } from "wagmi";
+import { QrCodeIcon } from "@heroicons/react/24/solid";
 import { CommonInputProps, InputBase } from "~~/components/scaffold-eth";
+import { useAppStore } from "~~/services/store/store";
 
 // ToDo:  move this function to an utility file
 const isENS = (address = "") => address.endsWith(".eth") || address.endsWith(".xyz");
@@ -11,6 +13,8 @@ const isENS = (address = "") => address.endsWith(".eth") || address.endsWith(".x
  * Address input with ENS name resolution
  */
 export const AddressInput = ({ value, name, placeholder, onChange }: CommonInputProps) => {
+  const setIsQrReaderOpen = useAppStore(state => state.setIsQrReaderOpen);
+
   const { data: ensAddress, isLoading: isEnsAddressLoading } = useEnsAddress({
     name: value,
     enabled: isENS(value),
@@ -73,7 +77,16 @@ export const AddressInput = ({ value, name, placeholder, onChange }: CommonInput
           </div>
         )
       }
-      suffix={value && <Blockies className="!rounded-full" seed={value?.toLowerCase() as string} size={7} scale={5} />}
+      suffix={
+        value ? (
+          <Blockies className="!rounded-full" seed={value?.toLowerCase() as string} size={7} scale={5} />
+        ) : (
+          <QrCodeIcon
+            className="w-6 h-6 text-primary pointer relative left-[-10px]"
+            onClick={() => setIsQrReaderOpen(true)}
+          />
+        )
+      }
     />
   );
 };
