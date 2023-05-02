@@ -69,9 +69,9 @@ export const AddressMain = ({ address, disableAddressLink, format }: TAddressPro
         {ensAvatar ? (
           // Don't want to use nextJS Image here (and adding remote patterns for the URL)
           // eslint-disable-next-line
-          <img className="rounded-full" src={ensAvatar} width={24} height={24} alt={`${address} avatar`} />
+          <img className="rounded-full" src={ensAvatar} width={80} height={80} alt={`${address} avatar`} />
         ) : (
-          <Blockies className="mx-auto rounded-full" size={8} seed={address.toLowerCase()} scale={8} />
+          <Blockies className="mx-auto rounded-full" size={8} seed={address.toLowerCase()} scale={10} />
         )}
       </div>
       <div className="flex items-center mt-2">
