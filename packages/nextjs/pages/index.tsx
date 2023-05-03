@@ -1,16 +1,21 @@
 import Head from "next/head";
 import type { NextPage } from "next";
 import { useAccount } from "wagmi";
-import { ArrowDownTrayIcon, HomeIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
+import { ArrowDownTrayIcon, ClockIcon, HomeIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import { Balance, FaucetButton } from "~~/components/scaffold-eth";
 import { AddressMain } from "~~/components/scaffold-eth/AddressMain";
 import { TokenBalance } from "~~/components/scaffold-eth/TokenBalance";
-import { Main } from "~~/components/screens/Main";
-import { Receive } from "~~/components/screens/Receive";
-import { Send } from "~~/components/screens/Send";
+import { History, Main, Receive, Send } from "~~/components/screens";
 import { useAutoConnect, useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 import scaffoldConfig from "~~/scaffold.config";
 import { useAppStore } from "~~/services/store/store";
+
+const screens = {
+  main: <Main />,
+  send: <Send />,
+  receive: <Receive />,
+  history: <History />,
+};
 
 const Home: NextPage = () => {
   useAutoConnect();
@@ -25,18 +30,7 @@ const Home: NextPage = () => {
     args: [address],
   });
 
-  let screenRender = <></>;
-  switch (screen) {
-    case "main":
-      screenRender = <Main />;
-      break;
-    case "send":
-      screenRender = <Send />;
-      break;
-    case "receive":
-      screenRender = <Receive />;
-      break;
-  }
+  const screenRender = screens[screen];
 
   return (
     <>
@@ -70,14 +64,29 @@ const Home: NextPage = () => {
                   <TokenBalance amount={balance} />
                 </div>
                 <div className="flex gap-6 justify-center mb-8">
-                  <button className="bg-secondary text-white rounded-full p-3" onClick={() => setScreen("main")}>
+                  <button
+                    className={`${screen === "main" ? "bg-primary" : "bg-secondary"} text-white rounded-full p-3`}
+                    onClick={() => setScreen("main")}
+                  >
                     <HomeIcon className="w-8" />
                   </button>
-                  <button className="bg-secondary text-white rounded-full p-3" onClick={() => setScreen("receive")}>
+                  <button
+                    className={`${screen === "receive" ? "bg-primary" : "bg-secondary"} text-white rounded-full p-3`}
+                    onClick={() => setScreen("receive")}
+                  >
                     <ArrowDownTrayIcon className="w-8" />
                   </button>
-                  <button className="bg-secondary text-white rounded-full p-3" onClick={() => setScreen("send")}>
+                  <button
+                    className={`${screen === "send" ? "bg-primary" : "bg-secondary"} text-white rounded-full p-3`}
+                    onClick={() => setScreen("send")}
+                  >
                     <PaperAirplaneIcon className="w-8" />
+                  </button>
+                  <button
+                    className={`${screen === "history" ? "bg-primary" : "bg-secondary"} text-white rounded-full p-3`}
+                    onClick={() => setScreen("history")}
+                  >
+                    <ClockIcon className="w-8" />
                   </button>
                 </div>
               </>
