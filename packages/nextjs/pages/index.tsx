@@ -12,6 +12,12 @@ import { useAutoConnect, useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 import scaffoldConfig from "~~/scaffold.config";
 import { useAppStore } from "~~/services/store/store";
 
+const screens = {
+  main: <Main />,
+  send: <Send />,
+  receive: <Receive />,
+};
+
 const Home: NextPage = () => {
   useAutoConnect();
 
@@ -25,18 +31,7 @@ const Home: NextPage = () => {
     args: [address],
   });
 
-  let screenRender = <></>;
-  switch (screen) {
-    case "main":
-      screenRender = <Main />;
-      break;
-    case "send":
-      screenRender = <Send />;
-      break;
-    case "receive":
-      screenRender = <Receive />;
-      break;
-  }
+  const screenRender = screens[screen];
 
   return (
     <>
