@@ -64,16 +64,28 @@ const Home: NextPage = () => {
                   <TokenBalance amount={balance} />
                 </div>
                 <div className="flex gap-6 justify-center mb-8">
-                  <button className="bg-secondary text-white rounded-full p-3" onClick={() => setScreen("main")}>
+                  <button
+                    className={`${screen === "main" ? "bg-primary" : "bg-secondary"} text-white rounded-full p-3`}
+                    onClick={() => setScreen("main")}
+                  >
                     <HomeIcon className="w-8" />
                   </button>
-                  <button className="bg-secondary text-white rounded-full p-3" onClick={() => setScreen("receive")}>
+                  <button
+                    className={`${screen === "receive" ? "bg-primary" : "bg-secondary"} text-white rounded-full p-3`}
+                    onClick={() => setScreen("receive")}
+                  >
                     <ArrowDownTrayIcon className="w-8" />
                   </button>
-                  <button className="bg-secondary text-white rounded-full p-3" onClick={() => setScreen("send")}>
+                  <button
+                    className={`${screen === "send" ? "bg-primary" : "bg-secondary"} text-white rounded-full p-3`}
+                    onClick={() => setScreen("send")}
+                  >
                     <PaperAirplaneIcon className="w-8" />
                   </button>
-                  <button className="bg-secondary text-white rounded-full p-3" onClick={() => setScreen("history")}>
+                  <button
+                    className={`${screen === "history" ? "bg-primary" : "bg-secondary"} text-white rounded-full p-3`}
+                    onClick={() => setScreen("history")}
+                  >
                     <ClockIcon className="w-8" />
                   </button>
                 </div>
