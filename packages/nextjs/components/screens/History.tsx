@@ -17,25 +17,42 @@ export const History = () => {
     ? blockNumber - 1000
     : 0;
 
-  const { data: outboundTransferEvents } = useScaffoldEventHistory({
+  const { data: outboundTransferEvents, isLoading: isLoadingOutBoundTransferEvents } = useScaffoldEventHistory({
     contractName: "EventGems",
     eventName: "Transfer",
     fromBlock,
     filters: { from: address },
   });
 
-  const { data: inboundTransferEvents } = useScaffoldEventHistory({
+  const { data: inboundTransferEvents, isLoading: isLoadingInboundTransferEvents } = useScaffoldEventHistory({
     contractName: "EventGems",
     eventName: "Transfer",
     fromBlock,
     filters: { to: address },
   });
 
+  if (isLoadingOutBoundTransferEvents || isLoadingInboundTransferEvents) {
+    return (
+      <div className="text-center">
+        <p className="font-bold">
+          Loading history<span className=" loading-dots">...</span>
+        </p>
+      </div>
+    );
+  }
+
   let allTransferEvents: any[] = [];
   if (outboundTransferEvents && inboundTransferEvents) {
     allTransferEvents = outboundTransferEvents.concat(inboundTransferEvents);
     allTransferEvents.sort((a, b) => b.log.blockNumber - a.log.blockNumber);
-    console.log("allTransferEvents", allTransferEvents);
+  }
+
+  if (allTransferEvents.length === 0) {
+    return (
+      <div className="text-center">
+        <p className="font-bold">No history yet</p>
+      </div>
+    );
   }
 
   return (
