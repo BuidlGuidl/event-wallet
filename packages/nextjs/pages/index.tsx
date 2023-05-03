@@ -1,13 +1,11 @@
 import Head from "next/head";
 import type { NextPage } from "next";
 import { useAccount } from "wagmi";
-import { ArrowDownTrayIcon, HomeIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
+import { ArrowDownTrayIcon, ClockIcon, HomeIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import { Balance, FaucetButton } from "~~/components/scaffold-eth";
 import { AddressMain } from "~~/components/scaffold-eth/AddressMain";
 import { TokenBalance } from "~~/components/scaffold-eth/TokenBalance";
-import { Main } from "~~/components/screens/Main";
-import { Receive } from "~~/components/screens/Receive";
-import { Send } from "~~/components/screens/Send";
+import { History, Main, Receive, Send } from "~~/components/screens";
 import { useAutoConnect, useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 import scaffoldConfig from "~~/scaffold.config";
 import { useAppStore } from "~~/services/store/store";
@@ -16,6 +14,7 @@ const screens = {
   main: <Main />,
   send: <Send />,
   receive: <Receive />,
+  history: <History />,
 };
 
 const Home: NextPage = () => {
@@ -73,6 +72,9 @@ const Home: NextPage = () => {
                   </button>
                   <button className="bg-secondary text-white rounded-full p-3" onClick={() => setScreen("send")}>
                     <PaperAirplaneIcon className="w-8" />
+                  </button>
+                  <button className="bg-secondary text-white rounded-full p-3" onClick={() => setScreen("history")}>
+                    <ClockIcon className="w-8" />
                   </button>
                 </div>
               </>
