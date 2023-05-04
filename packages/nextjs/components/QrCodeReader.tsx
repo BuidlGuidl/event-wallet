@@ -1,6 +1,7 @@
 import dynamic from "next/dynamic";
 import { ethers } from "ethers";
 import { useAppStore } from "~~/services/store/store";
+import { notification } from "~~/utils/scaffold-eth";
 
 // @ts-ignore
 const ReactQrReader = dynamic(() => import("react-qr-reader"), { ssr: false });
@@ -11,9 +12,20 @@ const QrCodeReader = () => {
   const setScreen = useAppStore(state => state.setScreen);
 
   const handelScanRead = (result: string) => {
+    const [action, payload] = result.split("#");
+
+    // ToDo. We could do "send#0x..." to avoid scanning non-event addresses.
     if (ethers.utils.isAddress(result)) {
       setScreen("send", { toAddress: result });
       return;
+    }
+
+    switch (action) {
+      case "mint":
+        setScreen("mint", { nftId: payload });
+        break;
+      default:
+        notification.error(`Unknown QR ${action}`);
     }
   };
 

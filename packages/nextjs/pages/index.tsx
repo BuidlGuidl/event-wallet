@@ -6,6 +6,7 @@ import { Balance, FaucetButton } from "~~/components/scaffold-eth";
 import { AddressMain } from "~~/components/scaffold-eth/AddressMain";
 import { TokenBalance } from "~~/components/scaffold-eth/TokenBalance";
 import { History, Main, Receive, Send } from "~~/components/screens";
+import { Mint } from "~~/components/screens/Mint";
 import { useAutoConnect, useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 import scaffoldConfig from "~~/scaffold.config";
 import { useAppStore } from "~~/services/store/store";
@@ -15,6 +16,7 @@ const screens = {
   send: <Send />,
   receive: <Receive />,
   history: <History />,
+  mint: <Mint />,
 };
 
 const Home: NextPage = () => {
