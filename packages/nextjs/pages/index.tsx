@@ -35,7 +35,7 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Scaffold-eth App</title>
+        <title>Event wallet</title>
         <meta name="description" content="Created with 🏗 scaffold-eth" />
       </Head>
 
