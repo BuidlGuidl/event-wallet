@@ -1,5 +1,6 @@
 import dynamic from "next/dynamic";
 import { ethers } from "ethers";
+import { Address } from "~~/components/scaffold-eth";
 import { useAppStore } from "~~/services/store/store";
 import { notification } from "~~/utils/scaffold-eth";
 
@@ -17,12 +18,22 @@ const QrCodeReader = () => {
     // ToDo. We could do "send#0x..." to avoid scanning non-event addresses.
     if (ethers.utils.isAddress(result)) {
       setScreen("send", { toAddress: result });
+      notification.info(
+        <>
+          <p className="mt-0">Address scanned!</p> <Address address={result} />{" "}
+        </>,
+      );
       return;
     }
 
     switch (action) {
       case "mint":
         setScreen("mint", { nftId: payload });
+        notification.info(
+          <>
+            <p className="my-0">NFT scanned!</p>
+          </>,
+        );
         break;
       default:
         notification.error(`Unknown QR ${action}`);
