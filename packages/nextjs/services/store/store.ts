@@ -9,10 +9,11 @@ import create from "zustand";
  * Think about it as a global useState.
  */
 
-type TWalletScreens = "main" | "send" | "receive" | "history";
+type TWalletScreens = "main" | "send" | "receive" | "history" | "mint";
 
 type TScreenPayload = {
   toAddress?: string;
+  nftId?: string;
 };
 
 type TAppStore = {
