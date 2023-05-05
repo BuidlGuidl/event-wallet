@@ -5,7 +5,7 @@ const contracts = {
       chainId: "31337",
       contracts: {
         EventGems: {
-          address: "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
+          address: "0x959922bE3CAee4b8Cd9a407cc3ac1C251C2007B1",
           abi: [
             {
               inputs: [
@@ -48,6 +48,81 @@ const contracts = {
               inputs: [
                 {
                   indexed: true,
+                  internalType: "bytes32",
+                  name: "role",
+                  type: "bytes32",
+                },
+                {
+                  indexed: true,
+                  internalType: "bytes32",
+                  name: "previousAdminRole",
+                  type: "bytes32",
+                },
+                {
+                  indexed: true,
+                  internalType: "bytes32",
+                  name: "newAdminRole",
+                  type: "bytes32",
+                },
+              ],
+              name: "RoleAdminChanged",
+              type: "event",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: true,
+                  internalType: "bytes32",
+                  name: "role",
+                  type: "bytes32",
+                },
+                {
+                  indexed: true,
+                  internalType: "address",
+                  name: "account",
+                  type: "address",
+                },
+                {
+                  indexed: true,
+                  internalType: "address",
+                  name: "sender",
+                  type: "address",
+                },
+              ],
+              name: "RoleGranted",
+              type: "event",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: true,
+                  internalType: "bytes32",
+                  name: "role",
+                  type: "bytes32",
+                },
+                {
+                  indexed: true,
+                  internalType: "address",
+                  name: "account",
+                  type: "address",
+                },
+                {
+                  indexed: true,
+                  internalType: "address",
+                  name: "sender",
+                  type: "address",
+                },
+              ],
+              name: "RoleRevoked",
+              type: "event",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: true,
                   internalType: "address",
                   name: "from",
                   type: "address",
@@ -67,6 +142,32 @@ const contracts = {
               ],
               name: "Transfer",
               type: "event",
+            },
+            {
+              inputs: [],
+              name: "DEFAULT_ADMIN_ROLE",
+              outputs: [
+                {
+                  internalType: "bytes32",
+                  name: "",
+                  type: "bytes32",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "MINTER_ROLE",
+              outputs: [
+                {
+                  internalType: "bytes32",
+                  name: "",
+                  type: "bytes32",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
             },
             {
               inputs: [
@@ -175,6 +276,67 @@ const contracts = {
             {
               inputs: [
                 {
+                  internalType: "bytes32",
+                  name: "role",
+                  type: "bytes32",
+                },
+              ],
+              name: "getRoleAdmin",
+              outputs: [
+                {
+                  internalType: "bytes32",
+                  name: "",
+                  type: "bytes32",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "bytes32",
+                  name: "role",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "address",
+                  name: "account",
+                  type: "address",
+                },
+              ],
+              name: "grantRole",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "bytes32",
+                  name: "role",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "address",
+                  name: "account",
+                  type: "address",
+                },
+              ],
+              name: "hasRole",
+              outputs: [
+                {
+                  internalType: "bool",
+                  name: "",
+                  type: "bool",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
                   internalType: "address",
                   name: "spender",
                   type: "address",
@@ -197,6 +359,24 @@ const contracts = {
               type: "function",
             },
             {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "to",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "amount",
+                  type: "uint256",
+                },
+              ],
+              name: "mint",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
               inputs: [],
               name: "name",
               outputs: [
@@ -204,6 +384,61 @@ const contracts = {
                   internalType: "string",
                   name: "",
                   type: "string",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "bytes32",
+                  name: "role",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "address",
+                  name: "account",
+                  type: "address",
+                },
+              ],
+              name: "renounceRole",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "bytes32",
+                  name: "role",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "address",
+                  name: "account",
+                  type: "address",
+                },
+              ],
+              name: "revokeRole",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "bytes4",
+                  name: "interfaceId",
+                  type: "bytes4",
+                },
+              ],
+              name: "supportsInterface",
+              outputs: [
+                {
+                  internalType: "bool",
+                  name: "",
+                  type: "bool",
                 },
               ],
               stateMutability: "view",
@@ -289,19 +524,37 @@ const contracts = {
               type: "function",
             },
             {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "newOwner",
+                  type: "address",
+                },
+              ],
+              name: "transferOwnership",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
               stateMutability: "payable",
               type: "receive",
             },
           ],
         },
         EventSBT: {
-          address: "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
+          address: "0x9A9f2CCfdE556A7E9Ff0848998Aa4a0CFD8863AE",
           abi: [
             {
               inputs: [
                 {
                   internalType: "address",
                   name: "_owner",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "gemAddress",
                   type: "address",
                 },
               ],

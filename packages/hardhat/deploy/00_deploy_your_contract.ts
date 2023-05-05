@@ -21,25 +21,36 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   const { deployer } = await hre.getNamedAccounts();
   const { deploy } = hre.deployments;
 
-  await deploy("EventGems", {
+  const ownerAddress = "0x34aA3F359A9D614239015126635CE7732c18fDF3";
+
+  const eventGems = await deploy("EventGems", {
     from: deployer,
     // Contract constructor arguments
-    args: ["0x34aA3F359A9D614239015126635CE7732c18fDF3"],
+    args: [ownerAddress],
     log: true,
     // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
     // automatically mining the contract deployment transaction. There is no effect on live networks.
     autoMine: true,
   });
 
-  await deploy("EventSBT", {
+  const eventSBT = await deploy("EventSBT", {
     from: deployer,
     // Contract constructor arguments
-    args: ["0x34aA3F359A9D614239015126635CE7732c18fDF3"],
+    args: [ownerAddress, eventGems.address],
     log: true,
     // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
     // automatically mining the contract deployment transaction. There is no effect on live networks.
     autoMine: true,
   });
+
+  const eventGemsContract = await hre.ethers.getContract("EventGems", deployer);
+
+  await eventGemsContract.grantRole(
+    hre.ethers.utils.keccak256(hre.ethers.utils.toUtf8Bytes("MINTER_ROLE")),
+    eventSBT.address
+  );
+
+  await eventGemsContract.transferOwnership(ownerAddress);
 
   // Get the deployed contract
   // const yourContract = await hre.ethers.getContract("YourContract", deployer);

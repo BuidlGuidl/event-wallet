@@ -1,25 +1,31 @@
 //SPDX-License-Identifier: MIT
-pragma solidity >=0.8.0 <0.9.0;
+pragma solidity 0.8.19;
 
-// Useful for debugging. Remove when deploying to a live network.
-import "hardhat/console.sol";
-// Use openzeppelin to inherit battle-tested implementations (ERC20, ERC721, etc)
-// import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/access/AccessControl.sol";
 
 /**
  * ERC20 token contract for Events.
  */
-contract EventGems is ERC20 {
+contract EventGems is ERC20, AccessControl {
+  bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
-    // Constructor: Called once on contract deployment
-    // Check packages/hardhat/deploy/00_deploy_your_contract.ts
-    constructor(address _owner) ERC20("EventGems", "EGM") {
-        _mint(_owner, 1000 ether);
-    }
+  constructor(address _owner) ERC20("EventGems", "EGM") {
+    _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
+    _mint(_owner, 1000 ether);
+  }
 
-    /**
-     * Function that allows the contract to receive ETH
-     */
-    receive() external payable {}
+  function transferOwnership(address newOwner) public onlyRole(DEFAULT_ADMIN_ROLE) {
+    _setupRole(DEFAULT_ADMIN_ROLE, newOwner);
+    renounceRole(DEFAULT_ADMIN_ROLE, msg.sender);
+  }
+
+  function mint(address to, uint256 amount) public onlyRole(MINTER_ROLE) {
+    _mint(to, amount);
+  }
+
+  /**
+   * Function that allows the contract to receive ETH
+   */
+  receive() external payable {}
 }

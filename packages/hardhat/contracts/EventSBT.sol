@@ -1,26 +1,30 @@
 //SPDX-License-Identifier: MIT
-pragma solidity >=0.8.0 <0.9.0;
+pragma solidity 0.8.19;
 
-// Useful for debugging. Remove when deploying to a live network.
-import "hardhat/console.sol";
-// Use openzeppelin to inherit battle-tested implementations (ERC20, ERC721, etc)
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
+abstract contract EventGemsContract {
+  function mint(address to, uint256 amount) public virtual;
+}
+
 /**
- * ERC20 token contract for Events.
+ * ERC721 soulbound token contract for Events.
  */
 contract EventSBT is ERC721, Ownable {
+  EventGemsContract eventGemsContract;
+
   mapping(uint => string) private _tokenMappings;
   mapping(uint => uint) private _tokenToType;
   mapping(uint => uint) private _amountMinted;
 
   // Constructor: Called once on contract deployment
   // Check packages/hardhat/deploy/00_deploy_your_contract.ts
-  constructor(address _owner) ERC721("EventSBT", "ESBT") {
+  constructor(address _owner, address gemAddress) ERC721("EventSBT", "ESBT") {
     _tokenMappings[19273198273] = "https://ipfs.io/ipfs/QmY9j9csK89C1huoirBCurhVv2g59XNL9RNUJexLeyrxmK";
     _tokenMappings[3453465376] = "https://ipfs.io/ipfs/QmY9j9csK89C1huoirBCurhVv2g59XNL9RNUJexLeyrxmK";
     transferOwnership(_owner);
+    eventGemsContract = EventGemsContract(gemAddress);
   }
 
   function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
@@ -35,6 +39,8 @@ contract EventSBT is ERC721, Ownable {
 
     _tokenToType[supply] = tokenType;
     _amountMinted[tokenType] = _amountMinted[tokenType] + 1;
+
+    eventGemsContract.mint(to, 5 ether);
     // mint (20 - (_amountMinted[tokenType]/10)) diamonds
     _mint(to, supply++);
   }
