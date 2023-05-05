@@ -36,6 +36,7 @@ contract EventSBT is ERC721, Ownable {
         
         _tokenToType[supply] = tokenType;
         _amountMinted[tokenType] = _amountMinted[tokenType] + 1;
+        // mint (20 - (_amountMinted[tokenType]/10)) diamonds 
         _mint(to, supply++);
     }
 
