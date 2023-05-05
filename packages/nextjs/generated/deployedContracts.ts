@@ -5,7 +5,7 @@ const contracts = {
       chainId: "31337",
       contracts: {
         EventGems: {
-          address: "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+          address: "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
           abi: [
             {
               inputs: [
@@ -294,16 +294,8 @@ const contracts = {
             },
           ],
         },
-      },
-    },
-  ],
-  11155111: [
-    {
-      name: "sepolia",
-      chainId: "11155111",
-      contracts: {
-        EventGems: {
-          address: "0x2fFCE47161611DD4B8b57229C8cdf4610d8049E5",
+        EventSBT: {
+          address: "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
           abi: [
             {
               inputs: [
@@ -328,17 +320,61 @@ const contracts = {
                 {
                   indexed: true,
                   internalType: "address",
-                  name: "spender",
+                  name: "approved",
                   type: "address",
                 },
                 {
-                  indexed: false,
+                  indexed: true,
                   internalType: "uint256",
-                  name: "value",
+                  name: "tokenId",
                   type: "uint256",
                 },
               ],
               name: "Approval",
+              type: "event",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: true,
+                  internalType: "address",
+                  name: "owner",
+                  type: "address",
+                },
+                {
+                  indexed: true,
+                  internalType: "address",
+                  name: "operator",
+                  type: "address",
+                },
+                {
+                  indexed: false,
+                  internalType: "bool",
+                  name: "approved",
+                  type: "bool",
+                },
+              ],
+              name: "ApprovalForAll",
+              type: "event",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: true,
+                  internalType: "address",
+                  name: "previousOwner",
+                  type: "address",
+                },
+                {
+                  indexed: true,
+                  internalType: "address",
+                  name: "newOwner",
+                  type: "address",
+                },
+              ],
+              name: "OwnershipTransferred",
               type: "event",
             },
             {
@@ -357,9 +393,9 @@ const contracts = {
                   type: "address",
                 },
                 {
-                  indexed: false,
+                  indexed: true,
                   internalType: "uint256",
-                  name: "value",
+                  name: "tokenId",
                   type: "uint256",
                 },
               ],
@@ -369,48 +405,36 @@ const contracts = {
             {
               inputs: [
                 {
-                  internalType: "address",
-                  name: "owner",
-                  type: "address",
-                },
-                {
-                  internalType: "address",
-                  name: "spender",
-                  type: "address",
-                },
-              ],
-              name: "allowance",
-              outputs: [
-                {
                   internalType: "uint256",
-                  name: "",
+                  name: "tokenType",
                   type: "uint256",
                 },
+                {
+                  internalType: "string",
+                  name: "uri",
+                  type: "string",
+                },
               ],
-              stateMutability: "view",
+              name: "addTokenType",
+              outputs: [],
+              stateMutability: "nonpayable",
               type: "function",
             },
             {
               inputs: [
                 {
-                  internalType: "address",
-                  name: "spender",
-                  type: "address",
+                  internalType: "uint256[]",
+                  name: "tokenTypes",
+                  type: "uint256[]",
                 },
                 {
-                  internalType: "uint256",
-                  name: "amount",
-                  type: "uint256",
+                  internalType: "string[]",
+                  name: "uris",
+                  type: "string[]",
                 },
               ],
-              name: "approve",
-              outputs: [
-                {
-                  internalType: "bool",
-                  name: "",
-                  type: "bool",
-                },
-              ],
+              name: "addTokenTypeBatch",
+              outputs: [],
               stateMutability: "nonpayable",
               type: "function",
             },
@@ -418,7 +442,25 @@ const contracts = {
               inputs: [
                 {
                   internalType: "address",
-                  name: "account",
+                  name: "to",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "tokenId",
+                  type: "uint256",
+                },
+              ],
+              name: "approve",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "owner",
                   type: "address",
                 },
               ],
@@ -434,13 +476,19 @@ const contracts = {
               type: "function",
             },
             {
-              inputs: [],
-              name: "decimals",
+              inputs: [
+                {
+                  internalType: "uint256",
+                  name: "tokenId",
+                  type: "uint256",
+                },
+              ],
+              name: "getApproved",
               outputs: [
                 {
-                  internalType: "uint8",
+                  internalType: "address",
                   name: "",
-                  type: "uint8",
+                  type: "address",
                 },
               ],
               stateMutability: "view",
@@ -450,16 +498,16 @@ const contracts = {
               inputs: [
                 {
                   internalType: "address",
-                  name: "spender",
+                  name: "owner",
                   type: "address",
                 },
                 {
-                  internalType: "uint256",
-                  name: "subtractedValue",
-                  type: "uint256",
+                  internalType: "address",
+                  name: "operator",
+                  type: "address",
                 },
               ],
-              name: "decreaseAllowance",
+              name: "isApprovedForAll",
               outputs: [
                 {
                   internalType: "bool",
@@ -467,30 +515,24 @@ const contracts = {
                   type: "bool",
                 },
               ],
-              stateMutability: "nonpayable",
+              stateMutability: "view",
               type: "function",
             },
             {
               inputs: [
                 {
                   internalType: "address",
-                  name: "spender",
+                  name: "to",
                   type: "address",
                 },
                 {
                   internalType: "uint256",
-                  name: "addedValue",
+                  name: "tokenType",
                   type: "uint256",
                 },
               ],
-              name: "increaseAllowance",
-              outputs: [
-                {
-                  internalType: "bool",
-                  name: "",
-                  type: "bool",
-                },
-              ],
+              name: "mint",
+              outputs: [],
               stateMutability: "nonpayable",
               type: "function",
             },
@@ -502,6 +544,146 @@ const contracts = {
                   internalType: "string",
                   name: "",
                   type: "string",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "owner",
+              outputs: [
+                {
+                  internalType: "address",
+                  name: "",
+                  type: "address",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "uint256",
+                  name: "tokenId",
+                  type: "uint256",
+                },
+              ],
+              name: "ownerOf",
+              outputs: [
+                {
+                  internalType: "address",
+                  name: "",
+                  type: "address",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "renounceOwnership",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "from",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "to",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "tokenId",
+                  type: "uint256",
+                },
+              ],
+              name: "safeTransferFrom",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "from",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "to",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "tokenId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "bytes",
+                  name: "data",
+                  type: "bytes",
+                },
+              ],
+              name: "safeTransferFrom",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "operator",
+                  type: "address",
+                },
+                {
+                  internalType: "bool",
+                  name: "approved",
+                  type: "bool",
+                },
+              ],
+              name: "setApprovalForAll",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "supply",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "bytes4",
+                  name: "interfaceId",
+                  type: "bytes4",
+                },
+              ],
+              name: "supportsInterface",
+              outputs: [
+                {
+                  internalType: "bool",
+                  name: "",
+                  type: "bool",
                 },
               ],
               stateMutability: "view",
@@ -521,40 +703,22 @@ const contracts = {
               type: "function",
             },
             {
-              inputs: [],
-              name: "totalSupply",
-              outputs: [
+              inputs: [
                 {
                   internalType: "uint256",
-                  name: "",
+                  name: "tokenId",
                   type: "uint256",
+                },
+              ],
+              name: "tokenURI",
+              outputs: [
+                {
+                  internalType: "string",
+                  name: "",
+                  type: "string",
                 },
               ],
               stateMutability: "view",
-              type: "function",
-            },
-            {
-              inputs: [
-                {
-                  internalType: "address",
-                  name: "to",
-                  type: "address",
-                },
-                {
-                  internalType: "uint256",
-                  name: "amount",
-                  type: "uint256",
-                },
-              ],
-              name: "transfer",
-              outputs: [
-                {
-                  internalType: "bool",
-                  name: "",
-                  type: "bool",
-                },
-              ],
-              stateMutability: "nonpayable",
               type: "function",
             },
             {
@@ -571,18 +735,25 @@ const contracts = {
                 },
                 {
                   internalType: "uint256",
-                  name: "amount",
+                  name: "tokenId",
                   type: "uint256",
                 },
               ],
               name: "transferFrom",
-              outputs: [
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [
                 {
-                  internalType: "bool",
-                  name: "",
-                  type: "bool",
+                  internalType: "address",
+                  name: "newOwner",
+                  type: "address",
                 },
               ],
+              name: "transferOwnership",
+              outputs: [],
               stateMutability: "nonpayable",
               type: "function",
             },
