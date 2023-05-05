@@ -50,12 +50,10 @@ contract EventSBT is ERC721, Ownable {
   }
 
   //soul bound
-  function _beforeTokenTransfer(address from, address to, uint256 tokenId) internal virtual {
-    //we might need to check if from is address(0) and then it's okay
+  function _beforeTokenTransfer(address from, address to, uint256 tokenId, uint256 batchSize) internal override {
+    require(from == address(0), "SBT: token transfer not allowed");
 
-    // some thing isn't working here
-
-    require(false, "SBT: token transfer not allowed");
+    super._beforeTokenTransfer(from, to, tokenId, batchSize);
   }
 
   /**
