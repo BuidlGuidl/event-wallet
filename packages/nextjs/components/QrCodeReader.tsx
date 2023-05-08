@@ -1,6 +1,7 @@
 import dynamic from "next/dynamic";
 import { ethers } from "ethers";
 import { Address } from "~~/components/scaffold-eth";
+import scaffoldConfig from "~~/scaffold.config";
 import { useAppStore } from "~~/services/store/store";
 import { notification } from "~~/utils/scaffold-eth";
 
@@ -13,20 +14,21 @@ const QrCodeReader = () => {
   const setScreen = useAppStore(state => state.setScreen);
 
   const handelScanRead = (result: string) => {
+    // Remove liveUrl from the result
+    result = result.replace(`${scaffoldConfig.liveUrl}/`, "");
     const [action, payload] = result.split("#");
 
-    // ToDo. We could do "send#0x..." to avoid scanning non-event addresses.
-    if (ethers.utils.isAddress(result)) {
-      setScreen("send", { toAddress: result });
-      notification.info(
-        <>
-          <p className="mt-0">Address scanned!</p> <Address address={result} />{" "}
-        </>,
-      );
-      return;
-    }
-
     switch (action) {
+      case "send":
+        if (ethers.utils.isAddress(payload)) {
+          setScreen("send", { toAddress: payload });
+          notification.info(
+            <>
+              <p className="mt-0">Address scanned!</p> <Address address={payload} />{" "}
+            </>,
+          );
+        }
+        break;
       case "mint":
         setScreen("mint", { nftId: payload });
         notification.info(
