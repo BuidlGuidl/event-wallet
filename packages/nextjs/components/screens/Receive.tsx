@@ -1,6 +1,7 @@
 import QRCode from "react-qr-code";
 import { useAccount } from "wagmi";
 import { Address } from "~~/components/scaffold-eth";
+import scaffoldConfig from "~~/scaffold.config";
 
 /**
  * Receive Screen
@@ -14,7 +15,7 @@ export const Receive = () => {
         <QRCode
           size={256}
           style={{ height: "auto", maxWidth: "100%", width: "100%" }}
-          value={address}
+          value={`${scaffoldConfig.liveUrl}/send#${address}`}
           viewBox={`0 0 256 256`}
         />
       )}
