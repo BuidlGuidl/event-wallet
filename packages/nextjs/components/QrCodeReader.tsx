@@ -1,9 +1,8 @@
 import dynamic from "next/dynamic";
-import { ethers } from "ethers";
-import { Address } from "~~/components/scaffold-eth";
+import { useRouter } from "next/router";
 import scaffoldConfig from "~~/scaffold.config";
 import { useAppStore } from "~~/services/store/store";
-import { notification } from "~~/utils/scaffold-eth";
+import { redirectToScreenFromCode } from "~~/utils/redirectToScreenFromCode";
 
 // @ts-ignore
 const ReactQrReader = dynamic(() => import("react-qr-reader"), { ssr: false });
@@ -12,34 +11,12 @@ const QrCodeReader = () => {
   const isQrReaderOpen = useAppStore(state => state.isQrReaderOpen);
   const setIsQrReaderOpen = useAppStore(state => state.setIsQrReaderOpen);
   const setScreen = useAppStore(state => state.setScreen);
+  const router = useRouter();
 
   const handelScanRead = (result: string) => {
     // Remove liveUrl from the result
-    result = result.replace(`${scaffoldConfig.liveUrl}/`, "");
-    const [action, payload] = result.split("#");
-
-    switch (action) {
-      case "send":
-        if (ethers.utils.isAddress(payload)) {
-          setScreen("send", { toAddress: payload });
-          notification.info(
-            <>
-              <p className="mt-0">Address scanned!</p> <Address address={payload} />{" "}
-            </>,
-          );
-        }
-        break;
-      case "mint":
-        setScreen("mint", { nftId: payload });
-        notification.info(
-          <>
-            <p className="my-0">NFT scanned!</p>
-          </>,
-        );
-        break;
-      default:
-        notification.error(`Unknown QR ${action}`);
-    }
+    const code = result.replace(`${scaffoldConfig.liveUrl}/#`, "");
+    redirectToScreenFromCode(code, setScreen, router);
   };
 
   return (

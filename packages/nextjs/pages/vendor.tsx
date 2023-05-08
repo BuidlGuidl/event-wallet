@@ -17,7 +17,7 @@ const Vendor: NextPage = () => {
         {Object.values(NTFS).map((emoji, i) => (
           <div className="flex flex-col items-center justify-center" key={i}>
             <span className="text-8xl mb-10">{emoji}</span>
-            <QRCode size={150} value={`${scaffoldConfig.liveUrl}/mint#${i}`} viewBox="0 0 150 150" />
+            <QRCode size={150} value={`${scaffoldConfig.liveUrl}#mint#${i}`} viewBox="0 0 150 150" />
           </div>
         ))}
       </div>
