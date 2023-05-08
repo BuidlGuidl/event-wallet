@@ -57,10 +57,4 @@ export const redirectToScreenFromCode = (
     default:
       notification.error(`Unknown QR ${action}`);
   }
-
-  // Remove hash from url
-  if (typeof window != "undefined" && window != null) {
-    const urlWithoutHash = window.location.href.split("#")[0];
-    window.history.pushState({}, "", urlWithoutHash);
-  }
 };

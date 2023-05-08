@@ -45,6 +45,13 @@ const Home: NextPage = () => {
   useEffect(() => {
     if (router.asPath === "/") return;
     const code = router.asPath.replace("/#", "");
+
+    // Remove hash from url
+    if (typeof window != "undefined" && window != null) {
+      const urlWithoutHash = window.location.href.split("#")[0];
+      window.history.pushState({}, "", urlWithoutHash);
+    }
+
     redirectToScreenFromCode(code, setScreen, router);
   }, [router]);
 
