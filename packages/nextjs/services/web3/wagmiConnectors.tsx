@@ -11,6 +11,7 @@ import { configureChains } from "wagmi";
 import * as chains from "wagmi/chains";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
+import { isBurnerWalletloaded } from "~~/hooks/scaffold-eth";
 import scaffoldConfig from "~~/scaffold.config";
 import { burnerWalletConfig } from "~~/services/web3/wagmi-burner/burnerWalletConfig";
 import { getTargetNetwork } from "~~/utils/scaffold-eth";
@@ -60,6 +61,9 @@ const wallets = [
 export const wagmiConnectors = connectorsForWallets([
   {
     groupName: "Supported Wallets",
-    wallets: burnerConfig.enabled ? [...wallets, burnerWalletConfig({ chains: [appChains.chains[0]] })] : wallets,
+    wallets:
+      burnerConfig.enabled && isBurnerWalletloaded()
+        ? [...wallets, burnerWalletConfig({ chains: [appChains.chains[0]] })]
+        : wallets,
   },
 ]);

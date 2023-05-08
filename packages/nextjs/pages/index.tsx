@@ -1,4 +1,6 @@
+import { useEffect, useState } from "react";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import type { NextPage } from "next";
 import { useAccount } from "wagmi";
 import { ArrowDownTrayIcon, ClockIcon, HomeIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
@@ -7,9 +9,11 @@ import { AddressMain } from "~~/components/scaffold-eth/AddressMain";
 import { TokenBalance } from "~~/components/scaffold-eth/TokenBalance";
 import { History, Main, Receive, Send } from "~~/components/screens";
 import { Mint } from "~~/components/screens/Mint";
-import { useAutoConnect, useScaffoldContractRead } from "~~/hooks/scaffold-eth";
+import { NotAllowed } from "~~/components/screens/NotAllowed";
+import { isBurnerWalletloaded, useAutoConnect, useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 import scaffoldConfig from "~~/scaffold.config";
 import { useAppStore } from "~~/services/store/store";
+import { redirectToScreenFromCode } from "~~/utils/redirectToScreenFromCode";
 
 const screens = {
   main: <Main />,
@@ -22,6 +26,9 @@ const screens = {
 const Home: NextPage = () => {
   useAutoConnect();
 
+  const router = useRouter();
+  const [isLoadingBurnerWallet, setIsLoadingBurnerWallet] = useState(true);
+
   const screen = useAppStore(state => state.screen);
   const setScreen = useAppStore(state => state.setScreen);
 
@@ -33,6 +40,24 @@ const Home: NextPage = () => {
   });
 
   const screenRender = screens[screen];
+  const isBurnerWalletSet = isBurnerWalletloaded();
+
+  useEffect(() => {
+    if (router.asPath === "/") return;
+    const code = router.asPath.replace("/#", "");
+    redirectToScreenFromCode(code, setScreen, router);
+  }, [router]);
+
+  useEffect(() => {
+    // Check if isBurnerWalletSet is true OR false
+    if (isBurnerWalletSet || isBurnerWalletSet === false) {
+      setIsLoadingBurnerWallet(false);
+    }
+  }, [isBurnerWalletSet]);
+
+  if (!isBurnerWalletSet && !isLoadingBurnerWallet) {
+    return <NotAllowed />;
+  }
 
   return (
     <>
@@ -55,7 +80,7 @@ const Home: NextPage = () => {
             </div>
           </div>
           <div className="flex flex-col gap-2 pt-2">
-            {!isConnected ? (
+            {!isConnected && isLoadingBurnerWallet ? (
               <div className="flex flex-col items-center justify-center my-16">
                 <span className="animate-bounce text-8xl">{scaffoldConfig.tokenEmoji}</span>
               </div>
