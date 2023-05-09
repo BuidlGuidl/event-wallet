@@ -1834,6 +1834,7 @@ __metadata:
     prettier: ^2.8.4
     react: ^18.2.0
     react-blockies: ^1.4.1
+    react-card-flip: ^1.2.0
     react-copy-to-clipboard: ^5.1.0
     react-dom: ^18.2.0
     react-fast-marquee: ^1.3.5
@@ -11145,6 +11146,16 @@ __metadata:
   peerDependencies:
     react: ">=15.0.0"
   checksum: 87139fc2cc682d34ff8633c58ce96f89826cc3127499b623fb1d8c99dd8e1fe21055750a051933ffc500ca9c88aa017930deae963ffc635135c02907e5d75e22
+  languageName: node
+  linkType: hard
+
+"react-card-flip@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "react-card-flip@npm:1.2.0"
+  peerDependencies:
+    react: ^18.2.0
+    react-dom: ^18.2.0
+  checksum: b31747790990da4899bece005538851a1671e06868561a6cf577cc0b49d86dab6fb7dbb80db4cc9713ea3fc4db7d26c6ebc6fb0cdc215220c70f5db8f0d9cd8f
   languageName: node
   linkType: hard
 

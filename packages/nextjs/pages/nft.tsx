@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import QRCode from "react-qr-code";
 import { ASSETS } from "~~/assets";
+import NftAsset from "~~/components/NftAsset";
 import scaffoldConfig from "~~/scaffold.config";
 
 /**
@@ -14,9 +15,11 @@ const Nft: NextPage = () => {
         <p className="text-center text-xl">Mint your NFT</p>
       </div>
       <div className="flex flex-col pt-2 gap-[100px] md:flex-row">
-        {Object.entries(ASSETS).map(([id, info]) => (
+        {Object.keys(ASSETS).map(id => (
           <div className="flex flex-col items-center justify-center" key={id}>
-            <img src={`/assets/${id}.jpg`} alt={`${info.name}`} className="mb-4" />
+            <div className="mb-4">
+              <NftAsset id={id} />
+            </div>
             <QRCode size={150} value={`${scaffoldConfig.liveUrl}/#mint#${id}`} viewBox="0 0 150 150" />
           </div>
         ))}

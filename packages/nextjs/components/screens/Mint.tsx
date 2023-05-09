@@ -1,4 +1,4 @@
-import { ASSETS } from "~~/assets";
+import NftAsset from "~~/components/NftAsset";
 import { useAppStore } from "~~/services/store/store";
 import { notification } from "~~/utils/scaffold-eth";
 
@@ -17,14 +17,9 @@ export const Mint = () => {
     );
   }
 
-  const nft = ASSETS[nftId as keyof typeof ASSETS];
-
   return (
     <div className="flex flex-col gap-2">
-      <div className="text-center">
-        <img src={`/assets/${nftId}.jpg`} alt={`${nft.name}`} className="mb-4" />
-        <span className="text-8xl mb-10"></span>
-      </div>
+      <NftAsset id={nftId} />
       <div>
         <button
           onClick={() => {
