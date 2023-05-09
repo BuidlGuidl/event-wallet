@@ -1,0 +1,28 @@
+import type { NextPage } from "next";
+import QRCode from "react-qr-code";
+import { ASSETS } from "~~/assets";
+import scaffoldConfig from "~~/scaffold.config";
+
+/**
+ * Example vendor page
+ */
+const Nft: NextPage = () => {
+  return (
+    <div className="flex flex-col items-center justify-center py-2">
+      <div className="max-w-96 p-8">
+        <h1 className="text-4xl font-bold">Example Vendor</h1>
+        <p className="text-center text-xl">Mint your NFT</p>
+      </div>
+      <div className="flex flex-col pt-2 gap-[100px] md:flex-row">
+        {Object.entries(ASSETS).map(([id, info]) => (
+          <div className="flex flex-col items-center justify-center" key={id}>
+            <img src={`/assets/${id}.jpg`} alt={`${info.name}`} className="mb-4" />
+            <QRCode size={150} value={`${scaffoldConfig.liveUrl}/#mint#${id}`} viewBox="0 0 150 150" />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default Nft;
