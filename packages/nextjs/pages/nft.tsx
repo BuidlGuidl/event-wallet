@@ -11,7 +11,7 @@ const Nft: NextPage = () => {
   return (
     <div className="flex flex-col items-center justify-center py-2">
       <div className="max-w-96 p-8">
-        <h1 className="text-4xl font-bold">Example Vendor</h1>
+        <h1 className="text-4xl font-bold">Example Talks</h1>
         <p className="text-center text-xl">Mint your NFT</p>
       </div>
       <div className="flex flex-col pt-2 gap-[100px] md:flex-row">
