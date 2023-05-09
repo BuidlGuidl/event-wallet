@@ -1,11 +1,6 @@
+import { ASSETS } from "~~/assets";
 import { useAppStore } from "~~/services/store/store";
 import { notification } from "~~/utils/scaffold-eth";
-
-export const NTFS = {
-  "0": "🦬",
-  "1": "🦓",
-  "2": "🦏",
-};
 
 /**
  * Mint Screen
@@ -14,7 +9,6 @@ export const Mint = () => {
   const payload = useAppStore(state => state.screenPayload);
 
   const nftId = payload?.nftId;
-
   if (nftId === undefined) {
     return (
       <div className="text-center">
@@ -23,10 +17,13 @@ export const Mint = () => {
     );
   }
 
+  const nft = ASSETS[nftId as keyof typeof ASSETS];
+
   return (
     <div className="flex flex-col gap-2">
       <div className="text-center">
-        <span className="text-8xl mb-10">{NTFS[nftId as keyof typeof NTFS]}</span>
+        <img src={`/assets/${nftId}.jpg`} alt={`${nft.name}`} className="mb-4" />
+        <span className="text-8xl mb-10"></span>
       </div>
       <div>
         <button
