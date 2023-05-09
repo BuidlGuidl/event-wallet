@@ -5,7 +5,7 @@ const contracts = {
       chainId: "31337",
       contracts: {
         EventGems: {
-          address: "0x959922bE3CAee4b8Cd9a407cc3ac1C251C2007B1",
+          address: "0xf5059a5D33d5853360D16C683c16e67980206f36",
           abi: [
             {
               inputs: [
@@ -543,7 +543,7 @@ const contracts = {
           ],
         },
         EventSBT: {
-          address: "0x9A9f2CCfdE556A7E9Ff0848998Aa4a0CFD8863AE",
+          address: "0x95401dc811bb5740090279Ba06cfA8fcF6113778",
           abi: [
             {
               inputs: [
@@ -959,6 +959,49 @@ const contracts = {
               inputs: [
                 {
                   internalType: "uint256",
+                  name: "index",
+                  type: "uint256",
+                },
+              ],
+              name: "tokenByIndex",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "owner",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "index",
+                  type: "uint256",
+                },
+              ],
+              name: "tokenOfOwnerByIndex",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "uint256",
                   name: "tokenId",
                   type: "uint256",
                 },
@@ -969,6 +1012,19 @@ const contracts = {
                   internalType: "string",
                   name: "",
                   type: "string",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "totalSupply",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
                 },
               ],
               stateMutability: "view",
