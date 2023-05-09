@@ -17,6 +17,7 @@ export const Mint = () => {
     );
   }
 
+  // ToDo. Check if the NFT is already minted
   return (
     <div className="flex flex-col gap-2">
       <NftAsset id={nftId} />
