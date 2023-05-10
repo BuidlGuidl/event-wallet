@@ -21,7 +21,8 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   const { deployer } = await hre.getNamedAccounts();
   const { deploy } = hre.deployments;
 
-  const ownerAddress = "0x34aA3F359A9D614239015126635CE7732c18fDF3";
+  // const ownerAddress = "0x34aA3F359A9D614239015126635CE7732c18fDF3";
+  const ownerAddress = deployer;
 
   const eventGems = await deploy("EventGems", {
     from: deployer,
@@ -47,7 +48,7 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
 
   await eventGemsContract.grantRole(
     hre.ethers.utils.keccak256(hre.ethers.utils.toUtf8Bytes("MINTER_ROLE")),
-    eventSBT.address
+    eventSBT.address,
   );
 
   await eventGemsContract.transferOwnership(ownerAddress);

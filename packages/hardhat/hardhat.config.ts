@@ -4,6 +4,7 @@ import { HardhatUserConfig, task } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
 import "hardhat-deploy";
 import { airdropGas } from "./scripts/airdropGas";
+import { airdropGems } from "./scripts/airdropGems";
 
 // If not set, it uses ours Alchemy's default API key.
 // You can get your own at https://dashboard.alchemyapi.io
@@ -83,5 +84,9 @@ const config: HardhatUserConfig = {
 task("airdrop-gas", "Airdrop some gas to the accounts in accounts.json")
   .addParam("amount", "The amount to drop")
   .setAction(async taskArgs => airdropGas(taskArgs.amount));
+
+task("airdrop-gems", "Airdrop ERC20 gems to the accounts in accounts.json")
+  .addParam("amount", "The amount of Gems to drop")
+  .setAction(async taskArgs => airdropGems(taskArgs.amount));
 
 export default config;

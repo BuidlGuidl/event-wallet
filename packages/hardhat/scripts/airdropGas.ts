@@ -2,10 +2,6 @@ import * as dotenv from "dotenv";
 dotenv.config();
 import * as fs from "fs";
 
-// hre comes from the hardhat runtime environment (using a task)
-
-import hre from "hardhat";
-
 const readFile = "accounts.json";
 
 /**
