@@ -7,7 +7,7 @@ import { createRequire } from "module";
 
 const require = createRequire(import.meta.url);
 const canvas = createCanvas(300, 300);
-const url = "https://event-wallet.vercel.app/pk#";
+const EVENT_URL = "https://event-wallet.vercel.app/#pk#";
 
 const outputDirectory = "generated";
 
@@ -31,10 +31,11 @@ async function main() {
     wallets[randomWallet.address] = randomWallet.privateKey;
 
     try {
-      const dataUrl = await QRCode.toDataURL(url + randomWallet.privateKey, {
+      const dataUrl = await QRCode.toDataURL(EVENT_URL + randomWallet.privateKey, {
         type: "image/png",
         rendererOpts: { quality: 1 },
       });
+
       const base64Data = dataUrl.replace(/^data:image\/\w+;base64,/, "");
       const buffer = Buffer.from(base64Data, "base64");
 
