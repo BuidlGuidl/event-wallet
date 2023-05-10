@@ -12,7 +12,7 @@ const url = "https://event-wallet.vercel.app/pk#";
 const outputDirectory = "generated";
 
 /**
- * Generate list of new random private key and write it to a json file
+ * Generate list of new random private key, generate PDF for each and write them to a json file
  */
 async function main() {
   // Check if amount argument is provided
