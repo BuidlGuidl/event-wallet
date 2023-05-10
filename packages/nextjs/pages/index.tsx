@@ -21,6 +21,12 @@ const screens = {
   receive: <Receive />,
   history: <History />,
   mint: <Mint />,
+  vendor: (
+    <>
+      <Receive />
+      <History />
+    </>
+  ),
 };
 
 const Home: NextPage = () => {
