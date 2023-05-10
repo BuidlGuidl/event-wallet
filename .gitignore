@@ -1,3 +1,4 @@
+packages/hardhat/generated
 node_modules
 
 # dependencies, yarn, etc
