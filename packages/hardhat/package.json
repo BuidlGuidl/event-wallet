@@ -9,6 +9,7 @@
     "fork": "MAINNET_FORKING_ENABLED=true hardhat node --network hardhat --no-deploy",
     "generate": "hardhat run scripts/generateAccount.ts",
     "generate-multiple": "node scripts/generateAccounts.mjs",
+    "generate-pdfs": "node scripts/generatePdfs.mjs",
     "lint": "eslint --config ./.eslintrc.json --ignore-path ./.eslintignore ./*.ts ./deploy/**/*.ts ./scripts/**/*.ts ./test/**/*.ts",
     "lint-staged": "eslint --config ./.eslintrc.json --ignore-path ./.eslintignore",
     "test": "REPORT_GAS=true hardhat test --network hardhat",
@@ -47,8 +48,10 @@
   "dependencies": {
     "@openzeppelin/contracts": "^4.8.1",
     "@pinata/sdk": "^2.1.0",
+    "canvas": "^2.11.2",
     "dotenv": "^16.0.3",
     "envfile": "^6.18.0",
+    "pdf-lib": "^1.17.1",
     "qrcode": "^1.5.1"
   }
 }
