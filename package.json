@@ -18,6 +18,7 @@
     "generate": "yarn workspace @se-2/hardhat generate",
     "generate-multiple": "yarn workspace @se-2/hardhat generate-multiple",
     "generate-pdfs": "yarn workspace @se-2/hardhat generate-pdfs",
+    "airdrop-gas": "yarn workspace @se-2/hardhat airdrop-gas",
     "hardhat:lint": "yarn workspace @se-2/hardhat lint",
     "hardhat:lint-staged": "yarn workspace @se-2/hardhat lint-staged",
     "hardhat:test": "yarn workspace @se-2/hardhat test",

@@ -10,6 +10,7 @@
     "generate": "hardhat run scripts/generateAccount.ts",
     "generate-multiple": "node scripts/generateAccounts.mjs",
     "generate-pdfs": "node scripts/generatePdfs.mjs",
+    "airdrop-gas": "node scripts/airdropGas.mjs",
     "lint": "eslint --config ./.eslintrc.json --ignore-path ./.eslintignore ./*.ts ./deploy/**/*.ts ./scripts/**/*.ts ./test/**/*.ts",
     "lint-staged": "eslint --config ./.eslintrc.json --ignore-path ./.eslintignore",
     "test": "REPORT_GAS=true hardhat test --network hardhat",
