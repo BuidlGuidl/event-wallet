@@ -1,8 +1,9 @@
 import * as dotenv from "dotenv";
 dotenv.config();
-import { HardhatUserConfig } from "hardhat/config";
+import { HardhatUserConfig, task } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
 import "hardhat-deploy";
+import { airdropGas } from "./scripts/airdropGas";
 
 // If not set, it uses ours Alchemy's default API key.
 // You can get your own at https://dashboard.alchemyapi.io
@@ -78,5 +79,9 @@ const config: HardhatUserConfig = {
     },
   },
 };
+
+task("airdrop-gas", "Airdrop some gas to the accounts in accounts.json")
+  .addParam("amount", "The amount to drop")
+  .setAction(async taskArgs => airdropGas(taskArgs.amount));
 
 export default config;
