@@ -117,7 +117,9 @@ export const History = () => {
 
   return (
     <div className="flex flex-col gap-2">
+      <h2 className="font-bold mt-4 text-xl">Your Gem History</h2>
       <GemHistory events={allTransferEvents} />
+      <h2 className="font-bold mt-4 text-xl">Your NFTs</h2>
       <NftCollection nfts={yourNfts} />
     </div>
   );
