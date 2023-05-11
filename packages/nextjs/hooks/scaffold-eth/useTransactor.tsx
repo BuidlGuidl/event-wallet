@@ -20,7 +20,7 @@ const TxnNotification = ({ message, blockExplorerLink }: { message: string; bloc
       <p className="my-0">{message}</p>
       {blockExplorerLink && blockExplorerLink.length > 0 ? (
         <a href={blockExplorerLink} target="_blank" rel="noreferrer" className="block underline text-md">
-          check out transaction
+          check out the transaction
         </a>
       ) : null}
     </div>
@@ -53,7 +53,7 @@ export const useTransactor = (_signer?: Signer): TTransactionFunc => {
       const provider = signer.provider;
       const network = await provider?.getNetwork();
 
-      notificationId = notification.loading(<TxnNotification message="Awaiting for user confirmation" />);
+      notificationId = notification.loading(<TxnNotification message="Sending transaction" />);
       if (tx instanceof Promise) {
         // Tx is already prepared by the caller
         transactionResponse = await tx;

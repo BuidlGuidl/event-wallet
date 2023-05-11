@@ -1,9 +1,8 @@
-import NftAsset from "~~/components/NftAsset";
-import { useAppStore } from "~~/services/store/store";
-import { notification } from "~~/utils/scaffold-eth";
-import { useAccount } from "wagmi";
-import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 import { BigNumber } from "ethers";
+import { useAccount } from "wagmi";
+import NftAsset from "~~/components/NftAsset";
+import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
+import { useAppStore } from "~~/services/store/store";
 
 /**
  * Mint Screen
@@ -19,9 +18,6 @@ export const Mint = () => {
     contractName: "EventSBT",
     functionName: "mint",
     args: [address, BigNumber.from(nftId)],
-    onSuccess() {
-      notification.success("Minted!");
-    }
   });
 
   if (nftId === undefined) {
@@ -37,11 +33,7 @@ export const Mint = () => {
     <div className="flex flex-col gap-2">
       <NftAsset id={nftId} />
       <div>
-        <button
-          onClick={writeAsync}
-          className="btn btn-primary w-full mt-4"
-          disabled={isLoading}
-        >
+        <button onClick={writeAsync} className="btn btn-primary w-full mt-4" disabled={isLoading}>
           Mint
         </button>
       </div>
