@@ -11,6 +11,7 @@ export const redirectToScreenFromCode = (
   code: string,
   setScreen: (action: TWalletScreens, payload?: TScreenPayload | null | undefined) => void,
   router: NextRouter,
+  reload = true,
 ) => {
   // Remove liveUrl from the result
   const [action, payload] = code.split("#");
@@ -52,7 +53,7 @@ export const redirectToScreenFromCode = (
       );
       setScreen("main");
       // ToDo. Find a better way to reload the wallet.
-      router.reload();
+      if (reload) router.reload();
       break;
     default:
       notification.error(`Unknown QR ${action}`);
