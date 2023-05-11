@@ -3,11 +3,11 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import type { NextPage } from "next";
 import { useAccount } from "wagmi";
-import { ArrowDownTrayIcon, ClockIcon, HomeIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
+import { ArrowDownTrayIcon, HomeIcon, PaperAirplaneIcon, PhotoIcon } from "@heroicons/react/24/outline";
 import { Balance, FaucetButton } from "~~/components/scaffold-eth";
 import { AddressMain } from "~~/components/scaffold-eth/AddressMain";
 import { TokenBalance } from "~~/components/scaffold-eth/TokenBalance";
-import { History, Main, Receive, Send } from "~~/components/screens";
+import { Collectibles, Main, Receive, Send } from "~~/components/screens";
 import { Mint } from "~~/components/screens/Mint";
 import { NotAllowed } from "~~/components/screens/NotAllowed";
 import { isBurnerWalletloaded, useAutoConnect, useScaffoldContractRead } from "~~/hooks/scaffold-eth";
@@ -19,7 +19,7 @@ const screens = {
   main: <Main />,
   send: <Send />,
   receive: <Receive />,
-  history: <History />,
+  collectibles: <Collectibles />,
   mint: <Mint />,
 };
 
@@ -117,10 +117,12 @@ const Home: NextPage = () => {
                     <PaperAirplaneIcon className="w-8" />
                   </button>
                   <button
-                    className={`${screen === "history" ? "bg-primary" : "bg-secondary"} text-white rounded-full p-3`}
-                    onClick={() => setScreen("history")}
+                    className={`${
+                      screen === "collectibles" ? "bg-primary" : "bg-secondary"
+                    } text-white rounded-full p-3`}
+                    onClick={() => setScreen("collectibles")}
                   >
-                    <ClockIcon className="w-8" />
+                    <PhotoIcon className="w-8" />
                   </button>
                 </div>
               </>

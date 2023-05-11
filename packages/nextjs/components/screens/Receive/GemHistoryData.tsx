@@ -1,9 +1,9 @@
-import { EventRow } from "~~/components/screens/History/EventRow";
+import { EventRow } from "~~/components/screens/Receive/EventRow";
 
 /**
  * Show all the gems transfers
  */
-export const GemHistory = ({ events }: { events: any[] }) => {
+export const GemHistoryData = ({ events }: { events: any[] }) => {
   if (events.length === 0) {
     return (
       <div>

@@ -1,40 +1,16 @@
 import { useEffect, useState } from "react";
 import { BigNumber } from "ethers";
-import { useAccount, useBlockNumber } from "wagmi";
+import { useAccount } from "wagmi";
 import { ASSETS } from "~~/assets";
-import { GemHistory } from "~~/components/screens/History/GemHistory";
-import { NftCollection } from "~~/components/screens/History/NftCollection";
-import { useScaffoldContract, useScaffoldContractRead, useScaffoldEventHistory } from "~~/hooks/scaffold-eth";
+import { NftCollection } from "~~/components/screens/Collectibles/NftCollection";
+import { useScaffoldContract, useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 import untypedMetadataHashes from "~~/metadataHashes.json";
 
 /**
  * History Screen
  */
-export const History = () => {
-  const { data: blockNumber } = useBlockNumber();
+export const Collectibles = () => {
   const { address } = useAccount();
-
-  // Starting block to fetch events from
-  // NEXT_PUBLIC_DEPLOY_BLOCK > blockNumber - 1000 > 0
-  const fromBlock = process.env.NEXT_PUBLIC_DEPLOY_BLOCK
-    ? Number(process.env.NEXT_PUBLIC_DEPLOY_BLOCK)
-    : blockNumber
-    ? blockNumber - 1000
-    : 0;
-
-  const { data: outboundTransferEvents, isLoading: isLoadingOutBoundTransferEvents } = useScaffoldEventHistory({
-    contractName: "EventGems",
-    eventName: "Transfer",
-    fromBlock,
-    filters: { from: address },
-  });
-
-  const { data: inboundTransferEvents, isLoading: isLoadingInboundTransferEvents } = useScaffoldEventHistory({
-    contractName: "EventGems",
-    eventName: "Transfer",
-    fromBlock,
-    filters: { to: address },
-  });
 
   type MetadataHashes = {
     [key: string]: string;
@@ -94,31 +70,23 @@ export const History = () => {
       }
       console.log("nfUpdate: ", nftUpdate);
       setYourNfts(nftUpdate.reverse());
-      setIsLoadingNfts(false);
+      if (nftContract && balance) setIsLoadingNfts(false);
     };
     updateYourNfts();
   }, [address, balance, nftContract]);
 
-  if (isLoadingOutBoundTransferEvents || isLoadingInboundTransferEvents || isLoadingNfts) {
+  if (isLoadingNfts) {
     return (
       <div className="text-center">
         <p className="font-bold">
-          Loading history<span className=" loading-dots">...</span>
+          Loading collectibles<span className=" loading-dots">...</span>
         </p>
       </div>
     );
   }
 
-  let allTransferEvents: any[] = [];
-  if (outboundTransferEvents && inboundTransferEvents) {
-    allTransferEvents = outboundTransferEvents.concat(inboundTransferEvents);
-    allTransferEvents.sort((a, b) => b.log.blockNumber - a.log.blockNumber);
-  }
-
   return (
     <div className="flex flex-col gap-2">
-      <h2 className="font-bold mt-4 text-xl">Your Gem History</h2>
-      <GemHistory events={allTransferEvents} />
       <h2 className="font-bold mt-4 text-xl">Your NFTs</h2>
       <NftCollection nfts={yourNfts} />
     </div>

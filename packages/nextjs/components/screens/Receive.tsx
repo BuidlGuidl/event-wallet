@@ -1,6 +1,7 @@
 import QRCode from "react-qr-code";
 import { useAccount } from "wagmi";
 import { Address } from "~~/components/scaffold-eth";
+import { GemHistory } from "~~/components/screens/Receive/GemsHistory";
 import scaffoldConfig from "~~/scaffold.config";
 
 /**
@@ -21,6 +22,10 @@ export const Receive = () => {
       )}
       <div className="mt-4">
         <Address address={address} />
+      </div>
+
+      <div className="mt-4 w-full">
+        <GemHistory />
       </div>
     </div>
   );
