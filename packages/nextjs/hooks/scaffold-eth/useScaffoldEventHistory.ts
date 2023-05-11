@@ -44,7 +44,8 @@ export const useScaffoldEventHistory = <
 
   const contract = useContract({
     address: deployedContractData?.address,
-    abi: deployedContractData?.abi,
+    // @ts-ignore. Seems like an error. I'll open an issue on SE-2
+    abi: 2,
     signerOrProvider: provider,
   });
 

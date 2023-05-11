@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";
-import { useAccount, useBlockNumber } from "wagmi";
-import { EventRow } from "~~/components/screens/History/EventRow";
-import { useScaffoldEventHistory, useScaffoldContractRead, useScaffoldContract } from "~~/hooks/scaffold-eth";
-import untypedMetadataHashes from "~~/metadataHashes.json";
-import { ASSETS } from "~~/assets";
+import { useEffect, useState } from "react";
 import { BigNumber } from "ethers";
+import { useAccount, useBlockNumber } from "wagmi";
+import { ASSETS } from "~~/assets";
+import { GemHistory } from "~~/components/screens/History/GemHistory";
+import { NftCollection } from "~~/components/screens/History/NftCollection";
+import { useScaffoldContract, useScaffoldContractRead, useScaffoldEventHistory } from "~~/hooks/scaffold-eth";
+import untypedMetadataHashes from "~~/metadataHashes.json";
 
 /**
  * History Screen
@@ -18,8 +19,8 @@ export const History = () => {
   const fromBlock = process.env.NEXT_PUBLIC_DEPLOY_BLOCK
     ? Number(process.env.NEXT_PUBLIC_DEPLOY_BLOCK)
     : blockNumber
-      ? blockNumber - 1000
-      : 0;
+    ? blockNumber - 1000
+    : 0;
 
   const { data: outboundTransferEvents, isLoading: isLoadingOutBoundTransferEvents } = useScaffoldEventHistory({
     contractName: "EventGems",
@@ -36,8 +37,8 @@ export const History = () => {
   });
 
   type MetadataHashes = {
-    [key: string]: string
-  }
+    [key: string]: string;
+  };
 
   type Nft = {
     id: BigNumber;
@@ -63,7 +64,7 @@ export const History = () => {
     const updateYourNfts = async () => {
       setIsLoadingNfts(true);
       const nftUpdate: Nft[] = [];
-      const metadataHashes: MetadataHashes = untypedMetadataHashes
+      const metadataHashes: MetadataHashes = untypedMetadataHashes;
       if (nftContract && balance && balance.toNumber && balance.toNumber() > 0) {
         for (let tokenIndex = 0; tokenIndex < balance.toNumber(); tokenIndex++) {
           try {
@@ -76,7 +77,14 @@ export const History = () => {
             const tokenType = metadataHashes[hash];
             const nftData = ASSETS[tokenType as keyof typeof ASSETS];
 
-            const nft: Nft = { id: tokenId, uri: tokenURI, owner: address!, tokenType: tokenType, name: nftData.name, talk: nftData.talk };
+            const nft: Nft = {
+              id: tokenId,
+              uri: tokenURI,
+              owner: address!,
+              tokenType: tokenType,
+              name: nftData.name,
+              talk: nftData.talk,
+            };
 
             nftUpdate.push(nft);
           } catch (e) {
@@ -91,7 +99,7 @@ export const History = () => {
     updateYourNfts();
   }, [address, balance, nftContract]);
 
-  if (isLoadingOutBoundTransferEvents || isLoadingInboundTransferEvents) {
+  if (isLoadingOutBoundTransferEvents || isLoadingInboundTransferEvents || isLoadingNfts) {
     return (
       <div className="text-center">
         <p className="font-bold">
@@ -107,22 +115,10 @@ export const History = () => {
     allTransferEvents.sort((a, b) => b.log.blockNumber - a.log.blockNumber);
   }
 
-  if (allTransferEvents.length === 0) {
-    return (
-      <div className="text-center">
-        <p className="font-bold">No history yet</p>
-      </div>
-    );
-  }
-
   return (
     <div className="flex flex-col gap-2">
-      {allTransferEvents.map(event => (
-        <EventRow key={event.log.blockhash} event={event} />
-      ))}
-      {isLoadingNfts ? <div className="text-center">Loading NFTs<span className=" loading-dots">...</span></div> : yourNfts.map(nft => (
-        <img key={nft.tokenType} src={`/assets/nfts/${nft.tokenType}.jpg`} alt={`${nft.name} - ${nft.talk}`} />
-      ))}
+      <GemHistory events={allTransferEvents} />
+      <NftCollection nfts={yourNfts} />
     </div>
   );
 };
