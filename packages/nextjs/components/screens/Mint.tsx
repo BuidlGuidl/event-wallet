@@ -1,6 +1,9 @@
 import NftAsset from "~~/components/NftAsset";
 import { useAppStore } from "~~/services/store/store";
 import { notification } from "~~/utils/scaffold-eth";
+import { useAccount } from "wagmi";
+import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
+import { BigNumber } from "ethers";
 
 /**
  * Mint Screen
@@ -8,7 +11,19 @@ import { notification } from "~~/utils/scaffold-eth";
 export const Mint = () => {
   const payload = useAppStore(state => state.screenPayload);
 
+  const { address } = useAccount();
+
   const nftId = payload?.nftId;
+
+  const { writeAsync, isLoading } = useScaffoldContractWrite({
+    contractName: "EventSBT",
+    functionName: "mint",
+    args: [address, BigNumber.from(nftId)],
+    onSuccess() {
+      notification.success("Minted!");
+    }
+  });
+
   if (nftId === undefined) {
     return (
       <div className="text-center">
@@ -23,10 +38,9 @@ export const Mint = () => {
       <NftAsset id={nftId} />
       <div>
         <button
-          onClick={() => {
-            notification.info("Not implemented yet :)");
-          }}
+          onClick={writeAsync}
           className="btn btn-primary w-full mt-4"
+          disabled={isLoading}
         >
           Mint
         </button>

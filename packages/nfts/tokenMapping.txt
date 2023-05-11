@@ -1,0 +1,3 @@
+_tokenMappings[1122334455] = "QmdTKH3zGFEWwui67upHXB2VmCvMVT44ecWtifBTsSXvo2";
+_tokenMappings[3453465376] = "QmasCi84LAbmJF6vvp1uudK49f3Ur8iw6m8WR2Uky8LTKq";
+_tokenMappings[19273198273] = "QmPTEqnw1NYDqxpr7A89Br5bvBaiZbYNu96rYNXm6ZNmo9";

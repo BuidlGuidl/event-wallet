@@ -1,46 +1,46 @@
 [
   {
-    "name": "Austin Griffith at EDCON: SpeedRunEthereum",
-    "description": "Austin Griffith at EDCON: SpeedRunEthereum",
-    "image": "ipfs://Qmc2oe8VqNUvqDpiYTf5BnSZKe9ywsb33DjyFeXYf8kmCK",
+    "name": "Balaji Srinivasan at EDCON: Talk Title",
+    "description": "Balaji Srinivasan at EDCON: Talk Title",
+    "image": "ipfs://QmfZUeg9KDDYvECo38p4mBPLhpH6bnCanqTZcwPNUMET3E",
     "attributes": [
       {
         "trait_type": "speaker",
-        "value": "Austin Griffith"
+        "value": "Balaji Srinivasan"
       },
       {
         "trait_type": "talk",
-        "value": "SpeedRunEthereum"
+        "value": "Talk Title"
       }
     ]
   },
   {
-    "name": "Carlos Sánchez at EDCON: Scaffold-ETH 2",
-    "description": "Carlos Sánchez at EDCON: Scaffold-ETH 2",
-    "image": "ipfs://QmTn7FscBs9CnwugQsmre2nMyUKbAW51V834UGsMXAfHUV",
+    "name": "Skylar Weaver at EDCON: Talk Title",
+    "description": "Skylar Weaver at EDCON: Talk Title",
+    "image": "ipfs://QmRysg2P11xGcdFBSohT4wW7xRF1kqiy3Q7C5bbMbwaMB7",
     "attributes": [
       {
         "trait_type": "speaker",
-        "value": "Carlos Sánchez"
+        "value": "Skylar Weaver"
       },
       {
         "trait_type": "talk",
-        "value": "Scaffold-ETH 2"
+        "value": "Talk Title"
       }
     ]
   },
   {
-    "name": "Damian Martinelli at EDCON: NFTs SVG",
-    "description": "Damian Martinelli at EDCON: NFTs SVG",
-    "image": "ipfs://Qmf6jodcsBroKkbsxiN4evBeRaQoLBXWzQxAFSiog3ZVD9",
+    "name": "Vitalik Buterin at EDCON: The Future of Ethereum",
+    "description": "Vitalik Buterin at EDCON: The Future of Ethereum",
+    "image": "ipfs://QmXkwZ9kUvBduWh7oCAgav35fYGEaGjnmtWsQHuK962noQ",
     "attributes": [
       {
         "trait_type": "speaker",
-        "value": "Damian Martinelli"
+        "value": "Vitalik Buterin"
       },
       {
         "trait_type": "talk",
-        "value": "NFTs SVG"
+        "value": "The Future of Ethereum"
       }
     ]
   }
