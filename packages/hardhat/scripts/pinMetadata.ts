@@ -2,7 +2,6 @@ import * as dotenv from "dotenv";
 dotenv.config();
 import pinataSDK from "@pinata/sdk";
 import * as fs from "fs";
-// import dataJson from "../../nfts/data.json" assert { type: "json" };
 import { ASSETS } from "../../nextjs/assets";
 
 async function main() {
@@ -15,8 +14,6 @@ async function main() {
 
 	const pinata = new pinataSDK({ pinataJWTKey: pinataJWTKey });
 	const imagesDirname = "../nextjs/public/assets/nfts/";
-
-	// console.log("dataJson: ", dataJson);
 
 	pinata.testAuthentication().then(async (result) => {
 		//handle successful authentication here
