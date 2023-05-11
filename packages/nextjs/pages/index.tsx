@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import Head from "next/head";
-import { useRouter } from "next/router";
 import type { NextPage } from "next";
 import { useAccount } from "wagmi";
 import { ArrowDownTrayIcon, HomeIcon, PaperAirplaneIcon, PhotoIcon } from "@heroicons/react/24/outline";
@@ -13,7 +12,6 @@ import { NotAllowed } from "~~/components/screens/NotAllowed";
 import { isBurnerWalletloaded, useAutoConnect, useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 import scaffoldConfig from "~~/scaffold.config";
 import { useAppStore } from "~~/services/store/store";
-import { redirectToScreenFromCode } from "~~/utils/redirectToScreenFromCode";
 
 const screens = {
   main: <Main />,
@@ -26,7 +24,6 @@ const screens = {
 const Home: NextPage = () => {
   useAutoConnect();
 
-  const router = useRouter();
   const [isLoadingBurnerWallet, setIsLoadingBurnerWallet] = useState(true);
 
   const screen = useAppStore(state => state.screen);
@@ -41,19 +38,6 @@ const Home: NextPage = () => {
 
   const screenRender = screens[screen];
   const isBurnerWalletSet = isBurnerWalletloaded();
-
-  useEffect(() => {
-    if (router.asPath === "/") return;
-    const code = router.asPath.replace("/#", "");
-
-    // Remove hash from url
-    if (typeof window != "undefined" && window != null) {
-      const urlWithoutHash = window.location.href.split("#")[0];
-      window.history.pushState({}, "", urlWithoutHash);
-    }
-
-    redirectToScreenFromCode(code, setScreen, router);
-  }, [router]);
 
   useEffect(() => {
     // Check if isBurnerWalletSet is true OR false

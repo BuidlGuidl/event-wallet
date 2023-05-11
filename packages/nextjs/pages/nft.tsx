@@ -20,7 +20,7 @@ const Nft: NextPage = () => {
             <div className="mb-4">
               <NftAsset id={id} />
             </div>
-            <QRCode size={150} value={`${scaffoldConfig.liveUrl}/#mint#${id}`} viewBox="0 0 150 150" />
+            <QRCode size={150} value={`${scaffoldConfig.liveUrl}/mint#${id}`} viewBox="0 0 150 150" />
           </div>
         ))}
       </div>
