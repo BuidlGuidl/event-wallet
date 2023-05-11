@@ -31,7 +31,7 @@ export const useScaffoldContractRead = <
     chainId: getTargetNetwork().id,
     functionName,
     address: deployedContract?.address,
-    abi: 2,
+    abi: deployedContract?.abi,
     watch: true,
     args,
     ...(readConfig as any),
