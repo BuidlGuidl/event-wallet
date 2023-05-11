@@ -22,9 +22,9 @@ contract EventSBT is ERC721Enumerable, Ownable {
   // Constructor: Called once on contract deployment
   // Check packages/hardhat/deploy/00_deploy_your_contract.ts
   constructor(address _owner, address gemAddress) ERC721("EventSBT", "ESBT") {
-    _tokenMappings[19273198273] = "QmebGFqdLR4C4ZzeAA2tWxQW5jgqq6frhiusfZsv4kr8zy";
-    _tokenMappings[3453465376] = "QmUFw1rVNBUhfB5fPMgBxXnveaPirkej5s44w1QczTYWui";
-    _tokenMappings[1122334455] = "QmNXbXkZyFwEuvZDCmtMAPrX6Kx3hnfW6KEJJg3rUvUE7x";
+    _tokenMappings[1122334455] = "QmdTKH3zGFEWwui67upHXB2VmCvMVT44ecWtifBTsSXvo2";
+    _tokenMappings[3453465376] = "QmasCi84LAbmJF6vvp1uudK49f3Ur8iw6m8WR2Uky8LTKq";
+    _tokenMappings[19273198273] = "QmPTEqnw1NYDqxpr7A89Br5bvBaiZbYNu96rYNXm6ZNmo9";
 
     transferOwnership(_owner);
     eventGemsContract = EventGemsContract(gemAddress);

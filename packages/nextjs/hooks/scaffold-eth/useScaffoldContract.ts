@@ -21,6 +21,7 @@ export const useScaffoldContract = <TContractName extends ContractName>({
 
   const contract = useContract({
     address: deployedContractData?.address,
+    // @ts-ignore. Seems like an error. I'll open an issue on SE-2
     abi: deployedContractData?.abi,
     signerOrProvider: signerOrProvider === undefined ? provider : signerOrProvider,
   });

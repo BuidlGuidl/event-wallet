@@ -1,14 +1,17 @@
 export const ASSETS = {
-  "1": {
+  "19273198273": {
     name: "Vitalik Buterin",
+    talk: "The Future of Ethereum",
     description: "Description",
   },
-  "7": {
+  "3453465376": {
     name: "Skylar Weaver",
+    talk: "Talk Title",
     description: "Description",
   },
-  "9": {
+  "1122334455": {
     name: "Balaji Srinivasan",
+    talk: "Talk Title",
     description: "Description",
   },
 };
