@@ -16,7 +16,7 @@ export const Receive = () => {
         <QRCode
           size={256}
           style={{ height: "auto", maxWidth: "100%", width: "100%" }}
-          value={`${scaffoldConfig.liveUrl}/#send#${address}`}
+          value={`${scaffoldConfig.liveUrl}/send#${address}`}
           viewBox={`0 0 256 256`}
         />
       )}

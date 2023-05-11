@@ -7,7 +7,7 @@ import { createRequire } from "module";
 
 const require = createRequire(import.meta.url);
 const canvas = createCanvas(300, 300);
-const EVENT_URL = "https://event-wallet.vercel.app/#pk#";
+const EVENT_URL = "https://event-wallet.vercel.app/pk#";
 
 const outputDirectory = "generated";
 

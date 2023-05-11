@@ -15,7 +15,7 @@ const QrCodeReader = () => {
 
   const handelScanRead = (result: string) => {
     // Remove liveUrl from the result
-    const code = result.replace(`${scaffoldConfig.liveUrl}/#`, "");
+    const code = result.replace(`${scaffoldConfig.liveUrl}/`, "");
     redirectToScreenFromCode(code, setScreen, router);
   };
 
