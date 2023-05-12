@@ -13,7 +13,7 @@ const QrCodeReader = () => {
   const setScreen = useAppStore(state => state.setScreen);
   const router = useRouter();
 
-  const handelScanRead = (result: string) => {
+  const handleScanRead = (result: string) => {
     // Remove liveUrl from the result
     const code = result.replace(`${scaffoldConfig.liveUrl}/`, "");
     redirectToScreenFromCode(code, setScreen, router);
@@ -28,7 +28,7 @@ const QrCodeReader = () => {
             onScan={(result: string) => {
               if (!!result) {
                 console.info("Scan result", result);
-                handelScanRead(result);
+                handleScanRead(result);
                 setIsQrReaderOpen(false);
               }
             }}
