@@ -12,11 +12,11 @@ export const EventRow = ({ eventData }: { eventData: any }) => {
         <div className="text-2xl">{scaffoldConfig.tokenEmoji}</div>
         <div className="flex flex-col">
           <span>
-            you <span className="font-bold">received</span> {ethers.utils.formatEther(eventData.value || "0")}
+            you <span className="font-bold">sent</span> {ethers.utils.formatEther(eventData.value || "0")}
           </span>
           <div className="flex gap-2">
-            from
-            <Address address={eventData.from} disableAddressLink={true} />
+            to
+            <Address address={eventData.to} disableAddressLink={true} />
           </div>
         </div>
       </div>

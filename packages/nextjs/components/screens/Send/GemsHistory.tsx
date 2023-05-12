@@ -17,7 +17,7 @@ export const GemHistory = () => {
     value: BigNumber;
   };
 
-  const [newInboundTransferEvents, setNewInboundTransferEvents] = useState<EventData[]>([]);
+  const [newOutboundTransferEvents, setNewOutboundTransferEvents] = useState<EventData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   // Starting block to fetch events from
@@ -28,11 +28,11 @@ export const GemHistory = () => {
     ? blockNumber - 1000
     : 0;
 
-  const { data: inboundTransferEvents, isLoading: isLoadingInboundTransferEvents } = useScaffoldEventHistory({
+  const { data: outboundTransferEvents, isLoading: isLoadingOutboundTransferEvents } = useScaffoldEventHistory({
     contractName: "EventGems",
     eventName: "Transfer",
     fromBlock,
-    filters: { to: address },
+    filters: { from: address },
   });
 
   useScaffoldEventSubscriber({
@@ -40,24 +40,24 @@ export const GemHistory = () => {
     eventName: "Transfer",
     listener: (from, to, value) => {
       console.log("New Transfer: ", from, to, value);
-      if (to.toLowerCase() === address?.toLowerCase()) {
-        setNewInboundTransferEvents(prevState => [{ from, to, value }, ...prevState]);
+      if (from.toLowerCase() === address?.toLowerCase()) {
+        setNewOutboundTransferEvents(prevState => [{ from, to, value }, ...prevState]);
       }
     },
   });
 
   useEffect(() => {
-    if (!isLoadingInboundTransferEvents && inboundTransferEvents) {
+    if (!isLoadingOutboundTransferEvents && outboundTransferEvents) {
       const events: EventData[] = [];
-      for (let i = 0; i < inboundTransferEvents.length; i++) {
-        const event = inboundTransferEvents[i];
+      for (let i = 0; i < outboundTransferEvents.length; i++) {
+        const event = outboundTransferEvents[i];
         const eventData = event.args;
         events.push({ from: eventData.from, to: eventData.to, value: eventData.value });
       }
-      setNewInboundTransferEvents(events);
+      setNewOutboundTransferEvents(events);
       setIsLoading(false);
     }
-  }, [address, isLoadingInboundTransferEvents]);
+  }, [address, isLoadingOutboundTransferEvents]);
 
   if (isLoading) {
     return (
@@ -71,8 +71,8 @@ export const GemHistory = () => {
 
   return (
     <div className="flex flex-col gap-2">
-      <h2 className="font-bold mt-4 text-xl">Gem Received</h2>
-      <GemHistoryData events={newInboundTransferEvents} />
+      <h2 className="font-bold mt-4 text-xl">Gem Sent</h2>
+      <GemHistoryData events={newOutboundTransferEvents} />
     </div>
   );
 };

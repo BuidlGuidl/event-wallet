@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import { AddressInput, InputBase } from "~~/components/scaffold-eth";
+import { GemHistory } from "~~/components/screens/Send/GemsHistory";
 import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 import { useAppStore } from "~~/services/store/store";
 
@@ -44,6 +45,9 @@ export const Send = () => {
           <PaperAirplaneIcon className="h-5 w-5 mr-2" aria-hidden="true" />
           Send
         </button>
+      </div>
+      <div className="mt-4 w-full">
+        <GemHistory />
       </div>
     </div>
   );

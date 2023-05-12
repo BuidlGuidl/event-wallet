@@ -1,4 +1,4 @@
-import { EventRow } from "~~/components/screens/Receive/EventRow";
+import { EventRow } from "~~/components/screens/Send/EventRow";
 
 /**
  * Show all the gems transfers
