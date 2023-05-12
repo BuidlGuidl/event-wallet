@@ -15,7 +15,7 @@ export const GemHistoryData = ({ events }: { events: any[] }) => {
   return (
     <>
       {events.map((eventData, index) => (
-        <EventRow key={index} eventData={eventData} />
+        <EventRow eventData={eventData} key={JSON.stringify(events[0]) + index} />
       ))}
     </>
   );

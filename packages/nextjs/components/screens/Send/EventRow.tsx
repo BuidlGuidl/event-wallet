@@ -7,7 +7,7 @@ import scaffoldConfig from "~~/scaffold.config";
  */
 export const EventRow = ({ eventData }: { eventData: any }) => {
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 animate-fadeIn">
       <div className="flex gap-2 mb-4 items-center">
         <div className="text-2xl">{scaffoldConfig.tokenEmoji}</div>
         <div className="flex flex-col">
