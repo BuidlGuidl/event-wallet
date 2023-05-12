@@ -40,17 +40,17 @@ export const GemHistory = () => {
     eventName: "Transfer",
     listener: (from, to, value) => {
       console.log("New Transfer: ", from, to, value);
-      if (to.toLowerCase() === address!.toLowerCase()) {
-        setNewInboundTransferEvents([{ from, to, value }, ...newInboundTransferEvents]);
+      if (to.toLowerCase() === address?.toLowerCase()) {
+        setNewInboundTransferEvents(prevState => [{ from, to, value }, ...prevState]);
       }
     },
   });
 
   useEffect(() => {
-    if (!isLoadingInboundTransferEvents) {
+    if (!isLoadingInboundTransferEvents && inboundTransferEvents) {
       const events: EventData[] = [];
-      for (let i = 0; i < inboundTransferEvents!.length; i++) {
-        const event = inboundTransferEvents![i];
+      for (let i = 0; i < inboundTransferEvents.length; i++) {
+        const event = inboundTransferEvents[i];
         const eventData = event.args;
         events.push({ from: eventData.from, to: eventData.to, value: eventData.value });
       }
