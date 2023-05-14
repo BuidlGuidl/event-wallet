@@ -66,7 +66,10 @@ const Home: NextPage = () => {
           />
           <div className="absolute top-0 right-0 m-5">
             <div className="flex items-center">
-              <Balance address={address} />
+              <div className="flex items-center">
+                <Balance className="pr-1" address={address} />
+                <span className="text-sm">⛽</span>
+              </div>
               <FaucetButton />
             </div>
           </div>

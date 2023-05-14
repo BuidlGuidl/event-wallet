@@ -27,7 +27,7 @@ type TAppStore = {
 };
 
 export const useAppStore = create<TAppStore>(set => ({
-  ethPrice: 0,
+  ethPrice: 1,
   setEthPrice: (newValue: number): void => set(() => ({ ethPrice: newValue })),
   isQrReaderOpen: false,
   setIsQrReaderOpen: (newValue: boolean): void => set(() => ({ isQrReaderOpen: newValue })),

@@ -36,7 +36,7 @@ export const Balance = ({ address, className = "" }: TBalanceProps) => {
       onClick={onToggleBalance}
     >
       <div className="w-full flex items-center justify-center">
-        {isEthBalance ? (
+        {isEthBalance && price !== 1 ? (
           <>
             <span>{balance?.toFixed(4)}</span>
             <span className="text-xs font-bold ml-1">ETH</span>
@@ -44,7 +44,7 @@ export const Balance = ({ address, className = "" }: TBalanceProps) => {
         ) : (
           <>
             <span className="text-xs font-bold mr-1">$</span>
-            <span>{(balance * price).toFixed(2)}</span>
+            <span>{(balance * price).toFixed(4)}</span>
           </>
         )}
       </div>
