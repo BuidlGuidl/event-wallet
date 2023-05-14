@@ -41,6 +41,10 @@ const config: HardhatUserConfig = {
       url: `https://rpc.gnosischain.com`,
       accounts: [deployerPrivateKey],
     },
+    chiado: {
+      url: `https://rpc.chiadochain.net`,
+      accounts: [deployerPrivateKey],
+    },
     sepolia: {
       url: `https://eth-sepolia.g.alchemy.com/v2/${providerApiKey}`,
       accounts: [deployerPrivateKey],
