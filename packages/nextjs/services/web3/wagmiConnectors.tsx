@@ -10,6 +10,7 @@ import {
 import { configureChains } from "wagmi";
 import * as chains from "wagmi/chains";
 import { alchemyProvider } from "wagmi/providers/alchemy";
+import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
 import { publicProvider } from "wagmi/providers/public";
 import { isBurnerWalletloaded } from "~~/hooks/scaffold-eth";
 import scaffoldConfig from "~~/scaffold.config";
@@ -29,6 +30,11 @@ const enabledChains =
 export const appChains = configureChains(
   enabledChains,
   [
+    jsonRpcProvider({
+      rpc: () => ({
+        http: "https://rpc.eu-central-2.gateway.fm/v4/gnosis/archival/chiado?apiKey=KLZPKPNVNPxw_z3D6WQNok55xFYkaTny.gbOfR6tiBQCjkRlM",
+      }),
+    }),
     alchemyProvider({
       apiKey: scaffoldConfig.alchemyApiKey,
       priority: 0,
