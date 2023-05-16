@@ -15,14 +15,10 @@ type TTransactionFunc = (
  * Custom notification content for TXs.
  */
 const TxnNotification = ({ message, blockExplorerLink }: { message: string; blockExplorerLink?: string }) => {
+  console.log("blockExplorerLink", blockExplorerLink);
   return (
     <div className={`flex flex-col ml-1 cursor-default`}>
       <p className="my-0">{message}</p>
-      {blockExplorerLink && blockExplorerLink.length > 0 ? (
-        <a href={blockExplorerLink} target="_blank" rel="noreferrer" className="block underline text-md">
-          check out the transaction
-        </a>
-      ) : null}
     </div>
   );
 };

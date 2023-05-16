@@ -81,7 +81,7 @@ const Home: NextPage = () => {
             ) : (
               <>
                 <div className="flex flex-col items-center mb-6 gap-4">
-                  <AddressMain address={address} />
+                  <AddressMain address={address} disableAddressLink={true} />
                   <TokenBalance amount={balance} />
                 </div>
                 <div className="flex gap-6 justify-center mb-8">

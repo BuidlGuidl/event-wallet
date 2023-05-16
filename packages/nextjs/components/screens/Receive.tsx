@@ -21,7 +21,7 @@ export const Receive = () => {
         />
       )}
       <div className="mt-4">
-        <Address address={address} />
+        <Address address={address} disableAddressLink={true} />
       </div>
 
       <div className="mt-4 w-full">
