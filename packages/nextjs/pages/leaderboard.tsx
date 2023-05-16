@@ -59,7 +59,7 @@ const Leaderboard: NextPage = () => {
           leaderboardData.push({ address, nftCount, balance });
         }
         leaderboardData = leaderboardData.sort((a, b) =>
-          a.nftCount === b.nftCount ? b.balance.toNumber() - a.balance.toNumber() : b.nftCount - a.nftCount,
+          a.nftCount === b.nftCount ? (b.balance.gte(a.balance) ? 1 : -1) : b.nftCount - a.nftCount,
         );
         setLeaderboard(leaderboardData);
         setIsLoading(false);
