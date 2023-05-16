@@ -22,7 +22,7 @@ const QrCodeReader = () => {
   return (
     <>
       {isQrReaderOpen && (
-        <div className="max-w-[90%] w-[300px] h-[300px] absolute top-0 left-0 right-0 bottom-0 m-auto z-50">
+        <div className="max-w-[90%] w-[300px] h-[300px] fixed top-0 left-0 right-0 bottom-0 m-auto z-50">
           <ReactQrReader
             // @ts-ignore
             onScan={(result: string) => {
