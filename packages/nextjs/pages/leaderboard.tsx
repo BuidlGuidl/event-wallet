@@ -38,7 +38,7 @@ const Leaderboard: NextPage = () => {
   useEffect(() => {
     const updateLeaderboard = async () => {
       if (!isLoadingMintEvents && mintEvents && nftContract) {
-        const leaderboardData: LeaderboardData[] = [];
+        let leaderboardData: LeaderboardData[] = [];
         const nftCountByAddress: { [key: string]: number } = {};
         for (let i = 0; i < mintEvents.length; i++) {
           const event = mintEvents[i];
@@ -58,6 +58,9 @@ const Leaderboard: NextPage = () => {
           const balance: BigNumber = await nftContract.balanceOf(address);
           leaderboardData.push({ address, nftCount, balance });
         }
+        leaderboardData = leaderboardData.sort((a, b) =>
+          a.nftCount === b.nftCount ? b.balance.toNumber() - a.balance.toNumber() : b.nftCount - a.nftCount,
+        );
         setLeaderboard(leaderboardData);
         setIsLoading(false);
       }
