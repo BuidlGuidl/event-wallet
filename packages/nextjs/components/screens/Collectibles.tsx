@@ -45,11 +45,8 @@ export const Collectibles = () => {
         for (let tokenIndex = 0; tokenIndex < balance.toNumber(); tokenIndex++) {
           try {
             const tokenId: BigNumber = await nftContract.tokenOfOwnerByIndex(address, tokenIndex);
-            console.log("Getting NFT tokenId: ", tokenId.toNumber());
             const tokenURI: string = await nftContract.tokenURI(tokenId);
-            console.log("tokenURI: ", tokenURI);
             const hash: string = tokenURI.split("/").pop()!;
-            console.log("hash: ", hash);
             const tokenType = metadataHashes[hash];
             const nftData = ASSETS[tokenType as keyof typeof ASSETS];
 
@@ -68,7 +65,6 @@ export const Collectibles = () => {
           }
         }
       }
-      console.log("nfUpdate: ", nftUpdate);
       setYourNfts(nftUpdate.reverse());
       if (nftContract && balance) setIsLoadingNfts(false);
     };
