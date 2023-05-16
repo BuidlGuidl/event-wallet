@@ -31,8 +31,6 @@ const Leaderboard: NextPage = () => {
     fromBlock,
   });
 
-  console.log("Mint Events: ", mintEvents);
-
   const PAGE_SIZE = 20;
 
   const { data: nftContract } = useScaffoldContract({ contractName: "EventGems" });
@@ -60,7 +58,6 @@ const Leaderboard: NextPage = () => {
           const balance: BigNumber = await nftContract.balanceOf(address);
           leaderboardData.push({ address, nftCount, balance });
         }
-        console.log("Leaderboard Data: ", leaderboardData);
         setLeaderboard(leaderboardData);
         setIsLoading(false);
       }

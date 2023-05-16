@@ -39,7 +39,6 @@ export const GemHistory = () => {
     contractName: "EventGems",
     eventName: "Transfer",
     listener: (from, to, value) => {
-      console.log("New Transfer: ", from, to, value);
       if (from.toLowerCase() === address?.toLowerCase()) {
         setNewOutboundTransferEvents(prevState => [{ from, to, value }, ...prevState]);
       }
