@@ -15,10 +15,11 @@ export const Footer = () => {
   }
 
   return (
-    <div className="fixed text-center bottom-0 mb-8 left-0 right-0">
-      <button className="bg-primary inline-block p-4 rounded-full" onClick={() => setIsQrReaderOpen(true)}>
-        <ScanIcon width="2.5rem" height="2.5rem" className="text-white" />
-      </button>
-    </div>
+    <button
+      className="fixed bg-primary inline-block p-4 rounded-full bottom-0 mb-8 left-0 right-0 w-[72px] m-auto"
+      onClick={() => setIsQrReaderOpen(true)}
+    >
+      <ScanIcon width="2.5rem" height="2.5rem" className="text-white" />
+    </button>
   );
 };
