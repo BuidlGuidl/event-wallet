@@ -50,7 +50,17 @@ export const Send = () => {
         <AddressInput value={toAddress} onChange={v => setToAddress(v)} placeholder="To Address" />
       </div>
       <div>
-        <InputBase type="number" value={amount} onChange={v => setAmount(v)} placeholder="Amount" />
+        <InputBase
+          type="number"
+          value={amount}
+          onChange={v => {
+            // Protect underflow (e.g. 0.0000000000000000001)
+            if (v.length < 21) {
+              setAmount(v);
+            }
+          }}
+          placeholder="Amount"
+        />
       </div>
       <div>
         <button onClick={handleSend} className={`btn btn-primary w-full mt-4 ${isMining ? "loading" : ""}`}>
