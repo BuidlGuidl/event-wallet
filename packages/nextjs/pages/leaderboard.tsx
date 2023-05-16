@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { BigNumber } from "ethers";
 import type { NextPage } from "next";
 import { useBlockNumber } from "wagmi";
-import { Board } from "~~/components/screens/Leaderboard/Board";
+import { Board } from "~~/components/Leaderboard/Board";
 import { useScaffoldContract, useScaffoldEventHistory } from "~~/hooks/scaffold-eth";
 
 const Leaderboard: NextPage = () => {
