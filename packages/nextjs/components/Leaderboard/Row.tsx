@@ -3,7 +3,7 @@ import { Address } from "~~/components/scaffold-eth";
 
 export const Row = ({ data, index }: { data: any; index: number }) => {
   return (
-    <tr>
+    <tr className="text-center">
       <td>{index + 1}</td>
       <td>
         <Address address={data.address} />

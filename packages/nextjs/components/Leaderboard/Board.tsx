@@ -19,9 +19,9 @@ export const Board = ({ leaderboard, isLoading }: { leaderboard: any[]; isLoadin
   }
 
   return (
-    <table className="table-auto">
+    <table className="table table-zebra">
       <thead>
-        <tr>
+        <tr className="text-center">
           <th>#</th>
           <th>Address</th>
           <th>NFTs</th>
