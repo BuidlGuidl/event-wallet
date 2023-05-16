@@ -49,8 +49,7 @@ contract EventSBT is ERC721Enumerable, Ownable {
     _amountMinted[tokenType] = _amountMinted[tokenType] + 1;
     _mintedByAddress[to][tokenType] = true;
 
-    eventGemsContract.mint(to, 5 ether);
-    // mint (20 - (_amountMinted[tokenType]/10)) diamonds
+    eventGemsContract.mint(to, (10 - (_amountMinted[tokenType] / 10)) * 1 ether);
     _mint(to, supply++);
   }
 
