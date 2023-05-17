@@ -40,6 +40,7 @@ export const saveBurnerSK = (wallet: Wallet): void => {
  * @returns
  */
 export const loadBurnerSK = (): string => {
+  console.log("LOADING BURNER-----");
   let currentSk = "";
   if (typeof window != "undefined" && window != null) {
     currentSk = window?.localStorage?.getItem?.(burnerStorageKey)?.replaceAll('"', "") ?? "";
@@ -58,6 +59,8 @@ export const isBurnerWalletloaded = (): boolean => {
   if (typeof window != "undefined" && window != null) {
     currentSk = window?.localStorage?.getItem?.(burnerStorageKey)?.replaceAll('"', "") ?? "";
   }
+
+  console.log("isBurnerWalletloaded", !!currentSk && isValidSk(currentSk));
 
   return !!currentSk && isValidSk(currentSk);
 };
