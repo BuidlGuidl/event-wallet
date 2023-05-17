@@ -24,6 +24,15 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   // const ownerAddress = "0x34aA3F359A9D614239015126635CE7732c18fDF3";
   const ownerAddress = deployer;
 
+  await deploy("EventAliases", {
+    from: deployer,
+    // Contract constructor arguments
+    log: true,
+    // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
+    // automatically mining the contract deployment transaction. There is no effect on live networks.
+    autoMine: true,
+  });
+
   const eventGems = await deploy("EventGems", {
     from: deployer,
     // Contract constructor arguments
