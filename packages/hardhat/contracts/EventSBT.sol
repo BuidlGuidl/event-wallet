@@ -3,6 +3,7 @@ pragma solidity 0.8.19;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
+import "@openzeppelin/contracts/security/Pausable.sol";
 
 abstract contract EventGemsContract {
   function mint(address to, uint256 amount) public virtual;
@@ -11,7 +12,7 @@ abstract contract EventGemsContract {
 /**
  * ERC721 soulbound token contract for Events.
  */
-contract EventSBT is ERC721Enumerable, Ownable {
+contract EventSBT is ERC721Enumerable, Ownable, Pausable {
   EventGemsContract eventGemsContract;
 
   mapping(uint => string) private _tokenMappings;
@@ -34,13 +35,13 @@ contract EventSBT is ERC721Enumerable, Ownable {
     return "https://ipfs.io/ipfs/";
   }
 
-  function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
+  function tokenURI(uint256 tokenId) public view override returns (string memory) {
     return string.concat(_baseURI(), _tokenMappings[_tokenToType[tokenId]]);
   }
 
   uint256 public supply = 0;
 
-  function mint(address to, uint256 tokenType) public virtual {
+  function mint(address to, uint256 tokenType) public whenNotPaused {
     bytes memory tokenBytes = bytes(_tokenMappings[tokenType]);
     require(tokenBytes.length > 0, "SBT: invalid token type");
     require(_mintedByAddress[to][tokenType] == false, "SBT: already minted");
@@ -52,6 +53,14 @@ contract EventSBT is ERC721Enumerable, Ownable {
     eventGemsContract.mint(to, 5 ether);
     // mint (20 - (_amountMinted[tokenType]/10)) diamonds
     _mint(to, supply++);
+  }
+
+  function pause() public onlyOwner {
+    _pause();
+  }
+
+  function unpause() public onlyOwner {
+    _unpause();
   }
 
   function addTokenType(uint256 tokenType, string memory uri) public onlyOwner {
