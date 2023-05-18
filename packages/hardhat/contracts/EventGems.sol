@@ -16,7 +16,9 @@ contract EventGems is ERC20, AccessControl {
   }
 
   function transferOwnership(address newOwner) public onlyRole(DEFAULT_ADMIN_ROLE) {
-    _setupRole(DEFAULT_ADMIN_ROLE, newOwner);
+    require(!hasRole(DEFAULT_ADMIN_ROLE, newOwner), "Ownable: new owner already have admin role");
+
+    grantRole(DEFAULT_ADMIN_ROLE, newOwner);
     renounceRole(DEFAULT_ADMIN_ROLE, msg.sender);
   }
 
