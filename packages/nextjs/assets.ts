@@ -204,4 +204,54 @@ export const ASSETS = {
     talk: "Protocol Guild: Funding + Incentivizing Core Protocol Work",
     description: "Description",
   },
+  "1208133159": {
+    name: "Basketball",
+    talk: "Basketball Experience",
+    description: "Description",
+  },
+  "1618976604": {
+    name: "Sandwhich",
+    talk: "Sandwhich Experience",
+    description: "Description",
+  },
+  "2195506947": {
+    name: "Elias Tazartes",
+    talk: "Kakarot zkEVM: introducing the modular zkEVM written in Cairo",
+    description: "Description",
+  },
+  "3739034685": {
+    name: "Belmin Kalkan",
+    talk: "Hiring Trends and Challenges in the Blockchain Space",
+    description: "Description",
+  },
+  "3923742679": {
+    name: "Barry Whitehat",
+    talk: "The next zkp 10x",
+    description: "Description",
+  },
+  "7880610541": {
+    name: "Adam Browman",
+    talk: "Loopring: Rise of the SuperApp",
+    description: "Description",
+  },
+  "6050659325": {
+    name: "Friederike Ernst",
+    talk: "The Limits of L2s",
+    description: "Description",
+  },
+  "4867417766": {
+    name: "Jason Morton",
+    talk: "What is unlocked by practical zero-knowledge proofs?",
+    description: "Description",
+  },
+  "6324807063": {
+    name: "Leonardo Bautista-Gomez",
+    talk: "Understanding Design Choices in Data Availability Sampling (DAS)",
+    description: "Description",
+  },
+  "7845796305": {
+    name: "Shuyao Kong",
+    talk: "Web3 Infrastructure - Building the L2 ecosystem",
+    description: "Description",
+  },
 };
