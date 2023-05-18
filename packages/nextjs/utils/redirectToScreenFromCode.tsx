@@ -36,7 +36,13 @@ export const redirectToScreenFromCode = (
       );
       break;
     case "pk":
-      const privateKey = payload;
+    case "ticket":
+      let privateKey = payload;
+      if (action === "ticket") {
+        // Generates a deterministic private key from the ticket id
+        privateKey = ethers.utils.keccak256(ethers.utils.toUtf8Bytes(payload));
+      }
+
       try {
         if (typeof window != "undefined" && window != null) {
           console.log("setting pk", privateKey);
