@@ -21,7 +21,6 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   const { deployer } = await hre.getNamedAccounts();
   const { deploy } = hre.deployments;
 
-  // const ownerAddress = "0x34aA3F359A9D614239015126635CE7732c18fDF3";
   const ownerAddress = deployer;
 
   await deploy("EventAliases", {
@@ -59,11 +58,6 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
     hre.ethers.utils.keccak256(hre.ethers.utils.toUtf8Bytes("MINTER_ROLE")),
     eventSBT.address,
   );
-
-  await eventGemsContract.transferOwnership(ownerAddress);
-
-  // Get the deployed contract
-  // const yourContract = await hre.ethers.getContract("YourContract", deployer);
 };
 
 export default deployYourContract;
