@@ -53,8 +53,8 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Event wallet</title>
-        <meta name="description" content="Created with 🏗 scaffold-eth" />
+        <title>Edcon Wallet 2023</title>
+        <meta name="description" content="Edcon Burner Wallet experience" />
       </Head>
 
       <div className="flex flex-col items-center justify-center py-2">
