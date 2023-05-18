@@ -34,12 +34,13 @@ export const appChains = configureChains(
       rpc: () => ({
         http: "https://rpc.eu-central-2.gateway.fm/v4/gnosis/archival/chiado?apiKey=KLZPKPNVNPxw_z3D6WQNok55xFYkaTny.gbOfR6tiBQCjkRlM",
       }),
+      priority: 0,
     }),
     alchemyProvider({
       apiKey: scaffoldConfig.alchemyApiKey,
-      priority: 0,
+      priority: 1,
     }),
-    publicProvider({ priority: 1 }),
+    publicProvider({ priority: 2 }),
   ],
   {
     stallTimeout: 3_000,
