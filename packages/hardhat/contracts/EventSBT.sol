@@ -80,16 +80,19 @@ contract EventSBT is ERC721Enumerable, Ownable, Pausable {
 
   uint256 public supply = 0;
 
-
-
   function mint(address to, uint256 tokenType) public whenNotPaused {
     bytes memory tokenBytes = bytes(_tokenMappings[tokenType]);
     require(tokenBytes.length > 0, "SBT: invalid token type");
     require(_mintedByAddress[to][tokenType] == false, "SBT: already minted");
+    require(_deadlines[tokenType] == 0 || _deadlines[tokenType] > block.timestamp, "SBT: deadline passed");
 
     _tokenToType[supply] = tokenType;
     _amountMinted[tokenType] = _amountMinted[tokenType] + 1;
     _mintedByAddress[to][tokenType] = true;
+
+    if (_amountMinted[tokenType] == 10) {
+      _deadlines[tokenType] = block.timestamp + 1 hours;
+    }
 
     if (_amountMinted[tokenType] < 200) {
       eventGemsContract.mint(to, (10 - (_amountMinted[tokenType] / 20)) * 1 ether);
