@@ -1,4 +1,4 @@
-import { ethers } from "ethers";
+import { ethers, Wallet } from "ethers";
 import * as fs from "fs";
 import QRCode from "qrcode";
 import { PDFDocument, rgb } from "pdf-lib";
@@ -12,26 +12,27 @@ const EVENT_URL = "https://wallet.edcon.io/pk#";
 const outputDirectory = "generated";
 
 /**
- * Generate list of new random private key, generate PDF for each and write them to a json file
+ * Henerate PDFs for each account.
  */
 async function main() {
   // Check if amount argument is provided
-  const [amount] = process.argv.slice(2);
-  if (!amount) {
-    console.error("🚫️ Please provide an amount. E.g. yarn generate-pdfs 200");
+  let accounts;
+  try {
+    accounts = JSON.parse(fs.readFileSync("accounts.json", "utf8"));
+  } catch (e) {
+    console.error("🚫️ packages/hardhat/accounts.json not found");
     return;
   }
-
+  const amount = Object.keys(accounts).length;
   console.log("🖨 Generating " + amount + " pdfs...");
 
-  const wallets = {};
-  for (let i = 0; i < +amount; i++) {
-    const randomWallet = ethers.Wallet.createRandom();
-    console.log("Created 🧍 " + randomWallet.address);
-    wallets[randomWallet.address] = randomWallet.privateKey;
+  const values = Object.values(accounts);
+  for (const privateKey of values) {
+    const generatedWallet = new Wallet(privateKey);
+    console.log("Created 🧍 " + generatedWallet.address);
 
     try {
-      const dataUrl = await QRCode.toDataURL(EVENT_URL + randomWallet.privateKey, {
+      const dataUrl = await QRCode.toDataURL(EVENT_URL + generatedWallet.privateKey, {
         type: "image/png",
         rendererOpts: { quality: 1 },
       });
@@ -56,7 +57,7 @@ async function main() {
       }
 
       const pdfBytes = await pdfDoc.save();
-      const filename = outputDirectory + "/" + randomWallet.address.substring(2, 8) + ".pdf";
+      const filename = outputDirectory + "/" + generatedWallet.address.substring(2, 8) + ".pdf";
       fs.writeFileSync(filename, pdfBytes);
 
       console.log("💾 " + filename + "");
@@ -64,10 +65,6 @@ async function main() {
       console.error(err);
     }
   }
-
-  // Dump wallets into a json file
-  fs.writeFileSync("./accounts.json", JSON.stringify(wallets, null, 2));
-  console.log("📄 Account and its private keys saved to packages/hardhat/accounts.json file");
 }
 
 main().catch(error => {
