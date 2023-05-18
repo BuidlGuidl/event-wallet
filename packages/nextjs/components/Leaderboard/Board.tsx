@@ -19,20 +19,37 @@ export const Board = ({ leaderboard, isLoading }: { leaderboard: any[]; isLoadin
   }
 
   return (
-    <table className="table table-zebra">
-      <thead>
-        <tr className="text-center">
-          <th>#</th>
-          <th>Address</th>
-          <th>NFTs</th>
-          <th>{scaffoldConfig.tokenEmoji}</th>
-        </tr>
-      </thead>
-      <tbody>
-        {leaderboard.map((data, index) => (
-          <Row data={data} index={index} key={JSON.stringify(leaderboard[0]) + index} />
-        ))}
-      </tbody>
-    </table>
+    <div className="flex gap-x-20">
+      <table className="table table-zebra self-start">
+        <thead>
+          <tr className="text-center">
+            <th>#</th>
+            <th>Address</th>
+            <th>NFTs</th>
+            <th>{scaffoldConfig.tokenEmoji}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {leaderboard.slice(0, 10).map((data, index) => (
+            <Row data={data} index={index} key={JSON.stringify(leaderboard[0]) + index} />
+          ))}
+        </tbody>
+      </table>
+      <table className="table table-zebra self-start">
+        <thead>
+          <tr className="text-center">
+            <th>#</th>
+            <th>Address</th>
+            <th>NFTs</th>
+            <th>{scaffoldConfig.tokenEmoji}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {leaderboard.slice(10, 20).map((data, index) => (
+            <Row data={data} index={10 + index} key={JSON.stringify(leaderboard[0]) + index} />
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };
