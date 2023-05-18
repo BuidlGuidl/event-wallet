@@ -27,6 +27,7 @@ contract EventSBT is ERC721Enumerable, Ownable, Pausable {
     _tokenMappings[3453465376] = "QmasCi84LAbmJF6vvp1uudK49f3Ur8iw6m8WR2Uky8LTKq";
     _tokenMappings[19273198273] = "QmPTEqnw1NYDqxpr7A89Br5bvBaiZbYNu96rYNXm6ZNmo9";
 
+
     transferOwnership(_owner);
     eventGemsContract = EventGemsContract(gemAddress);
   }
@@ -41,6 +42,8 @@ contract EventSBT is ERC721Enumerable, Ownable, Pausable {
 
   uint256 public supply = 0;
 
+
+
   function mint(address to, uint256 tokenType) public whenNotPaused {
     bytes memory tokenBytes = bytes(_tokenMappings[tokenType]);
     require(tokenBytes.length > 0, "SBT: invalid token type");
@@ -50,8 +53,10 @@ contract EventSBT is ERC721Enumerable, Ownable, Pausable {
     _amountMinted[tokenType] = _amountMinted[tokenType] + 1;
     _mintedByAddress[to][tokenType] = true;
 
-    if (_amountMinted[tokenType] < 100) {
-      eventGemsContract.mint(to, (10 - (_amountMinted[tokenType] / 10)) * 1 ether);
+    if (_amountMinted[tokenType] < 200) {
+      eventGemsContract.mint(to, (10 - (_amountMinted[tokenType] / 20)) * 1 ether);
+    } else {
+      eventGemsContract.mint(to, 1 ether);
     }
 
     _mint(to, supply++);

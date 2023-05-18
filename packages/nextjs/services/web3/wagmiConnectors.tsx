@@ -32,7 +32,7 @@ export const appChains = configureChains(
   [
     jsonRpcProvider({
       rpc: () => ({
-        http: "https://rpc.eu-central-2.gateway.fm/v4/gnosis/archival/chiado?apiKey=KLZPKPNVNPxw_z3D6WQNok55xFYkaTny.gbOfR6tiBQCjkRlM",
+        http: "https://rpc.eu-central-2.gateway.fm/v4/gnosis/non-archival/mainnet?apiKey=Kl9rMDPptvWGpaY1WNUGsHr0jr4G2uRW.hc18qxYscJg926Ax",
       }),
       priority: 0,
     }),

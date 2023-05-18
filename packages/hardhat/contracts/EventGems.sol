@@ -12,7 +12,7 @@ contract EventGems is ERC20, AccessControl {
 
   constructor(address _owner) ERC20("EventGems", "EGM") {
     _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
-    _mint(_owner, 1000 ether);
+    _mint(_owner, 60000 ether);
   }
 
   function transferOwnership(address newOwner) public onlyRole(DEFAULT_ADMIN_ROLE) {
