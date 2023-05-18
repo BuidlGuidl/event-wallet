@@ -58,12 +58,14 @@ export const AddressMain = ({ address, disableAddressLink, format }: TAddressPro
     displayAddress = address;
   }
 
-  const handleUpdateAlias = async () => {
+  const handleUpdateAlias = () => {
     if (aliasValue.length < 3) {
       notification.error("Alias must be at least 3 characters");
       return;
     }
-    await writeAsync();
+    setAliasModalOpen(false);
+    setAliasValue("");
+    writeAsync();
   };
 
   return (
