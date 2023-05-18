@@ -9,16 +9,22 @@ import { useAppStore } from "~~/services/store/store";
  */
 export const Mint = () => {
   const payload = useAppStore(state => state.screenPayload);
+  const setScreen = useAppStore(state => state.setScreen);
 
   const { address } = useAccount();
 
   const nftId = payload?.nftId;
 
-  const { writeAsync, isLoading } = useScaffoldContractWrite({
+  const { writeAsync, isMining } = useScaffoldContractWrite({
     contractName: "EventSBT",
     functionName: "mint",
     args: [address, BigNumber.from(nftId)],
   });
+
+  const handleMint = async () => {
+    await writeAsync();
+    setScreen("collectibles");
+  };
 
   if (nftId === undefined) {
     return (
@@ -31,12 +37,13 @@ export const Mint = () => {
   // ToDo. Check if the NFT is already minted
   return (
     <div className="flex flex-col gap-2">
-      <NftAsset id={nftId} />
+      <p className="font-bold max-w-[300px] text-center">Are you sure you want to mint this soulbound NFT?</p>
       <div>
-        <button onClick={writeAsync} className="btn btn-primary w-full mt-4" disabled={isLoading}>
-          Mint
+        <button onClick={handleMint} className="btn btn-primary w-full mb-4" disabled={isMining}>
+          Yes, mint
         </button>
       </div>
+      <NftAsset id={nftId} />
     </div>
   );
 };
