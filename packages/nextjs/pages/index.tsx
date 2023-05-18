@@ -36,6 +36,12 @@ const Home: NextPage = () => {
     args: [address],
   });
 
+  const { data: balanceSBT } = useScaffoldContractRead({
+    contractName: "EventSBT",
+    functionName: "balanceOf",
+    args: [address],
+  });
+
   const screenRender = screens[screen];
   const isBurnerWalletSet = isBurnerWalletloaded();
 
@@ -82,7 +88,14 @@ const Home: NextPage = () => {
               <>
                 <div className="flex flex-col items-center mb-6 gap-4">
                   <AddressMain address={address} disableAddressLink={true} />
-                  <TokenBalance amount={balance} />
+                  <div className="flex gap-4 items-center">
+                    <TokenBalance amount={balance} />
+                    <span className="text-xl">/</span>
+                    <div className="text-xl font-bold flex gap-1">
+                      <PhotoIcon className="w-4" />
+                      {balanceSBT?.toString()}
+                    </div>
+                  </div>
                 </div>
                 <div className="flex gap-6 justify-center mb-8">
                   <button
