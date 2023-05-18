@@ -9,6 +9,7 @@
     "fork": "MAINNET_FORKING_ENABLED=true hardhat node --network hardhat --no-deploy",
     "generate": "hardhat run scripts/generateAccount.ts",
     "generate-multiple": "node scripts/generateAccounts.mjs",
+    "generate-from-tickets": "node scripts/generateAccountsFromSecrets.mjs",
     "generate-pdfs": "node scripts/generatePdfs.mjs",
     "airdrop-gas": "npx hardhat airdrop-gas --amount",
     "airdrop-gems": "npx hardhat airdrop-gems --amount",

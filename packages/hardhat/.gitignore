@@ -13,3 +13,4 @@ artifacts
 deployments
 
 accounts.json
+ticket_secrets.csv

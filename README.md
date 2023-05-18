@@ -1,12 +1,19 @@
 # Event Wallet
 
-🧪 An open-source, up-to-date toolkit for building decentralized applications (dapps) on the Ethereum blockchain. It's designed to make it easier for developers to create and deploy smart contracts and build user interfaces that interact with those contracts
+## Set Up Wallets
 
-⚙️ Built using NextJS, RainbowKit, Hardhat, Wagmi and Typescript.
+1. Create `packages/hardhat/ticket_secrets.csv` with all the ticket secrets. Check `packages/hardhat/ticket_secrets.csv.exampe`.
+2. Run `yarn generate-from-tickets`. It'll generate `packages/hardhat/accounts.json` with a list of accounts and their private keys.
 
-- ✅ **Contract Hot Reload**: Your frontend auto-adapts to your smart contract as you edit it.
-- 🔥 **Burner Wallet & Local Faucet**: Quickly test your application with a burner wallet and local faucet.
-- 🔐 **Integration with Wallet Providers**: Connect to different wallet providers and interact with the Ethereum network.
+To fund the addresses make sure you have enough funds & tokens (`yarn account`)
+
+3. Run `yarn airdrop-gas <amount> --network <network>`
+4. Run `yarn airdrop-gems <amount> --network <network>`
+
+If you want, you can generate PK QRs with the generated accounts with `yarn generate-pdfs`.
+
+
+```
 
 ## Contents
 
