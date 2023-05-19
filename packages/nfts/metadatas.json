@@ -1,38 +1,353 @@
 [
   {
-    "name": "Balaji Srinivasan at EDCON: Talk Title",
-    "description": "Balaji Srinivasan at EDCON: Talk Title",
-    "image": "ipfs://QmfZUeg9KDDYvECo38p4mBPLhpH6bnCanqTZcwPNUMET3E",
+    "name": "Cheeky-Gorilla at EDCON: Protocol Guild: Funding + Incentivizing Core Protocol Work",
+    "description": "Cheeky-Gorilla at EDCON: Protocol Guild: Funding + Incentivizing Core Protocol Work",
+    "image": "ipfs://QmPLsoofvJDA1FMhcY962XnTcfWvV6vwS5pREHTH6qhDrW",
     "attributes": [
       {
         "trait_type": "speaker",
-        "value": "Balaji Srinivasan"
+        "value": "Cheeky-Gorilla"
       },
       {
         "trait_type": "talk",
-        "value": "Talk Title"
+        "value": "Protocol Guild: Funding + Incentivizing Core Protocol Work"
       }
     ]
   },
   {
-    "name": "Skylar Weaver at EDCON: Talk Title",
-    "description": "Skylar Weaver at EDCON: Talk Title",
-    "image": "ipfs://QmRysg2P11xGcdFBSohT4wW7xRF1kqiy3Q7C5bbMbwaMB7",
+    "name": "Ariah Mier y Teran at EDCON: Blockchain and Gen Alpha: Web3 with a 7 Year Old Hacker",
+    "description": "Ariah Mier y Teran at EDCON: Blockchain and Gen Alpha: Web3 with a 7 Year Old Hacker",
+    "image": "ipfs://QmWPEWzeA9EyAQxjPJS3ws9ChBDjqMPCu3jGRnfdYNSQWz",
     "attributes": [
       {
         "trait_type": "speaker",
-        "value": "Skylar Weaver"
+        "value": "Ariah Mier y Teran"
       },
       {
         "trait_type": "talk",
-        "value": "Talk Title"
+        "value": "Blockchain and Gen Alpha: Web3 with a 7 Year Old Hacker"
       }
     ]
   },
   {
-    "name": "Vitalik Buterin at EDCON: The Future of Ethereum",
-    "description": "Vitalik Buterin at EDCON: The Future of Ethereum",
-    "image": "ipfs://QmXkwZ9kUvBduWh7oCAgav35fYGEaGjnmtWsQHuK962noQ",
+    "name": "Yoseph Ayele at EDCON: Borderless Africa: Ethereum’s pathway to scale through mass adoption",
+    "description": "Yoseph Ayele at EDCON: Borderless Africa: Ethereum’s pathway to scale through mass adoption",
+    "image": "ipfs://QmXY1FWCAUPdihk6GhApCcKSXCQo8wjo34CBpDMP6QaaBD",
+    "attributes": [
+      {
+        "trait_type": "speaker",
+        "value": "Yoseph Ayele"
+      },
+      {
+        "trait_type": "talk",
+        "value": "Borderless Africa: Ethereum’s pathway to scale through mass adoption"
+      }
+    ]
+  },
+  {
+    "name": "Piper Merriam at EDCON: The Portal Network 'You can't get there from here'",
+    "description": "Piper Merriam at EDCON: The Portal Network 'You can't get there from here'",
+    "image": "ipfs://QmRxaTJWf3SBbUuWtPvCJYwzRz1p1Po5oy435uut3PqFWS",
+    "attributes": [
+      {
+        "trait_type": "speaker",
+        "value": "Piper Merriam"
+      },
+      {
+        "trait_type": "talk",
+        "value": "The Portal Network 'You can't get there from here'"
+      }
+    ]
+  },
+  {
+    "name": "Danilo Kim at EDCON: Web3 Applications and projects that were born in Zuzalu",
+    "description": "Danilo Kim at EDCON: Web3 Applications and projects that were born in Zuzalu",
+    "image": "ipfs://QmbPRLD2KbbJzZh1qUc9gvawjQkeDTTNurZ9yi3rsrJYau",
+    "attributes": [
+      {
+        "trait_type": "speaker",
+        "value": "Danilo Kim"
+      },
+      {
+        "trait_type": "talk",
+        "value": "Web3 Applications and projects that were born in Zuzalu"
+      }
+    ]
+  },
+  {
+    "name": "Scott Moore at EDCON: Public goods in web3",
+    "description": "Scott Moore at EDCON: Public goods in web3",
+    "image": "ipfs://QmaCw2afHV1BhZs2Cg2aYrh3F6fbaHYsaddSc1w1CzPF46",
+    "attributes": [
+      {
+        "trait_type": "speaker",
+        "value": "Scott Moore"
+      },
+      {
+        "trait_type": "talk",
+        "value": "Public goods in web3"
+      }
+    ]
+  },
+  {
+    "name": "Pooja Ranjan at EDCON: Elements of Protocol Governance",
+    "description": "Pooja Ranjan at EDCON: Elements of Protocol Governance",
+    "image": "ipfs://QmNsSedVbFioASdZGRiNpGNbSqVYgymv8FqZm7eAMCRcFt",
+    "attributes": [
+      {
+        "trait_type": "speaker",
+        "value": "Pooja Ranjan"
+      },
+      {
+        "trait_type": "talk",
+        "value": "Elements of Protocol Governance"
+      }
+    ]
+  },
+  {
+    "name": "Silur at EDCON: Control theory in DeFi - How to improve and stabilize tokenomics with better formalism",
+    "description": "Silur at EDCON: Control theory in DeFi - How to improve and stabilize tokenomics with better formalism",
+    "image": "ipfs://QmYkncEZ8A6BifLbP9BKmzGqnLDLNu4kGsr6homzq4muee",
+    "attributes": [
+      {
+        "trait_type": "speaker",
+        "value": "Silur"
+      },
+      {
+        "trait_type": "talk",
+        "value": "Control theory in DeFi - How to improve and stabilize tokenomics with better formalism"
+      }
+    ]
+  },
+  {
+    "name": "Basketball at EDCON: Basketball Experience",
+    "description": "Basketball at EDCON: Basketball Experience",
+    "image": "ipfs://QmQZRjNamdu9hJ3VPaRG5jDgvvtT4xy8KTpZgfkDvMQaVM",
+    "attributes": [
+      {
+        "trait_type": "speaker",
+        "value": "Basketball"
+      },
+      {
+        "trait_type": "talk",
+        "value": "Basketball Experience"
+      }
+    ]
+  },
+  {
+    "name": "Rand Hindi at EDCON: Private EVM smart contracts using homomorphic encryption",
+    "description": "Rand Hindi at EDCON: Private EVM smart contracts using homomorphic encryption",
+    "image": "ipfs://QmWJ7wqRziBZe52QnsMYLpLa3WLsdBCNgWoDeBY3VSpS3V",
+    "attributes": [
+      {
+        "trait_type": "speaker",
+        "value": "Rand Hindi"
+      },
+      {
+        "trait_type": "talk",
+        "value": "Private EVM smart contracts using homomorphic encryption"
+      }
+    ]
+  },
+  {
+    "name": "Jose He at EDCON: Voyager One: Our Path to Community and Public Good",
+    "description": "Jose He at EDCON: Voyager One: Our Path to Community and Public Good",
+    "image": "ipfs://Qmf3N1xvvfK8QY2FKrTWSeYDdhnCnkqG5fQPJ47DPMsWfv",
+    "attributes": [
+      {
+        "trait_type": "speaker",
+        "value": "Jose He"
+      },
+      {
+        "trait_type": "talk",
+        "value": "Voyager One: Our Path to Community and Public Good"
+      }
+    ]
+  },
+  {
+    "name": "Sandwhich at EDCON: Sandwhich Experience",
+    "description": "Sandwhich at EDCON: Sandwhich Experience",
+    "image": "ipfs://QmbfNFms2Qr2AzqCiLnPgNjoj3UdTvRCPnP1HZD6hU41Ev",
+    "attributes": [
+      {
+        "trait_type": "speaker",
+        "value": "Sandwhich"
+      },
+      {
+        "trait_type": "talk",
+        "value": "Sandwhich Experience"
+      }
+    ]
+  },
+  {
+    "name": "Quinn at EDCON: Socialist Web3 community",
+    "description": "Quinn at EDCON: Socialist Web3 community",
+    "image": "ipfs://QmSsJNZtxw9S3y4oCaUKJTM33bKmCURogkGJrVTYqaTp9k",
+    "attributes": [
+      {
+        "trait_type": "speaker",
+        "value": "Quinn"
+      },
+      {
+        "trait_type": "talk",
+        "value": "Socialist Web3 community"
+      }
+    ]
+  },
+  {
+    "name": "Jamilya Kamalova at EDCON: Blockchain based dispute resolution: from ADR type to DAO governance tool",
+    "description": "Jamilya Kamalova at EDCON: Blockchain based dispute resolution: from ADR type to DAO governance tool",
+    "image": "ipfs://Qme74D3khHhHMqTd1HvjmtgGPCgPwpcZv14zXEUqC5Pd5v",
+    "attributes": [
+      {
+        "trait_type": "speaker",
+        "value": "Jamilya Kamalova"
+      },
+      {
+        "trait_type": "talk",
+        "value": "Blockchain based dispute resolution: from ADR type to DAO governance tool"
+      }
+    ]
+  },
+  {
+    "name": "Elias Tazartes at EDCON: Kakarot zkEVM: introducing the modular zkEVM written in Cairo",
+    "description": "Elias Tazartes at EDCON: Kakarot zkEVM: introducing the modular zkEVM written in Cairo",
+    "image": "ipfs://Qmewu5b5FJkptSrNEqq8W6KnxiGY4TtXgGXEkVDNDY3W6j",
+    "attributes": [
+      {
+        "trait_type": "speaker",
+        "value": "Elias Tazartes"
+      },
+      {
+        "trait_type": "talk",
+        "value": "Kakarot zkEVM: introducing the modular zkEVM written in Cairo"
+      }
+    ]
+  },
+  {
+    "name": "Solange Gueiros at EDCON: How to Create Dynamic NFTs",
+    "description": "Solange Gueiros at EDCON: How to Create Dynamic NFTs",
+    "image": "ipfs://QmepBAhrpGcBTg3a9FUrQUePUiYJLzempB56HyD1sJWZER",
+    "attributes": [
+      {
+        "trait_type": "speaker",
+        "value": "Solange Gueiros"
+      },
+      {
+        "trait_type": "talk",
+        "value": "How to Create Dynamic NFTs"
+      }
+    ]
+  },
+  {
+    "name": "Primavera De Filippi at EDCON: Overthrowing the Network State with Coordi-Nations",
+    "description": "Primavera De Filippi at EDCON: Overthrowing the Network State with Coordi-Nations",
+    "image": "ipfs://QmXvjcpsUoCXfw2Y8fPugvdVKZR3d5akqEfjz1hsekvjoW",
+    "attributes": [
+      {
+        "trait_type": "speaker",
+        "value": "Primavera De Filippi"
+      },
+      {
+        "trait_type": "talk",
+        "value": "Overthrowing the Network State with Coordi-Nations"
+      }
+    ]
+  },
+  {
+    "name": "Derek Rein at EDCON: Decentralizing WalletConnect and Why Low-Latency is Hard",
+    "description": "Derek Rein at EDCON: Decentralizing WalletConnect and Why Low-Latency is Hard",
+    "image": "ipfs://QmVtB76SMYR5TcK7NBUFKt3LFhMzFjN14nbULzeWddMJEc",
+    "attributes": [
+      {
+        "trait_type": "speaker",
+        "value": "Derek Rein"
+      },
+      {
+        "trait_type": "talk",
+        "value": "Decentralizing WalletConnect and Why Low-Latency is Hard"
+      }
+    ]
+  },
+  {
+    "name": "Weiwu Zhang at EDCON: Unique value of tokens",
+    "description": "Weiwu Zhang at EDCON: Unique value of tokens",
+    "image": "ipfs://QmViHDzKvV3i9n9xewBTxJ9q6LMGKoRNjW85NRUjBA8SHf",
+    "attributes": [
+      {
+        "trait_type": "speaker",
+        "value": "Weiwu Zhang"
+      },
+      {
+        "trait_type": "talk",
+        "value": "Unique value of tokens"
+      }
+    ]
+  },
+  {
+    "name": "Dominic Williams at EDCON: Ethereum + Internet Computer = World Computer",
+    "description": "Dominic Williams at EDCON: Ethereum + Internet Computer = World Computer",
+    "image": "ipfs://QmPX4jdZr9Fj4GVk3Y761VYGtzV4pszfwUGcQR8P1VdLGq",
+    "attributes": [
+      {
+        "trait_type": "speaker",
+        "value": "Dominic Williams"
+      },
+      {
+        "trait_type": "talk",
+        "value": "Ethereum + Internet Computer = World Computer"
+      }
+    ]
+  },
+  {
+    "name": "Belmin Kalkan at EDCON: Hiring Trends and Challenges in the Blockchain Space",
+    "description": "Belmin Kalkan at EDCON: Hiring Trends and Challenges in the Blockchain Space",
+    "image": "ipfs://QmRBp6rCxLfQPTy83uFLEBS9bNHXTTJkKWkXSDESs2wfZ8",
+    "attributes": [
+      {
+        "trait_type": "speaker",
+        "value": "Belmin Kalkan"
+      },
+      {
+        "trait_type": "talk",
+        "value": "Hiring Trends and Challenges in the Blockchain Space"
+      }
+    ]
+  },
+  {
+    "name": "CyLi at EDCON: EDCON",
+    "description": "CyLi at EDCON: EDCON",
+    "image": "ipfs://Qmf6jodcsBroKkbsxiN4evBeRaQoLBXWzQxAFSiog3ZVD9",
+    "attributes": [
+      {
+        "trait_type": "speaker",
+        "value": "CyLi"
+      },
+      {
+        "trait_type": "talk",
+        "value": "EDCON"
+      }
+    ]
+  },
+  {
+    "name": "Barry Whitehat at EDCON: The next zkp 10x",
+    "description": "Barry Whitehat at EDCON: The next zkp 10x",
+    "image": "ipfs://QmWQRgchBDpzqyqDsbV63GHCCEqcuZkpySXuGLegXp7CSj",
+    "attributes": [
+      {
+        "trait_type": "speaker",
+        "value": "Barry Whitehat"
+      },
+      {
+        "trait_type": "talk",
+        "value": "The next zkp 10x"
+      }
+    ]
+  },
+  {
+    "name": "Vitalik Buterin at EDCON: Ethereum's big three technical challenges: scalability, privacy, and user security",
+    "description": "Vitalik Buterin at EDCON: Ethereum's big three technical challenges: scalability, privacy, and user security",
+    "image": "ipfs://Qmc2oe8VqNUvqDpiYTf5BnSZKe9ywsb33DjyFeXYf8kmCK",
     "attributes": [
       {
         "trait_type": "speaker",
@@ -40,7 +355,412 @@
       },
       {
         "trait_type": "talk",
-        "value": "The Future of Ethereum"
+        "value": "Ethereum's big three technical challenges: scalability, privacy, and user security"
+      }
+    ]
+  },
+  {
+    "name": "Paula Doy at EDCON: Geographically Decentralizing Ethereum: the role of Latam communities",
+    "description": "Paula Doy at EDCON: Geographically Decentralizing Ethereum: the role of Latam communities",
+    "image": "ipfs://QmawnpJa4Rh34EHqMJRLXFaGnRXFbBwu4oCiTW9UC9jsBS",
+    "attributes": [
+      {
+        "trait_type": "speaker",
+        "value": "Paula Doy"
+      },
+      {
+        "trait_type": "talk",
+        "value": "Geographically Decentralizing Ethereum: the role of Latam communities"
+      }
+    ]
+  },
+  {
+    "name": "Ivan Fartunov at EDCON: How to DAO: Lessons from Aragon's journey and the broad ecosystem",
+    "description": "Ivan Fartunov at EDCON: How to DAO: Lessons from Aragon's journey and the broad ecosystem",
+    "image": "ipfs://QmPYxX2y8MP6xPZnPUUJuGR4ZKBsWSxye793jU5fwDkTbh",
+    "attributes": [
+      {
+        "trait_type": "speaker",
+        "value": "Ivan Fartunov"
+      },
+      {
+        "trait_type": "talk",
+        "value": "How to DAO: Lessons from Aragon's journey and the broad ecosystem"
+      }
+    ]
+  },
+  {
+    "name": "Andy Guzman at EDCON: The topic is: Harnessing ZK and existing infrastructure for Ethereum's Mass Adoption",
+    "description": "Andy Guzman at EDCON: The topic is: Harnessing ZK and existing infrastructure for Ethereum's Mass Adoption",
+    "image": "ipfs://QmTn7FscBs9CnwugQsmre2nMyUKbAW51V834UGsMXAfHUV",
+    "attributes": [
+      {
+        "trait_type": "speaker",
+        "value": "Andy Guzman"
+      },
+      {
+        "trait_type": "talk",
+        "value": "The topic is: Harnessing ZK and existing infrastructure for Ethereum's Mass Adoption"
+      }
+    ]
+  },
+  {
+    "name": "Anuj Das Gupta at EDCON: Crypto is dead, long live crypto: a love letter",
+    "description": "Anuj Das Gupta at EDCON: Crypto is dead, long live crypto: a love letter",
+    "image": "ipfs://QmQwvqoy3XN94KJmWCmtJJ67YZXmLitU2noNGdKyzmKgEG",
+    "attributes": [
+      {
+        "trait_type": "speaker",
+        "value": "Anuj Das Gupta"
+      },
+      {
+        "trait_type": "talk",
+        "value": "Crypto is dead, long live crypto: a love letter"
+      }
+    ]
+  },
+  {
+    "name": "Collin Myers at EDCON: Why should you run Distributed Validators",
+    "description": "Collin Myers at EDCON: Why should you run Distributed Validators",
+    "image": "ipfs://QmTZ9JpB2iwM6Qi5ZDUmyFMCNzi3uPXnUvDu7cViKojUSU",
+    "attributes": [
+      {
+        "trait_type": "speaker",
+        "value": "Collin Myers"
+      },
+      {
+        "trait_type": "talk",
+        "value": "Why should you run Distributed Validators"
+      }
+    ]
+  },
+  {
+    "name": "Dennis Pourteaux at EDCON: Institutional Alignment & the Network State",
+    "description": "Dennis Pourteaux at EDCON: Institutional Alignment & the Network State",
+    "image": "ipfs://QmVcoPE1MKvfcUiB7Nq1ZbyF3GfphHaXXMX2x8cYC3jp4g",
+    "attributes": [
+      {
+        "trait_type": "speaker",
+        "value": "Dennis Pourteaux"
+      },
+      {
+        "trait_type": "talk",
+        "value": "Institutional Alignment & the Network State"
+      }
+    ]
+  },
+  {
+    "name": "Eli Ben-Sasson at EDCON: Starknet Vision",
+    "description": "Eli Ben-Sasson at EDCON: Starknet Vision",
+    "image": "ipfs://QmaSrp5f3VoqvPUAuPWZ4FGzW2u3DLGyHDuGUcB5szVTMq",
+    "attributes": [
+      {
+        "trait_type": "speaker",
+        "value": "Eli Ben-Sasson"
+      },
+      {
+        "trait_type": "talk",
+        "value": "Starknet Vision"
+      }
+    ]
+  },
+  {
+    "name": "Evgeny Yurtaev at EDCON: Web3 Wallet Evolution",
+    "description": "Evgeny Yurtaev at EDCON: Web3 Wallet Evolution",
+    "image": "ipfs://QmUBxZJzwFsRQytV1d3TAtBsm78N7h22xtToadZvs2pRWX",
+    "attributes": [
+      {
+        "trait_type": "speaker",
+        "value": "Evgeny Yurtaev"
+      },
+      {
+        "trait_type": "talk",
+        "value": "Web3 Wallet Evolution"
+      }
+    ]
+  },
+  {
+    "name": "Han Liu at EDCON: Know Your Developer: Verifiable development contribution via trusted software analysis",
+    "description": "Han Liu at EDCON: Know Your Developer: Verifiable development contribution via trusted software analysis",
+    "image": "ipfs://Qme7qGjmNgtVhKj4iU8LfKTHRFYWCKzCBw8xmX17jkz7eN",
+    "attributes": [
+      {
+        "trait_type": "speaker",
+        "value": "Han Liu"
+      },
+      {
+        "trait_type": "talk",
+        "value": "Know Your Developer: Verifiable development contribution via trusted software analysis"
+      }
+    ]
+  },
+  {
+    "name": "Ivan Šoć at EDCON: Blockchain Vs Crypto",
+    "description": "Ivan Šoć at EDCON: Blockchain Vs Crypto",
+    "image": "ipfs://QmYuHeDZRJGA5o32TjJzLicMfFRfJMhGhhphNF24bsysYV",
+    "attributes": [
+      {
+        "trait_type": "speaker",
+        "value": "Ivan Šoć"
+      },
+      {
+        "trait_type": "talk",
+        "value": "Blockchain Vs Crypto"
+      }
+    ]
+  },
+  {
+    "name": "Janine Leger at EDCON: ZUZALU",
+    "description": "Janine Leger at EDCON: ZUZALU",
+    "image": "ipfs://QmQEtzqjqkps8nwRTfxFNF2Xmyng6ZXZFbq2D33STreYMd",
+    "attributes": [
+      {
+        "trait_type": "speaker",
+        "value": "Janine Leger"
+      },
+      {
+        "trait_type": "talk",
+        "value": "ZUZALU"
+      }
+    ]
+  },
+  {
+    "name": "Jordi Baylina at EDCON: Experience and insight into the zkEVM Mainnet Launch and next steps",
+    "description": "Jordi Baylina at EDCON: Experience and insight into the zkEVM Mainnet Launch and next steps",
+    "image": "ipfs://QmXt94DQGySv4JKEc95qSEBXMkW13HvCbyhsMgiu476F3g",
+    "attributes": [
+      {
+        "trait_type": "speaker",
+        "value": "Jordi Baylina"
+      },
+      {
+        "trait_type": "talk",
+        "value": "Experience and insight into the zkEVM Mainnet Launch and next steps"
+      }
+    ]
+  },
+  {
+    "name": "Leo Lara at EDCON: Chiquito: high-level and structured language for writing zkp circuits",
+    "description": "Leo Lara at EDCON: Chiquito: high-level and structured language for writing zkp circuits",
+    "image": "ipfs://QmQQqZF2Wy8GKc1ypu5mWHJ17MA2C2hQpJtge5br6NUFjo",
+    "attributes": [
+      {
+        "trait_type": "speaker",
+        "value": "Leo Lara"
+      },
+      {
+        "trait_type": "talk",
+        "value": "Chiquito: high-level and structured language for writing zkp circuits"
+      }
+    ]
+  },
+  {
+    "name": "Marius Balaj at EDCON: NFT Collections at Scale",
+    "description": "Marius Balaj at EDCON: NFT Collections at Scale",
+    "image": "ipfs://Qmc3UiMJ76YU947gLagJjUekwcYcQnDyjhLwQJdpeCqM2k",
+    "attributes": [
+      {
+        "trait_type": "speaker",
+        "value": "Marius Balaj"
+      },
+      {
+        "trait_type": "talk",
+        "value": "NFT Collections at Scale"
+      }
+    ]
+  },
+  {
+    "name": "Milos Rakcevic at EDCON: Uncollateralized NFT Renting - A New Era of Asset Utilization",
+    "description": "Milos Rakcevic at EDCON: Uncollateralized NFT Renting - A New Era of Asset Utilization",
+    "image": "ipfs://QmXZ9Y1FjmZ9uE7HDVoVir2vcraLk1r4VGn6Kdm3c1MBz3",
+    "attributes": [
+      {
+        "trait_type": "speaker",
+        "value": "Milos Rakcevic"
+      },
+      {
+        "trait_type": "talk",
+        "value": "Uncollateralized NFT Renting - A New Era of Asset Utilization"
+      }
+    ]
+  },
+  {
+    "name": "Shrey Jain at EDCON: Plural Publics: Protecting Information Integrity from Generative AI",
+    "description": "Shrey Jain at EDCON: Plural Publics: Protecting Information Integrity from Generative AI",
+    "image": "ipfs://QmZALR8dF17RrBZqFVpGNggfaQJN3KZtsXED5EwR7NvFvQ",
+    "attributes": [
+      {
+        "trait_type": "speaker",
+        "value": "Shrey Jain"
+      },
+      {
+        "trait_type": "talk",
+        "value": "Plural Publics: Protecting Information Integrity from Generative AI"
+      }
+    ]
+  },
+  {
+    "name": "Skylar Weaver at EDCON: If it’s broken, fix it",
+    "description": "Skylar Weaver at EDCON: If it’s broken, fix it",
+    "image": "ipfs://QmYw6x1ZxULfYeJorY4dxaVRHCXggmPk75vuT3Jse56LQb",
+    "attributes": [
+      {
+        "trait_type": "speaker",
+        "value": "Skylar Weaver"
+      },
+      {
+        "trait_type": "talk",
+        "value": "If it’s broken, fix it"
+      }
+    ]
+  },
+  {
+    "name": "Suji Yan at EDCON: Entering the Network States: The Revolution and Future of Decentralized Social",
+    "description": "Suji Yan at EDCON: Entering the Network States: The Revolution and Future of Decentralized Social",
+    "image": "ipfs://Qmbg1WiyqxHR7tdBYoSAFTUf51GJi9tWLTPF6C1SXGY2sW",
+    "attributes": [
+      {
+        "trait_type": "speaker",
+        "value": "Suji Yan"
+      },
+      {
+        "trait_type": "talk",
+        "value": "Entering the Network States: The Revolution and Future of Decentralized Social"
+      }
+    ]
+  },
+  {
+    "name": "Tim Beiko at EDCON: Ethereum Protocol Development: Past, Present & Future",
+    "description": "Tim Beiko at EDCON: Ethereum Protocol Development: Past, Present & Future",
+    "image": "ipfs://QmNaTuDvEredwDjR79ad2JSQS1nJguGs3xifGb6CwxWMfE",
+    "attributes": [
+      {
+        "trait_type": "speaker",
+        "value": "Tim Beiko"
+      },
+      {
+        "trait_type": "talk",
+        "value": "Ethereum Protocol Development: Past, Present & Future"
+      }
+    ]
+  },
+  {
+    "name": "Toghrul Maharramov at EDCON: How to Spot a Rollup in the Wild?",
+    "description": "Toghrul Maharramov at EDCON: How to Spot a Rollup in the Wild?",
+    "image": "ipfs://QmWAgRdxtqZXWQHrZG4kMY2ETrZeyH2iN3dPEvJPs62MRT",
+    "attributes": [
+      {
+        "trait_type": "speaker",
+        "value": "Toghrul Maharramov"
+      },
+      {
+        "trait_type": "talk",
+        "value": "How to Spot a Rollup in the Wild?"
+      }
+    ]
+  },
+  {
+    "name": "Toni Wahrstätter at EDCON: Unlinkable Payments - The beauty of stealth addresses",
+    "description": "Toni Wahrstätter at EDCON: Unlinkable Payments - The beauty of stealth addresses",
+    "image": "ipfs://QmPw6vVjnfZT1UcfCXD2heP4cKaXDp7HWKnpmfntkxfauM",
+    "attributes": [
+      {
+        "trait_type": "speaker",
+        "value": "Toni Wahrstätter"
+      },
+      {
+        "trait_type": "talk",
+        "value": "Unlinkable Payments - The beauty of stealth addresses"
+      }
+    ]
+  },
+  {
+    "name": "Yaron Velner at EDCON: Removing the Human Factor from DeFi Risk Management",
+    "description": "Yaron Velner at EDCON: Removing the Human Factor from DeFi Risk Management",
+    "image": "ipfs://QmZ8d8jE1yLeVqdPg5xgya7PVqwQR22khDF9mWjzDfpuCE",
+    "attributes": [
+      {
+        "trait_type": "speaker",
+        "value": "Yaron Velner"
+      },
+      {
+        "trait_type": "talk",
+        "value": "Removing the Human Factor from DeFi Risk Management"
+      }
+    ]
+  },
+  {
+    "name": "Adam Browman at EDCON: Loopring: Rise of the SuperApp",
+    "description": "Adam Browman at EDCON: Loopring: Rise of the SuperApp",
+    "image": "ipfs://Qme2nQmqGS9rKf1Qrz68cwXd5oK43tEGr4AjJV133eZCTb",
+    "attributes": [
+      {
+        "trait_type": "speaker",
+        "value": "Adam Browman"
+      },
+      {
+        "trait_type": "talk",
+        "value": "Loopring: Rise of the SuperApp"
+      }
+    ]
+  },
+  {
+    "name": "Friederike Ernst at EDCON: The Limits of L2s",
+    "description": "Friederike Ernst at EDCON: The Limits of L2s",
+    "image": "ipfs://QmRRAKxHk7NJdXrA8DecheYnGRdXiycnHUwWh1bLDGDAHR",
+    "attributes": [
+      {
+        "trait_type": "speaker",
+        "value": "Friederike Ernst"
+      },
+      {
+        "trait_type": "talk",
+        "value": "The Limits of L2s"
+      }
+    ]
+  },
+  {
+    "name": "Jason Morton at EDCON: What is unlocked by practical zero-knowledge proofs?",
+    "description": "Jason Morton at EDCON: What is unlocked by practical zero-knowledge proofs?",
+    "image": "ipfs://Qmc2mLuQpXy3vxX8znBwC99DPmzDRVXAtNHdyHFSgFaBV1",
+    "attributes": [
+      {
+        "trait_type": "speaker",
+        "value": "Jason Morton"
+      },
+      {
+        "trait_type": "talk",
+        "value": "What is unlocked by practical zero-knowledge proofs?"
+      }
+    ]
+  },
+  {
+    "name": "Leonardo Bautista-Gomez at EDCON: Understanding Design Choices in Data Availability Sampling (DAS)",
+    "description": "Leonardo Bautista-Gomez at EDCON: Understanding Design Choices in Data Availability Sampling (DAS)",
+    "image": "ipfs://QmbpJn1Bw9XYy24sTuuSmmaioFma34RcL2VhPJe9LYbAEz",
+    "attributes": [
+      {
+        "trait_type": "speaker",
+        "value": "Leonardo Bautista-Gomez"
+      },
+      {
+        "trait_type": "talk",
+        "value": "Understanding Design Choices in Data Availability Sampling (DAS)"
+      }
+    ]
+  },
+  {
+    "name": "Shuyao Kong at EDCON: Web3 Infrastructure - Building the L2 ecosystem",
+    "description": "Shuyao Kong at EDCON: Web3 Infrastructure - Building the L2 ecosystem",
+    "image": "ipfs://QmW8si3FPjJPwwhuG1Ss96NceMw6GtwVS7osYNa12iDdCS",
+    "attributes": [
+      {
+        "trait_type": "speaker",
+        "value": "Shuyao Kong"
+      },
+      {
+        "trait_type": "talk",
+        "value": "Web3 Infrastructure - Building the L2 ecosystem"
       }
     ]
   }
