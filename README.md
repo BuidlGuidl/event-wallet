@@ -10,7 +10,8 @@ To fund the addresses make sure you have enough funds & tokens (`yarn account`)
 3. Run `yarn airdrop-gas <amount> --network <network>`
 4. Run `yarn airdrop-gems <amount> --network <network>`
 
-If you want, you can generate PK QRs with the generated accounts with `yarn generate-pdfs`.
+If you want, you can generate PK QRs with the generated accounts with `yarn generate-pdfs`
+
 
 
 ```
