@@ -763,5 +763,35 @@
         "value": "Web3 Infrastructure - Building the L2 ecosystem"
       }
     ]
+  },
+  {
+    "name": "BuidlGuidl at EDCON: A curated group of Ethereum builders creating products, prototypes, and tutorials to enrich the web3 ecosystem. Our tool of choice is Scaffold-ETH-2! Get started building today at SpeedRunEthereum.com",
+    "description": "BuidlGuidl at EDCON: A curated group of Ethereum builders creating products, prototypes, and tutorials to enrich the web3 ecosystem. Our tool of choice is Scaffold-ETH-2! Get started building today at SpeedRunEthereum.com",
+    "image": "ipfs://QmWFPfjh5JdSSpqDQgkFH1dVATVeXe95BdFjbLPfktoFgK",
+    "attributes": [
+      {
+        "trait_type": "speaker",
+        "value": "BuidlGuidl"
+      },
+      {
+        "trait_type": "talk",
+        "value": "A curated group of Ethereum builders creating products, prototypes, and tutorials to enrich the web3 ecosystem. Our tool of choice is Scaffold-ETH-2! Get started building today at SpeedRunEthereum.com"
+      }
+    ]
+  },
+  {
+    "name": "De University of Ethereum at EDCON: We are a collaborative learning community focused on promoting the learning, research, discussion, and advancement of the Ethereum network.",
+    "description": "De University of Ethereum at EDCON: We are a collaborative learning community focused on promoting the learning, research, discussion, and advancement of the Ethereum network.",
+    "image": "ipfs://QmazHuMjwk8huvus8gdyJwBJkaWYdhba22Q9ruGKeQQGGG",
+    "attributes": [
+      {
+        "trait_type": "speaker",
+        "value": "De University of Ethereum"
+      },
+      {
+        "trait_type": "talk",
+        "value": "We are a collaborative learning community focused on promoting the learning, research, discussion, and advancement of the Ethereum network."
+      }
+    ]
   }
 ]
