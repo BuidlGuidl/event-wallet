@@ -30,12 +30,14 @@ const enabledChains =
 export const appChains = configureChains(
   enabledChains,
   [
+    /*
     jsonRpcProvider({
       rpc: () => ({
         http: "https://rpc.eu-central-2.gateway.fm/v4/gnosis/non-archival/mainnet?apiKey=Kl9rMDPptvWGpaY1WNUGsHr0jr4G2uRW.hc18qxYscJg926Ax",
       }),
       priority: 0,
     }),
+    */
     alchemyProvider({
       apiKey: scaffoldConfig.alchemyApiKey,
       priority: 1,

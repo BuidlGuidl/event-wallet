@@ -20,6 +20,7 @@
     "generate-from-tickets": "yarn workspace @se-2/hardhat generate-from-tickets",
     "generate-pdfs": "yarn workspace @se-2/hardhat generate-pdfs",
     "airdrop-gas": "yarn workspace @se-2/hardhat airdrop-gas",
+    "airdrop-gas-batch": "yarn workspace @se-2/hardhat airdrop-gas-batch",
     "airdrop-gems": "yarn workspace @se-2/hardhat airdrop-gems",
     "hardhat:lint": "yarn workspace @se-2/hardhat lint",
     "hardhat:lint-staged": "yarn workspace @se-2/hardhat lint-staged",

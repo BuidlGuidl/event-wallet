@@ -12,6 +12,7 @@
     "generate-from-tickets": "node scripts/generateAccountsFromSecrets.mjs",
     "generate-pdfs": "node scripts/generatePdfs.mjs",
     "airdrop-gas": "npx hardhat airdrop-gas --amount",
+    "airdrop-gas-batch": "npx hardhat airdrop-gas-batch --amount",
     "airdrop-gems": "npx hardhat airdrop-gems --amount",
     "lint": "eslint --config ./.eslintrc.json --ignore-path ./.eslintignore ./*.ts ./deploy/**/*.ts ./scripts/**/*.ts ./test/**/*.ts",
     "lint-staged": "eslint --config ./.eslintrc.json --ignore-path ./.eslintignore",

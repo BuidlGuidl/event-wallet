@@ -22,7 +22,7 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   const { deploy } = hre.deployments;
 
   const ownerAddress = deployer;
-
+  /*
   await deploy("EventAliases", {
     from: deployer,
     // Contract constructor arguments
@@ -50,14 +50,24 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
     // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
     // automatically mining the contract deployment transaction. There is no effect on live networks.
     autoMine: true,
-  });
+  });*/
 
+  const batchContract = await deploy("Batch", {
+    from: deployer,
+    // Contract constructor arguments
+    //args: [ownerAddress, eventGems.address],
+    log: true,
+    // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
+    // automatically mining the contract deployment transaction. There is no effect on live networks.
+    autoMine: true,
+  });
+  /*
   const eventGemsContract = await hre.ethers.getContract("EventGems", deployer);
 
   await eventGemsContract.grantRole(
     hre.ethers.utils.keccak256(hre.ethers.utils.toUtf8Bytes("MINTER_ROLE")),
     eventSBT.address,
-  );
+  );*/
 };
 
 export default deployYourContract;

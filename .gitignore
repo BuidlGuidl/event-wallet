@@ -1,6 +1,8 @@
 packages/hardhat/generated
 node_modules
 
+**/.env.deployer
+
 # dependencies, yarn, etc
 # yarn / eslint
 .yarn/*
