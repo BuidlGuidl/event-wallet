@@ -254,4 +254,14 @@ export const ASSETS = {
     talk: "Web3 Infrastructure - Building the L2 ecosystem",
     description: "Description",
   },
+  "4920984003": {
+    name: "BuidlGuidl",
+    talk: "A curated group of Ethereum builders creating products, prototypes, and tutorials to enrich the web3 ecosystem. Our tool of choice is Scaffold-ETH-2! Get started building today at SpeedRunEthereum.com",
+    description: "Description",
+  },
+  "9974389911": {
+    name: "De University of Ethereum",
+    talk: "We are a collaborative learning community focused on promoting the learning, research, discussion, and advancement of the Ethereum network.",
+    description: "Description",
+  },
 };

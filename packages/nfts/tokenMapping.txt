@@ -49,3 +49,5 @@ _tokenMappings[6050659325] = "QmNeUwkqieJaycjPj3JZzqaSFrAsJHJgivuTByFc1LVeB6";
 _tokenMappings[4867417766] = "QmcrDGyViJAS6gUJbkUb6ZmqhGUVfGRpGfEzJDPHTsQGb1";
 _tokenMappings[6324807063] = "Qme2WtyRavPTszRixDZkXwCJbeMnPVDPjgiyhiSGuUDE5r";
 _tokenMappings[7845796305] = "QmYeY1XvcJk9WQTqQpLHz7GtpjHqE2EfgDKu9Woviu9wFq";
+_tokenMappings[4920984003] = "QmYeLDTpyJsJBm7YaADptE3qjeGWbHDqxf323azDHrMN3P";
+_tokenMappings[9974389911] = "QmUz76r6oGRSVKyhiHMFpL7LSMmwCd5HTSwBcmNVqX4pRE";
