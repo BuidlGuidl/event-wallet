@@ -669,7 +669,7 @@ const contracts = {
           ],
         },
         EventSBT: {
-          address: "0x4c3D3927d849704249064a7bfB85b75D09861Ab1",
+          address: "0x8f788c998F71969c2Af5bf512917f65867E35A0d",
           abi: [
             {
               inputs: [
@@ -878,6 +878,24 @@ const contracts = {
                 },
               ],
               stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address[]",
+                  name: "to",
+                  type: "address[]",
+                },
+                {
+                  internalType: "uint256[]",
+                  name: "tokenType",
+                  type: "uint256[]",
+                },
+              ],
+              name: "batchMint",
+              outputs: [],
+              stateMutability: "nonpayable",
               type: "function",
             },
             {
