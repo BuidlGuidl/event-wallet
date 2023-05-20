@@ -38,8 +38,8 @@ export const Board = ({
   return (
     <div className="flex flex-col">
       <div className="p-8 justify-center max-w-4xl bg-yellow-100 mb-8">
-        <div className="font-bold text-2xl text-center">VIP Lounge </div>
-        <div className="text-xl pb-8 text-center">(hackers that minted all the NFTs by watching onchain 😅)</div>
+        <div className="font-bold text-2xl text-center">Time Traveling Hackers Club</div>
+        <div className="text-xl pb-8 text-center">(minted all the NFTs ahead of the talks by watching onchain 😅)</div>
         <div className="flex gap-4 flex-wrap ">{vipDisplay}</div>
       </div>
       <div className="flex gap-x-20 justify-center">
