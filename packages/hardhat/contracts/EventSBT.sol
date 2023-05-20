@@ -75,6 +75,8 @@ contract EventSBT is ERC721Enumerable, Ownable, Pausable {
     _tokenMappings[4867417766] = "QmcrDGyViJAS6gUJbkUb6ZmqhGUVfGRpGfEzJDPHTsQGb1";
     _tokenMappings[6324807063] = "Qme2WtyRavPTszRixDZkXwCJbeMnPVDPjgiyhiSGuUDE5r";
     _tokenMappings[7845796305] = "QmYeY1XvcJk9WQTqQpLHz7GtpjHqE2EfgDKu9Woviu9wFq";
+    _tokenMappings[4920984003] = "QmYeLDTpyJsJBm7YaADptE3qjeGWbHDqxf323azDHrMN3P";
+    _tokenMappings[9974389911] = "QmUz76r6oGRSVKyhiHMFpL7LSMmwCd5HTSwBcmNVqX4pRE";
 
     transferOwnership(_owner);
     eventGemsContract = EventGemsContract(gemAddress);
@@ -89,6 +91,21 @@ contract EventSBT is ERC721Enumerable, Ownable, Pausable {
   }
 
   uint256 public supply = 0;
+
+  function batchMint(address[] memory to, uint256[] memory tokenType) public onlyOwner {
+    require(to.length == tokenType.length, "SBT: invalid input");
+    for (uint256 i = 0; i < to.length; i++) {
+      bytes memory tokenBytes = bytes(_tokenMappings[tokenType[i]]);
+      require(tokenBytes.length > 0, "SBT: invalid token type");
+      require(_mintedByAddress[to[i]][tokenType[i]] == false, "SBT: already minted");
+
+      _tokenToType[supply] = tokenType[i];
+      _amountMinted[tokenType[i]] = _amountMinted[tokenType[i]] + 1;
+      _mintedByAddress[to[i]][tokenType[i]] = true;
+
+      _mint(to[i], supply++);
+    }
+  }
 
   function mint(address to, uint256 tokenType) public whenNotPaused {
     bytes memory tokenBytes = bytes(_tokenMappings[tokenType]);
@@ -107,7 +124,7 @@ contract EventSBT is ERC721Enumerable, Ownable, Pausable {
     _mintedByAddress[to][tokenType] = true;
 
     if (_amountMinted[tokenType] == 10) {
-      _deadlines[tokenType] = block.timestamp + 1 hours;
+      _deadlines[tokenType] = block.timestamp + 2 days;
     }
 
     if (_amountMinted[tokenType] < 200) {
