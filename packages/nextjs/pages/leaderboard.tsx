@@ -3,7 +3,7 @@ import { BigNumber } from "ethers";
 import type { NextPage } from "next";
 import { useBlockNumber } from "wagmi";
 import { Board } from "~~/components/Leaderboard/Board";
-import { useScaffoldContract, useScaffoldContractRead, useScaffoldEventHistory } from "~~/hooks/scaffold-eth";
+import { useScaffoldContract, useScaffoldEventHistory } from "~~/hooks/scaffold-eth";
 
 const Leaderboard: NextPage = () => {
   type LeaderboardData = {

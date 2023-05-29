@@ -1,14 +1,7 @@
-import { Address } from "../scaffold-eth";
 import { Row } from "./Row";
 import scaffoldConfig from "~~/scaffold.config";
 
-export const Board = ({
-  leaderboard,
-  isLoading,
-}: {
-  leaderboard: any[];
-  isLoading: boolean;
-}) => {
+export const Board = ({ leaderboard, isLoading }: { leaderboard: any[]; isLoading: boolean }) => {
   if (isLoading) {
     return (
       <div>
