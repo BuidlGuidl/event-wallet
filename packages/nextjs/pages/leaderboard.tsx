@@ -35,11 +35,6 @@ const Leaderboard: NextPage = () => {
 
   const { data: nftContract } = useScaffoldContract({ contractName: "EventGems" });
 
-  const { data: allVips } = useScaffoldContractRead({
-    contractName: "CongratsVIPLounge",
-    functionName: "getAddresses",
-  });
-
   useEffect(() => {
     const updateLeaderboard = async () => {
       if (!isLoadingMintEvents && mintEvents && nftContract) {
@@ -79,7 +74,7 @@ const Leaderboard: NextPage = () => {
         <h1 className="text-4xl font-bold">Leaderboard</h1>
       </div>
       <div className="flex flex-col pt-2 gap-[100px] md:flex-row">
-        <Board leaderboard={leaderboard} isLoading={isLoading} vips={allVips} />
+        <Board leaderboard={leaderboard} isLoading={isLoading} />
       </div>
     </div>
   );
