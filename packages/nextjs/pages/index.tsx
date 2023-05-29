@@ -66,8 +66,8 @@ const Home: NextPage = () => {
       <div className="flex flex-col items-center justify-center py-2">
         <div className="max-w-96 p-8">
           <img
-            src="https://ueth.org/_nuxt/img/logo.7b7e59b.png"
-            alt="EDCON WALLET"
+            src="bg.png"
+            alt="EVENT WALLET"
             className="max-w-[40px] absolute top-0 left-0 m-5"
           />
           <div className="absolute top-0 right-0 m-5">
