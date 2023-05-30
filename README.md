@@ -12,9 +12,14 @@ To fund the addresses make sure you have enough funds & tokens (`yarn account`)
 
 If you want, you can generate PK QRs with the generated accounts with `yarn generate-pdfs`
 
+## Generate NFTs
 
-
-```
+1. Add custom images to `nfts/images/`.
+2. From `packages/hardhat` run `yarn generate-token-types`. This will generate random tokenTypes and save the images at `packages/nextjs/public/assets/nfts/`. This will generate the `packages/nfts/metadata.json` file too.
+3. Update `packages/nextjs/assets.ts` with the new tokenTypes and the metadata (you can use the data from `packages/nfts/metadata.json` as a starting point).
+4. For ipfs upload and pin data, we use Pinata. Configure your Pinata JWT key at `packages/hardhat/.env` file (*PINATA_JWT_KEY*).
+5. From `packages/hardhat` run `yarn pin-metadata`. This will upload the images to ipfs, pin the files, generate the metadata for each one based on the data from `assets.ts`, and then upload and pin the metadata to ipfs. This will update the `packages/nextjs/metadataHashes.json` file (used to load the metadata and images locally instead of from ipfs), create the file `packages/nextjs/imagesPinned.json` (each ipfs hash for each tokenType), `packages/nextjs/metadatas.json` (all the metadata objects uploaded to ipfs) and `packages/nextjs/tokenMapping.txt` (the mapping from tokenType to metadata ipfs hash).
+6. Copy the data from `packages/nextjs/tokenMapping.txt` to the `EventSBT` constructor, replacing the current tokenTypes.
 
 ## Contents
 
