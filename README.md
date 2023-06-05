@@ -12,10 +12,6 @@ To fund the addresses make sure you have enough funds & tokens (`yarn account`)
 
 If you want, you can generate PK QRs with the generated accounts with `yarn generate-pdfs`
 
-
-
-```
-
 ## Contents
 
 - [Requirements](#requirements)
