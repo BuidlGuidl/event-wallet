@@ -59,17 +59,13 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Edcon Wallet 2023</title>
-        <meta name="description" content="Edcon Burner Wallet experience" />
+        <title>Event Wallet 2023</title>
+        <meta name="description" content="Event Wallet experience" />
       </Head>
 
       <div className="flex flex-col items-center justify-center py-2">
         <div className="max-w-96 p-8">
-          <img
-            src="bg.png"
-            alt="EVENT WALLET"
-            className="max-w-[40px] absolute top-0 left-0 m-5"
-          />
+          <img src="/bg.png" alt="Event Wallet Logo" className="max-w-[30px] absolute top-0 left-0 m-5" />
           <div className="absolute top-0 right-0 m-5">
             <div className="flex items-center">
               <div className="flex items-center">
