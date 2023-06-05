@@ -7,7 +7,7 @@ import scaffoldConfig from "~~/scaffold.config";
 /**
  * Example vendor page
  */
-const Nft: NextPage = () => {
+const Nfts: NextPage = () => {
   return (
     <div className="flex flex-col items-center justify-center py-2">
       <div className="max-w-96 p-8">
@@ -28,4 +28,4 @@ const Nft: NextPage = () => {
   );
 };
 
-export default Nft;
+export default Nfts;

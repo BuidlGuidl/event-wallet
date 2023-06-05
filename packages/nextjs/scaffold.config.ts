@@ -6,6 +6,7 @@ export type ScaffoldConfig = {
   alchemyApiKey: string;
   liveUrl: string;
   tokenEmoji: string;
+  eventName: string;
   hideHeader: boolean;
   burnerWallet: {
     enabled: boolean;
@@ -16,7 +17,7 @@ export type ScaffoldConfig = {
 
 const scaffoldConfig = {
   // The network where your DApp lives in
-  targetNetwork: chains.gnosis,
+  targetNetwork: chains.hardhat,
   liveUrl: process.env.NEXT_PUBLIC_LIVE_URL || "http://localhost:3000",
 
   // The interval at which your front-end polls the RPC servers for new data
@@ -24,6 +25,7 @@ const scaffoldConfig = {
   pollingInterval: 5000,
 
   tokenEmoji: "💎",
+  eventName: "EVENT",
   hideHeader: true,
 
   // This is ours Alchemy's default API key.

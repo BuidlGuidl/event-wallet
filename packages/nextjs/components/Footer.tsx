@@ -24,7 +24,7 @@ export const Footer = () => {
       </button>
       <div className="fixed bottom-0 flex gap-1 justify-center w-full text-xs mb-2 text-gray-400">
         <span className="italic">powered by</span>
-        <span>Gateway.fm</span>
+        <span>BuidlGuidl</span>
       </div>
     </>
   );
