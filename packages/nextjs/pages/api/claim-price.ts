@@ -1,7 +1,7 @@
+import { kv } from "@vercel/kv";
 import { ethers } from "ethers";
 import { verifyMessage } from "ethers/lib/utils";
 import { NextApiRequest, NextApiResponse } from "next";
-import { winners } from "~~/winners";
 
 type ReqBody = {
   signature: string;
@@ -12,16 +12,42 @@ type ReqBody = {
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { signature, signerAddress, destinationAddress }: ReqBody = req.body;
 
+  // Params validation
   if (!process.env.PRIVATE_KEY) {
     res.status(400).json({ error: "Missing sender private key" });
     return;
   }
-
   if (!signature || !destinationAddress) {
     res.status(400).json({ error: "Missing required parameters." });
     return;
   }
 
+  let recoveredAddress: string;
+  try {
+    // The message is just the signer address
+    recoveredAddress = verifyMessage(signerAddress, signature);
+  } catch (error) {
+    res.status(400).json({ error: "Error recovering the signature" });
+    return;
+  }
+
+  if (recoveredAddress !== signerAddress) {
+    res.status(403).json({ error: "The signature is not valid" });
+    return;
+  }
+
+  const amount = await kv.hget<string>(signerAddress, "amount");
+  console.log("amount", amount);
+
+  if (!amount) {
+    res.status(403).json({ error: "The address is not a winner (or already claimed)" });
+    return;
+  }
+
+  // Mark the address as claimed
+  await kv.hset(signerAddress, { amount: 0 });
+
+  // Init the provider and wallet.
   let provider: ethers.providers.JsonRpcProvider;
   let wallet: ethers.Wallet;
   let daiContractAddress: string;
@@ -42,37 +68,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     daiContractAddress = "0x53844f9577c2334e541aec7df7174ece5df1fcf0";
   }
 
-  let recoveredAddress: string;
   try {
-    // The message is just the signer address
-    recoveredAddress = verifyMessage(signerAddress, signature);
-  } catch (error) {
-    res.status(400).json({ error: "Error recovering the signature" });
-    return;
-  }
-
-  if (recoveredAddress !== signerAddress) {
-    res.status(403).json({ error: "The signature is not valid" });
-    return;
-  }
-
-  if (!winners[recoveredAddress]) {
-    res.status(403).json({ error: "The address is not a winner" });
-    return;
-  }
-
-  // ToDo. Check if the address has already claimed the price
-  // we can check previous transactions to the DAI contract
-  // or we can store the addresses in a some persistent storage
-
-  try {
-    const daiAmount = ethers.utils.parseUnits(winners[recoveredAddress], "ether");
+    const daiAmount = ethers.utils.parseUnits(amount, "ether");
     const daiContractABI = ["function transfer(address dst, uint wad) external returns (bool)"];
     const daiContract = new ethers.Contract(daiContractAddress, daiContractABI, wallet);
     await daiContract.transfer(destinationAddress, daiAmount);
     // We don't wait for the transaction to be mined, just until it's sent to the network
     res.status(200).json({ message: "DAI sent!" });
   } catch (error) {
+    // Reset the address as not claimed
+    await kv.hset(signerAddress, { amount });
     res.status(400).json({ error: "Error sending the DAI. Please contact us." });
   }
 }

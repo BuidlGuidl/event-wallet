@@ -1,4 +1,4 @@
-// ToDo. Save this on a persistent storage, so we can check who we have already paid
+// ToDo. Save this on Vercel KV
 export const winners: Record<string, string> = {
   // Time travelers
   "0x169Bb5b996C304Ea97c081AbF2fec122Fe23c26f": "50",
