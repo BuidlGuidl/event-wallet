@@ -45,10 +45,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   let recoveredAddress: string;
   try {
     // The message is just the signer address
-    console.log("signature", signature);
-    console.log("signerAddress", signerAddress);
     recoveredAddress = verifyMessage(signerAddress, signature);
-    console.log("recoveredAddress", recoveredAddress);
   } catch (error) {
     res.status(400).json({ error: "Error recovering the signature" });
     return;
