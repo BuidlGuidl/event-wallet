@@ -23,8 +23,8 @@ async function main() {
   // and store the wallet address and private key in a json file
   const wallets = {};
   for (let i = 0; i < numberOfSecrets; i++) {
-    const secretsWithoutTrailingSpaces = ticketSecrets[i].trim();
-    const generatedWallet = new Wallet(ethers.utils.keccak256(ethers.utils.toUtf8Bytes(secretsWithoutTrailingSpaces)));
+    const secretWithoutTrailingSpaces = ticketSecrets[i].trim();
+    const generatedWallet = new Wallet(ethers.utils.keccak256(ethers.utils.toUtf8Bytes(secretWithoutTrailingSpaces)));
     wallets[generatedWallet.address] = generatedWallet.privateKey;
   }
 
