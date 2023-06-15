@@ -75,16 +75,16 @@ Here you can view some Events that used our wallet:
 
 ## Steps to set your own Event Wallet
 
-You'll need to complete a few steps to have your Hacker House running:
+You'll need to complete a few steps to have your Event Wallet running:
 
 - [0. Checking prerequisites](#0-checking-prerequisites)
 - [1. Clone/Fork this repo & install dependencies](#1-clonefork-this-repo--install-dependencies)
-- [2. Configure on-chain data for your Event Wallet](#2-configure-on-chain-data-for-your-hacker-house-stream)
-  - [2.1 Set Token details](#51-deploy-your-smart-contracts)
-  - [2.2 Set Up Wallets](#52-deploy-your-nextjs-app)
-  - [2.3 Generate NFTs](#53-disabling-type-and-linting-error-checks)
-- [3. Configure wallet web-app](#3-configure-website)
-- [4. Test your local environment](#4-testing-locally)
+- [2. Configure on-chain data for your Event Wallet](#2-configure-on-chain-data-for-your-event-wallet)
+  - [2.1 Set Token details](#21-set-token-details)
+  - [2.2 Set Up Wallets](#22-set-up-wallets)
+  - [2.3 Generate NFTs](#23-generate-nfts)
+- [3. Configure website](#3-configure-website)
+- [4. Testing locally](#4-testing-locally)
 - [5. Deploy to a Live Network](#5-deploy-to-a-live-network)
   - [5.1 Deploy your Smart Contracts](#51-deploy-your-smart-contracts)
   - [5.2 Deploy your NextJS App](#52-deploy-your-nextjs-app)
