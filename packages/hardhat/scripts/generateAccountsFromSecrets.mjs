@@ -15,7 +15,7 @@ async function main() {
   }
 
   // Count the number of lines in the file
-  const ticketSecrets = secrets.split("\n");
+  const ticketSecrets = secrets.trim().split("\n");
   const numberOfSecrets = ticketSecrets.length;
   console.log("🔥 Generating " + numberOfSecrets + " new burner accounts...");
 
