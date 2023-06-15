@@ -1,8 +1,8 @@
 # Event Wallet
 
-This **forkable** project provides a web-based crypto wallet, optimized for both mobile and desktop, aiming to enhance the experience of attendees at your crypto event, by providing a gamification element. This allows interaction with other attendees, as well as the organizers and sponsors of the event.
+This **forkable** project provides a web-based crypto wallet, aiming to enhance the experience of attendees at your crypto event, by providing a gamification element. This allows interaction with other attendees, as well as the organizers and sponsors of the event.
 
-**Event Wallet** is designed for both crypto natives and muggles to complete a series of activities, allowing them to have a more immersive experience within your crypto event, experimenting with common use-cases of the crypto space, like sending and receiving tokens, and minting NFTs.
+**Event Wallet** is designed for both crypto natives and newcomers to complete a series of activities, allowing them to have a more immersive experience within your crypto event, experimenting with common use-cases of the crypto space, like sending and receiving tokens, and minting NFTs.
 
 ## Event Wallet features
 
@@ -11,8 +11,8 @@ This **forkable** project provides a web-based crypto wallet, optimized for both
 - Get a welcome message with the Event and wallet instructions.
 - Scan QR codes to mint soulbound NFTs (of each speaker for example).
 - Receive 💎 gem tokens when they complete different tasks (like mint an NFT).
-- Exchange 💎 gem tokens with other attendees, or use them to purchase swag or other stuff at the event.
-- Set an alias (for the moment just to showoff on the Leaderboard).
+- Exchange 💎 gem tokens with other attendees, or use them to purchase swag or other stuff during the event.
+- Set an alias linked to the wallet address.
 
 ### For organizers
 
@@ -25,7 +25,7 @@ This **forkable** project provides a web-based crypto wallet, optimized for both
 
 ## Wallet overview
 
-Let's take a quick tour of the actions that attendees can perform with the Event Wallet, after scanning the QR with the wallet access they get with their ticket:
+Let's take a quick tour around the Event Wallet to check the actions that attendees can perform with it, after scanning the QR from their tickets, which gives them access to their personal wallet.
 
 - **Welcome screen - Home**  
   When users access their wallet, the first thing they see is a welcome message and some brief instructions on what they will be able to do with their wallet during the event.
@@ -35,14 +35,14 @@ Let's take a quick tour of the actions that attendees can perform with the Event
 - **Receive tokens**  
   At this screen, attendees get a QR code to show to other users for easier token transfers. When another wallet user scans this QR code, a transfer preloads with the QR address as the recipient of the transfer.
 
-      They can also review all the transfers made to them so far.
+  They can also review all the token transfers received so far.
 
   ![Receive tokens](https://github.com/Pabl0cks/event-wallet/assets/55535804/47ad8982-333f-494c-9e3f-92a0c83e487c)
 
 - **Send tokens**  
-  Here you can make transfers by manually entering the address and the amount of tokens you want to send, or you can scan another attendee's or merchant QR to preload their address.
+  Here you can make token transfers to others wallet. You can manually input the address and the amount of tokens you want to send, or you can scan another attendee's or merchant QR to preload their address.
 
-      You can also review the history of transfers you have sent.
+  You can also review the history of transfers you have sent.
 
   ![Send tokens](https://github.com/Pabl0cks/event-wallet/assets/55535804/47ad8982-333f-494c-9e3f-92a0c83e487c)
 
@@ -54,25 +54,26 @@ Let's take a quick tour of the actions that attendees can perform with the Event
   ![Collectibles](https://github.com/Pabl0cks/event-wallet/assets/55535804/47ad8982-333f-494c-9e3f-92a0c83e487c)
 
 - **Scan QRs**  
-  At the bottom of the wallet, you'll find the button to scan QR codes. You can scan three types of QR codes: - **Wallet access**. Will load the wallet linked to the QR. - **Send to**. Loads the Send screen with a preloaded "To" address. - **Mint collectible**. It loads Mint screen for the soulbound collectible linked to the QR.
+  At the bottom of the wallet, you'll find the button to scan QR codes. You can scan three types of QR codes:
+
+  - **Wallet access**. Will load the wallet linked to the QR, located at your Event Ticket.
+  - **Send to**. Loads the Send screen with a preloaded "To" address. You'll have to scan this QR from another wallet or from a swag stand.
+  - **Mint collectible**. It loads Mint screen for the soulbound collectible linked to the QR. You'll find those during the speaks.
 
   ![Send tokens](https://github.com/Pabl0cks/event-wallet/assets/55535804/47ad8982-333f-494c-9e3f-92a0c83e487c)
 
 - **Set alias**  
-  Set up an alias that will be displayed in your wallet, instead of the network address associated to your wallet.
-
-      It will also be displayed in some common elements to other users such as the Leaderboard.
+  Set up an alias associated to your wallet address. It will be shown at your wallet profile and at the Leaderboard.
 
   ![Collectibles](https://github.com/Pabl0cks/event-wallet/assets/55535804/47ad8982-333f-494c-9e3f-92a0c83e487c)
 
-Here you can view some examples of Events using this wallet:
+Here you can view some Events that used our wallet:
 
-| Event      | Links                                                                                                | Description                                   |
-| ---------- | ---------------------------------------------------------------------------------------------------- | --------------------------------------------- |
-| Edcon 2023 | [Repo](https://github.com/BuidlGuidl/event-wallet/tree/edcon-2023) / [Site](https://2023.edcon.io/)  | First event that used BuidlGuidl Event Wallet |
-| Event 2    | [Repo](https://github.com/BuidlGuidl/event-wallet/tree/edcon-2023) / [Site](https://buidlguidl.com/) | Event 2 description                           |
+| Event      | Links                                                                                               | Description                                   |
+| ---------- | --------------------------------------------------------------------------------------------------- | --------------------------------------------- |
+| Edcon 2023 | [Repo](https://github.com/BuidlGuidl/event-wallet/tree/edcon-2023) / [Site](https://2023.edcon.io/) | First event that used BuidlGuidl Event Wallet |
 
-## Steps to set your own Hacker House
+## Steps to set your own Event Wallet
 
 You'll need to complete a few steps to have your Hacker House running:
 
@@ -109,7 +110,7 @@ yarn install
 
 #### 2.1 Set Token details
 
-- Set Token Name, Symbol and Quantity to mint to the Owner at `EventGems.sol`.
+- Set Token Name, Symbol and Quantity to mint to the Owner of the contract at `EventGems.sol`.
 
   ```jsx
     constructor(address _owner) ERC20("EventGems", "EGM") {
@@ -127,7 +128,7 @@ yarn install
 
 2. Run `yarn generate-from-tickets`. It'll generate `packages/hardhat/accounts.json` with a list of accounts and their private keys.
 
-To fund the addresses make sure you have enough funds & tokens (`yarn account`)
+> **Note:** To fund the addresses make sure you have enough funds & tokens (`yarn account`)
 
 3.  Run `yarn airdrop-gas <amount> --network <network>`
 4.  Run `yarn airdrop-gems <amount> --network <network>`
