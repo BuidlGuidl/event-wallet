@@ -1,8 +1,8 @@
 # Event Wallet
 
-This **forkable** project provides a web-based crypto wallet, aiming to enhance the experience of attendees at your crypto event, by providing a gamification element. This allows interaction with other attendees, as well as the organizers and sponsors of the event.
+This **forkable** project provides a web-based crypto (burner) wallet, aiming to enhance the experience of attendees at your event, by providing a gamification element. This allows interaction with other attendees, as well as the organizers and sponsors of the event.
 
-**Event Wallet** is designed for both crypto natives and newcomers to complete a series of activities, allowing them to have a more immersive experience within your crypto event, experimenting with common use-cases of the crypto space, like sending and receiving tokens, and minting NFTs.
+**Event Wallet** is designed for both crypto natives and newcomers to complete a series of activities, allowing them to have a more immersive experience within your crypto event, experimenting with common use-cases of the crypto space, like sending / receiving tokens, and minting NFTs.
 
 ## Event Wallet features
 
@@ -11,13 +11,14 @@ This **forkable** project provides a web-based crypto wallet, aiming to enhance 
 - Get a welcome message with the Event and wallet instructions.
 - Scan QR codes to mint soulbound NFTs (of each speaker for example).
 - Receive 💎 gem tokens when they complete different tasks (like mint an NFT).
-- Exchange 💎 gem tokens with other attendees, or use them to purchase swag or other stuff during the event.
+- Exchange 💎 gem tokens with other attendees, or use them to purchase swag or food during the event.
 - Set an alias linked to the wallet address.
 
 ### For organizers
 
 - Mass generate wallets for your attendees.
 - Generate QR codes linked to each wallet to include them in your attendees' tickets.
+  - **Note**: You can also give attendees a link to their wallet (/ticket#SECRET_FOR_EACH_USER). e.g. in the email where they get the ticket for the event.
 - Airdrop 💎 gem tokens and gas to the attendees.
 - Set VIP status on the contract to offer special experiences to VIP attendees.
 - Easily create customized NFTs and upload them to IPFS.
