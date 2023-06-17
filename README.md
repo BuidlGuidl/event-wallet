@@ -30,28 +30,28 @@ Let's take a quick tour around the Event Wallet to check the actions that attend
 - **Welcome screen - Home**  
   When users access their wallet, the first thing they see is a welcome message and some brief instructions on what they will be able to do with their wallet during the event.
 
-  ![Welcome screen](https://github.com/Pabl0cks/event-wallet/assets/55535804/47ad8982-333f-494c-9e3f-92a0c83e487c)
+  ![Welcome screen](.github/img/EventWallet_Welcome.JPG)
 
 - **Receive tokens**  
   At this screen, attendees get a QR code to show to other users for easier token transfers. When another wallet user scans this QR code, a transfer preloads with the QR address as the recipient of the transfer.
 
   They can also review all the token transfers received so far.
 
-  ![Receive tokens](https://github.com/Pabl0cks/event-wallet/assets/55535804/47ad8982-333f-494c-9e3f-92a0c83e487c)
+  ![Receive tokens](.github/img/EventWallet_Receive.JPG)
 
 - **Send tokens**  
   Here you can make token transfers to others wallet. You can manually input the address and the amount of tokens you want to send, or you can scan another attendee's or merchant QR to preload their address.
 
   You can also review the history of transfers you have sent.
 
-  ![Send tokens](https://github.com/Pabl0cks/event-wallet/assets/55535804/47ad8982-333f-494c-9e3f-92a0c83e487c)
+  ![Send tokens](.github/img/EventWallet_Send.JPG)
 
 - **Collectibles**  
   In the collectibles section, you'll find all the NFTs you've minted during the event.
 
   To mint an NFT, you simply need to scan the QR code of a collectible, and it will display the minting screen.
 
-  ![Collectibles](https://github.com/Pabl0cks/event-wallet/assets/55535804/47ad8982-333f-494c-9e3f-92a0c83e487c)
+  ![Collectibles](.github/img/EventWallet_Collectibles.JPG)
 
 - **Scan QRs**  
   At the bottom of the wallet, you'll find the button to scan QR codes. You can scan three types of QR codes:
@@ -60,12 +60,12 @@ Let's take a quick tour around the Event Wallet to check the actions that attend
   - **Send to**. Loads the Send screen with a preloaded "To" address. You'll have to scan this QR from another wallet or from a swag stand.
   - **Mint collectible**. It loads Mint screen for the soulbound collectible linked to the QR. You'll find those during the speaks.
 
-  ![Send tokens](https://github.com/Pabl0cks/event-wallet/assets/55535804/47ad8982-333f-494c-9e3f-92a0c83e487c)
+  ![Mint collectible](.github/img/EventWallet_Mint.JPG)
 
 - **Set alias**  
   Set up an alias associated to your wallet address. It will be shown at your wallet profile and at the Leaderboard.
 
-  ![Collectibles](https://github.com/Pabl0cks/event-wallet/assets/55535804/47ad8982-333f-494c-9e3f-92a0c83e487c)
+  ![Alias](.github/img/EventWallet_Alias.JPG)
 
 Here you can view some Events that used our wallet:
 
