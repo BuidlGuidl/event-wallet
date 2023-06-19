@@ -15,15 +15,16 @@ async function main() {
   }
 
   // Count the number of lines in the file
-  const ticketSecrets = secrets.split("\n");
-  const amount = ticketSecrets.length - 1;
-  console.log("🔥 Generating " + amount + " new burner accounts...");
+  const ticketSecrets = secrets.trim().split("\n");
+  const numberOfSecrets = ticketSecrets.length;
+  console.log("🔥 Generating " + numberOfSecrets + " new burner accounts...");
 
   // Loop through walletSecrets and create a new wallet for each (using the value as a seed)
   // and store the wallet address and private key in a json file
   const wallets = {};
-  for (let i = 0; i < amount; i++) {
-    const generatedWallet = new Wallet(ethers.utils.keccak256(ethers.utils.toUtf8Bytes(ticketSecrets[i])));
+  for (let i = 0; i < numberOfSecrets; i++) {
+    const secretWithoutTrailingSpaces = ticketSecrets[i].trim();
+    const generatedWallet = new Wallet(ethers.utils.keccak256(ethers.utils.toUtf8Bytes(secretWithoutTrailingSpaces)));
     wallets[generatedWallet.address] = generatedWallet.privateKey;
   }
 

@@ -159,7 +159,7 @@ export type UseScaffoldEventConfig<
 > = {
   contractName: TContractName;
 } & IsContractsFileMissing<
-  UseContractEventConfig,
+  UseContractEventConfig & { listener?: (...args: any[]) => void },
   {
     eventName: TEventName;
     listener: (...args: TEventInputs) => void;
