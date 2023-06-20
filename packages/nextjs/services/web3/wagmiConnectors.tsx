@@ -31,9 +31,14 @@ export const appChains = configureChains(
   enabledChains,
   [
     jsonRpcProvider({
-      rpc: () => ({
-        http: "https://rpc.eu-central-2.gateway.fm/v4/gnosis/non-archival/mainnet?apiKey=Kl9rMDPptvWGpaY1WNUGsHr0jr4G2uRW.hc18qxYscJg926Ax",
-      }),
+      rpc: chain => {
+        if (chain.id === chains.gnosis.id) {
+          return {
+            http: "https://rpc.eu-central-2.gateway.fm/v4/gnosis/non-archival/mainnet?apiKey=Kl9rMDPptvWGpaY1WNUGsHr0jr4G2uRW.hc18qxYscJg926Ax",
+          };
+        }
+        return null;
+      },
       priority: 0,
     }),
     alchemyProvider({
