@@ -5,11 +5,14 @@ import { toast } from "react-hot-toast";
 import { useAccount } from "wagmi";
 import { AddressInput } from "~~/components/scaffold-eth";
 import { loadBurnerSK } from "~~/hooks/scaffold-eth";
+import { winners } from "~~/winners";
 
 export const Claim = () => {
   const { address } = useAccount();
   const [toAddress, setToAddress] = useState("");
   const [processing, setProcessing] = useState(false);
+
+  const amount = address && winners[address];
 
   const handleClick = async () => {
     setProcessing(true);
@@ -56,7 +59,7 @@ export const Claim = () => {
   return (
     <div>
       <p>🎉</p>
-      <p className="text-center text-xl font-bold">Winner!</p>
+      <p className="text-center text-xl font-bold">Winner! ({amount} DAI)</p>
       <div>
         <p>
           Get more info{" "}
