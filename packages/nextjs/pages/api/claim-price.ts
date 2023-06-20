@@ -37,7 +37,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   const amount = await kv.hget<string>(signerAddress, "amount");
-  console.log("amount", amount);
 
   if (!amount) {
     res.status(403).json({ error: "The address is not a winner (or already claimed)" });
@@ -45,14 +44,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   // Mark the address as claimed
-  await kv.hset(signerAddress, { amount: 0 });
+  await kv.hset(signerAddress, { amount: "0" });
 
   // Init the provider and wallet.
   let provider: ethers.providers.JsonRpcProvider;
   let wallet: ethers.Wallet;
   let daiContractAddress: string;
   let providerUrl: string;
-  if (process.env.NODE_ENV === "production") {
+  if (process.env.NODE_ENV === "production" || process.env.VERCEL_ENV === "production") {
     // Mainnet
     providerUrl = process.env.RPC_PROVIDER_URL || "https://rpc.eth.gateway.fm";
     provider = new ethers.providers.JsonRpcProvider(providerUrl);
@@ -69,13 +68,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    const daiAmount = ethers.utils.parseUnits(amount, "ether");
+    const daiAmount = ethers.utils.parseUnits(String(amount), "ether");
     const daiContractABI = ["function transfer(address dst, uint wad) external returns (bool)"];
     const daiContract = new ethers.Contract(daiContractAddress, daiContractABI, wallet);
     await daiContract.transfer(destinationAddress, daiAmount);
     // We don't wait for the transaction to be mined, just until it's sent to the network
     res.status(200).json({ message: "DAI sent!" });
   } catch (error) {
+    console.log("Error sending the DAI", error);
     // Reset the address as not claimed
     await kv.hset(signerAddress, { amount });
     res.status(400).json({ error: "Error sending the DAI. Please contact us." });
