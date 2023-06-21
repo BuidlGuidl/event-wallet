@@ -63,7 +63,7 @@ export const Claim = () => {
       <div>
         <p>
           Get more information{" "}
-          <a className="link" target="_blank" href="https://test.edcon.io/wallet" rel="noreferrer">
+          <a className="link" target="_blank" href="https://2023.edcon.io/wallet" rel="noreferrer">
             here
           </a>{" "}
           on how you can collect your DAI.
