@@ -62,13 +62,15 @@ export const Claim = () => {
       <p className="text-center text-xl font-bold">Winner! ({amount} DAI)</p>
       <div>
         <p>
-          Get more info{" "}
+          Get more information{" "}
           <a className="link" target="_blank" href="https://test.edcon.io/wallet" rel="noreferrer">
             here
           </a>{" "}
           on how you can off-ramp your DAI.
         </p>
-        <p>Enter the address when you want to receive your DAI:</p>
+        <p>
+          Enter the <span className="font-bold">Mainnet Ethereum address</span> where you want to receive your DAI:
+        </p>
         <AddressInput value={toAddress} onChange={v => setToAddress(v)} placeholder="To Address" />
       </div>
       <button
