@@ -59,7 +59,7 @@ Let's take a quick tour around the Event Wallet to check the actions that attend
 
   - **Wallet access**. Will load the wallet linked to the QR, located at your Event Ticket.
   - **Send to**. Loads the Send screen with a preloaded "To" address. You'll have to scan this QR from another wallet or from a swag stand.
-  - **Mint collectible**. It loads Mint screen for the soulbound collectible linked to the QR. You'll find those during the speaks.
+  - **Mint collectible**. It loads Mint screen for the soulbound collectible linked to the QR. You'll find those during the talks.
 
   ![Mint collectible](.github/img/EventWallet_Mint.JPG)
 
@@ -159,6 +159,11 @@ yarn install
 5. From `packages/hardhat` run `yarn pin-metadata`. This will upload the images to ipfs, pin the files, generate the metadata for each one based on the data from `assets.ts`, and then upload and pin the metadata to ipfs. This will update the `packages/nextjs/metadataHashes.json` file (used to load the metadata and images locally instead of from ipfs), create the file `packages/nextjs/imagesPinned.json` (each ipfs hash for each tokenType), `packages/nextjs/metadatas.json` (all the metadata objects uploaded to ipfs) and `packages/nextjs/tokenMapping.txt` (the mapping from tokenType to metadata ipfs hash).
 
 6. Copy the data from `packages/nextjs/tokenMapping.txt` to the `EventSBT` constructor, replacing the current tokenTypes.
+
+7. EXAMPLE: Display a QR that leads to http://localhost:3000/mint#5833866498 to mint an example nft with id 5833866498
+ 
+(This is kind of a hacky way to hide NFT mints. Expect that some folks will inspect the chain and find the NFT ids ahead of you reavealing them if you are at a blockchain event.) 
+   
 
 ### 3. Configure website
 
