@@ -66,7 +66,7 @@ export const Claim = () => {
           <a className="link" target="_blank" href="https://test.edcon.io/wallet" rel="noreferrer">
             here
           </a>{" "}
-          on how you can off-ramp your DAI.
+          on how you can collect your DAI.
         </p>
         <p>
           Enter the <span className="font-bold">Mainnet Ethereum address</span> where you want to receive your DAI:
