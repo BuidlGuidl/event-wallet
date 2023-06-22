@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import { GemHistoryData } from "./GemHistoryData";
 import { BigNumber } from "ethers";
 import { useAccount, useBlockNumber } from "wagmi";
-import { useScaffoldEventHistory, useScaffoldEventSubscriber } from "~~/hooks/scaffold-eth";
+import { useScaffoldEventHistory } from "~~/hooks/scaffold-eth";
+import { ContractName } from "~~/utils/scaffold-eth/contract";
 
 /**
  * GemHistory
  */
-export const GemHistory = () => {
+export const GemHistory = ({ tokenContract }: { tokenContract: ContractName }) => {
   const { data: blockNumber } = useBlockNumber();
   const { address } = useAccount();
 
@@ -29,23 +30,14 @@ export const GemHistory = () => {
     : 0;
 
   const { data: outboundTransferEvents, isLoading: isLoadingOutboundTransferEvents } = useScaffoldEventHistory({
-    contractName: "EventGems",
+    contractName: tokenContract,
     eventName: "Transfer",
     fromBlock,
     filters: { from: address },
   });
 
-  useScaffoldEventSubscriber({
-    contractName: "EventGems",
-    eventName: "Transfer",
-    listener: (from, to, value) => {
-      if (from.toLowerCase() === address?.toLowerCase()) {
-        setNewOutboundTransferEvents(prevState => [{ from, to, value }, ...prevState]);
-      }
-    },
-  });
-
   useEffect(() => {
+    setIsLoading(true);
     if (!isLoadingOutboundTransferEvents && outboundTransferEvents) {
       const events: EventData[] = [];
       for (let i = 0; i < outboundTransferEvents.length; i++) {
@@ -56,7 +48,7 @@ export const GemHistory = () => {
       setNewOutboundTransferEvents(events);
       setIsLoading(false);
     }
-  }, [address, isLoadingOutboundTransferEvents]);
+  }, [address, isLoadingOutboundTransferEvents, outboundTransferEvents, tokenContract]);
 
   if (isLoading) {
     return (

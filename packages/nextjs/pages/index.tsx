@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Head from "next/head";
+import { BigNumber } from "ethers";
 import type { NextPage } from "next";
 import { useAccount } from "wagmi";
 import { ArrowDownTrayIcon, HomeIcon, PaperAirplaneIcon, PhotoIcon } from "@heroicons/react/24/outline";
@@ -12,6 +13,7 @@ import { NotAllowed } from "~~/components/screens/NotAllowed";
 import { isBurnerWalletloaded, useAutoConnect, useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 import scaffoldConfig from "~~/scaffold.config";
 import { useAppStore } from "~~/services/store/store";
+import { ContractName } from "~~/utils/scaffold-eth/contract";
 
 const screens = {
   main: <Main />,
@@ -30,10 +32,22 @@ const Home: NextPage = () => {
   const setScreen = useAppStore(state => state.setScreen);
 
   const { address, isConnected } = useAccount();
-  const { data: balance } = useScaffoldContractRead({
-    contractName: "EventGems",
-    functionName: "balanceOf",
-    args: [address],
+
+  const balances: { [key: string]: BigNumber } = {};
+
+  scaffoldConfig.tokens.forEach(token => {
+    balances[token.symbol] = BigNumber.from(0);
+    const contractName: ContractName = `${token.name}Token` as ContractName;
+    // The tokens array should not change, so this should be safe. Anyway, we can refactor this later.
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const { data: balance } = useScaffoldContractRead({
+      contractName: contractName,
+      functionName: "balanceOf",
+      args: [address],
+    });
+    if (balance) {
+      balances[token.symbol] = balance;
+    }
   });
 
   const { data: balanceSBT } = useScaffoldContractRead({
@@ -85,7 +99,9 @@ const Home: NextPage = () => {
                 <div className="flex flex-col items-center mb-6 gap-4">
                   <AddressMain address={address} disableAddressLink={true} />
                   <div className="flex gap-4 items-center">
-                    <TokenBalance amount={balance} />
+                    {scaffoldConfig.tokens.map(token => (
+                      <TokenBalance key={token.symbol} emoji={token.emoji} amount={balances[token.symbol]} />
+                    ))}
                     <span className="text-xl">/</span>
                     <div className="text-xl font-bold flex gap-1">
                       <PhotoIcon className="w-4" />

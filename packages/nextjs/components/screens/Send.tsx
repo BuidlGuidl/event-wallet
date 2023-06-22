@@ -5,8 +5,10 @@ import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import { AddressInput, InputBase } from "~~/components/scaffold-eth";
 import { GemHistory } from "~~/components/screens/Send/GemsHistory";
 import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
+import scaffoldConfig from "~~/scaffold.config";
 import { useAppStore } from "~~/services/store/store";
 import { notification } from "~~/utils/scaffold-eth";
+import { ContractName } from "~~/utils/scaffold-eth/contract";
 
 /**
  * Send Screen
@@ -14,6 +16,9 @@ import { notification } from "~~/utils/scaffold-eth";
 export const Send = () => {
   const [toAddress, setToAddress] = useState("");
   const [amount, setAmount] = useState("");
+  const [selectedToken, setSelectedToken] = useState<ContractName>(
+    scaffoldConfig.tokens[0].contractName as ContractName,
+  );
   const payload = useAppStore(state => state.screenPayload);
 
   useEffect(() => {
@@ -23,7 +28,7 @@ export const Send = () => {
   }, [payload]);
 
   const { writeAsync: transfer, isMining } = useScaffoldContractWrite({
-    contractName: "EventGems",
+    contractName: selectedToken,
     functionName: "transfer",
     args: [toAddress, ethers.utils.parseEther(amount || "0")],
   });
@@ -46,6 +51,25 @@ export const Send = () => {
 
   return (
     <div className="flex flex-col gap-2">
+      <div className="flex gap-4 text-3xl">
+        {scaffoldConfig.tokens.map(token => (
+          <label
+            key={token.symbol}
+            className={`p-2 cursor-pointer ${
+              selectedToken === token.contractName ? "bg-primary outline outline-2 outline-black" : ""
+            }`}
+          >
+            <input
+              type="radio"
+              name="token"
+              value={token.contractName}
+              className="w-0 h-0"
+              onChange={t => setSelectedToken(t.target.value as ContractName)}
+            />
+            {token.emoji}
+          </label>
+        ))}
+      </div>
       <div>
         <AddressInput value={toAddress} onChange={v => setToAddress(v)} placeholder="To Address" />
       </div>
@@ -69,7 +93,7 @@ export const Send = () => {
         </button>
       </div>
       <div className="mt-4 w-full">
-        <GemHistory />
+        <GemHistory tokenContract={selectedToken} />
       </div>
     </div>
   );

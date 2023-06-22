@@ -4,6 +4,8 @@ import type { NextPage } from "next";
 import { useBlockNumber } from "wagmi";
 import { Board } from "~~/components/Leaderboard/Board";
 import { useScaffoldContract, useScaffoldEventHistory } from "~~/hooks/scaffold-eth";
+import scaffoldConfig from "~~/scaffold.config";
+import { ContractName } from "~~/utils/scaffold-eth/contract";
 
 const Leaderboard: NextPage = () => {
   type LeaderboardData = {
@@ -33,11 +35,13 @@ const Leaderboard: NextPage = () => {
 
   const PAGE_SIZE = 100;
 
-  const { data: nftContract } = useScaffoldContract({ contractName: "EventGems" });
+  const { data: tokenContract } = useScaffoldContract({
+    contractName: scaffoldConfig.tokens[0].contractName as ContractName,
+  });
 
   useEffect(() => {
     const updateLeaderboard = async () => {
-      if (!isLoadingMintEvents && mintEvents && nftContract) {
+      if (!isLoadingMintEvents && mintEvents && tokenContract) {
         let leaderboardData: LeaderboardData[] = [];
         const nftCountByAddress: { [key: string]: number } = {};
         for (let i = 0; i < mintEvents.length; i++) {
@@ -55,7 +59,7 @@ const Leaderboard: NextPage = () => {
         for (let i = 0; i < topAddresses.length; i++) {
           const address = topAddresses[i][0];
           const nftCount = topAddresses[i][1];
-          const balance: BigNumber = await nftContract.balanceOf(address);
+          const balance: BigNumber = await tokenContract.balanceOf(address);
           leaderboardData.push({ address, nftCount, balance });
         }
         leaderboardData = leaderboardData.sort((a, b) =>
@@ -66,7 +70,7 @@ const Leaderboard: NextPage = () => {
       }
     };
     updateLeaderboard();
-  }, [isLoadingMintEvents, nftContract]);
+  }, [isLoadingMintEvents, tokenContract]);
 
   return (
     <div className="flex flex-col items-center justify-center py-2">

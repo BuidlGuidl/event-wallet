@@ -32,29 +32,40 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
     autoMine: true,
   });
 
-  const eventGems = await deploy("EventGems", {
+  const avocado = await deploy("AvocadoToken", {
     from: deployer,
-    // Contract constructor arguments
     args: [ownerAddress],
     log: true,
-    // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
-    // automatically mining the contract deployment transaction. There is no effect on live networks.
+    autoMine: true,
+  });
+
+  await deploy("BananaToken", {
+    from: deployer,
+    args: [ownerAddress],
+    log: true,
+    autoMine: true,
+  });
+
+  await deploy("TomatoToken", {
+    from: deployer,
+    args: [ownerAddress],
+    log: true,
     autoMine: true,
   });
 
   const eventSBT = await deploy("EventSBT", {
     from: deployer,
     // Contract constructor arguments
-    args: [ownerAddress, eventGems.address],
+    args: [ownerAddress, avocado.address],
     log: true,
     // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
     // automatically mining the contract deployment transaction. There is no effect on live networks.
     autoMine: true,
   });
 
-  const eventGemsContract = await hre.ethers.getContract("EventGems", deployer);
+  const avocadoContract = await hre.ethers.getContract("AvocadoToken", deployer);
 
-  await eventGemsContract.grantRole(
+  await avocadoContract.grantRole(
     hre.ethers.utils.keccak256(hre.ethers.utils.toUtf8Bytes("MINTER_ROLE")),
     eventSBT.address,
   );
