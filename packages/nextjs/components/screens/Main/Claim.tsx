@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import { isAddress } from "ethers/lib/utils";
 import { toast } from "react-hot-toast";
@@ -11,8 +11,28 @@ export const Claim = () => {
   const { address } = useAccount();
   const [toAddress, setToAddress] = useState("");
   const [processing, setProcessing] = useState(false);
+  const [isClaimed, setIsClaimed] = useState(false);
+  const [isLoadingClaimed, setIsLoadingClaimed] = useState(true);
 
   const amount = address && winners[address];
+
+  useEffect(() => {
+    const checkClaimed = async () => {
+      try {
+        const response = await fetch(`/api/check-claimed?address=${address}`);
+        const result = await response.json();
+        setIsClaimed(result.claimed);
+      } catch (err) {
+        console.error("Error checking claim status");
+      } finally {
+        setIsLoadingClaimed(false);
+      }
+    };
+
+    if (address) {
+      checkClaimed();
+    }
+  }, [address]);
 
   const handleClick = async () => {
     setProcessing(true);
@@ -48,6 +68,7 @@ export const Claim = () => {
 
       toast.success("Claimed DAI! You should receive it shortly in your destination address.");
       setToAddress("");
+      setIsClaimed(true);
     } catch (err) {
       // @ts-ignore
       toast.error(err.message);
@@ -74,11 +95,11 @@ export const Claim = () => {
         <AddressInput value={toAddress} onChange={v => setToAddress(v)} placeholder="To Address" />
       </div>
       <button
-        className={`btn btn-primary w-full mt-4 ${processing ? "loading" : ""}`}
-        disabled={processing}
+        className={`btn btn-primary w-full mt-4 ${processing || isLoadingClaimed ? "loading" : ""}`}
+        disabled={processing || isLoadingClaimed || isClaimed}
         onClick={handleClick}
       >
-        Claim DAI
+        {isClaimed ? "Already Claimed" : "Claim DAI"}
       </button>
     </div>
   );
