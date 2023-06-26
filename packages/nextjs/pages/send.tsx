@@ -15,7 +15,7 @@ const Send: NextPage = () => {
     const code = router.asPath.replace("/", "");
     redirectToScreenFromCode(code, setScreen, router);
     router.push("/");
-  }, [router.asPath, router.push]);
+  }, [router, setScreen, router.asPath, router.push]);
 
   return null;
 };

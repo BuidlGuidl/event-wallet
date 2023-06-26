@@ -56,7 +56,7 @@ export const GemHistory = () => {
       setNewOutboundTransferEvents(events);
       setIsLoading(false);
     }
-  }, [address, isLoadingOutboundTransferEvents]);
+  }, [address, isLoadingOutboundTransferEvents, outboundTransferEvents]);
 
   if (isLoading) {
     return (
