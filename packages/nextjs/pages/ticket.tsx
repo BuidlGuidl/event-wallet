@@ -17,7 +17,7 @@ const Ticket: NextPage = () => {
     router.push("/").then(() => {
       router.reload();
     });
-  }, [router.asPath, router.push]);
+  }, [router, setScreen, router.asPath, router.push]);
 
   return null;
 };

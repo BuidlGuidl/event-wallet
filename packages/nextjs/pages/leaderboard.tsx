@@ -66,7 +66,7 @@ const Leaderboard: NextPage = () => {
       }
     };
     updateLeaderboard();
-  }, [isLoadingMintEvents, nftContract]);
+  }, [isLoadingMintEvents, nftContract, mintEvents]);
 
   return (
     <div className="flex flex-col items-center justify-center py-2">

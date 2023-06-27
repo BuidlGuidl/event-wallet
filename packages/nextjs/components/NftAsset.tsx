@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Image from "next/image";
 import ReactCardFlip from "react-card-flip";
 import Tilt from "react-parallax-tilt";
 import { ArrowsRightLeftIcon } from "@heroicons/react/24/solid";
@@ -23,11 +24,13 @@ const NftAsset = ({ id }: { id: string }) => {
       <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
         <div className="relative">
           <ArrowsRightLeftIcon className="w-5 h-5 absolute right-0 top-0 m-2 text-secondary pointer-events-none" />
-          <img
+          <Image
             src={`/assets/nfts/${id}.jpg`}
             alt={asset.description}
             onClick={handleClick}
-            className="cursor-pointer w-[300px] h-[300px]"
+            width={300}
+            height={300}
+            className="cursor-pointer"
           />
         </div>
         <div onClick={handleClick} className="cursor-pointer w-[300px] h-[300px] bg-primary text-white p-10 relative">
