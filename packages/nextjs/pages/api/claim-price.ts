@@ -9,6 +9,11 @@ type ReqBody = {
   destinationAddress: string;
 };
 
+// month is 0-indexed (5 for June)
+const claimingPeriodStart = new Date(2023, 5, 29);
+const claimingPeriodEnd = new Date(claimingPeriodStart.getTime());
+claimingPeriodEnd.setDate(claimingPeriodStart.getDate() + 60);
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { signature, signerAddress, destinationAddress }: ReqBody = req.body;
 
@@ -19,6 +24,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
   if (!signature || !destinationAddress) {
     res.status(400).json({ error: "Missing required parameters." });
+    return;
+  }
+
+  const now = new Date();
+  if (now > claimingPeriodEnd) {
+    res.status(401).json({ error: "Claiming period is over" });
     return;
   }
 
