@@ -27,7 +27,7 @@ export const Board = ({ leaderboard, isLoading }: { leaderboard: any[]; isLoadin
               <th>#</th>
               <th>Address</th>
               <th>NFTs</th>
-              <th>{scaffoldConfig.tokenEmoji}</th>
+              <th>{scaffoldConfig.tokens[0].emoji}</th>
             </tr>
           </thead>
           <tbody>

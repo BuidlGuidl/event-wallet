@@ -1,18 +1,18 @@
 import { BigNumber, ethers } from "ethers";
-import scaffoldConfig from "~~/scaffold.config";
 
 type TTokenBalanceProps = {
+  emoji?: string;
   amount?: BigNumber;
 };
 
 /**
- * Display Balance of token
+ * Display Balance of a token
  */
-export const TokenBalance = ({ amount }: TTokenBalanceProps) => {
+export const TokenBalance = ({ emoji, amount }: TTokenBalanceProps) => {
   return (
     <div className="w-full flex items-center justify-center">
       <>
-        <span className="text-3xl font-bold mr-1">{scaffoldConfig.tokenEmoji}</span>
+        <span className="text-3xl font-bold mr-1">{emoji}</span>
         <div className="flex flex-col">
           <span className="text-2xl font-bold">{amount && ethers.utils.formatEther(amount)}</span>
         </div>

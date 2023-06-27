@@ -7,10 +7,10 @@ import "@openzeppelin/contracts/access/AccessControl.sol";
 /**
  * ERC20 token contract for Events.
  */
-contract EventGems is ERC20, AccessControl {
+contract TomatoToken is ERC20, AccessControl {
   bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
-  constructor(address _owner) ERC20("EventGems", "EGM") {
+  constructor(address _owner) ERC20("Tomato", "TMT") {
     _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
     _mint(_owner, 60000 ether);
   }
