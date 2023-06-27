@@ -41,19 +41,20 @@ export const Collectibles = () => {
       setIsLoadingNfts(true);
       const nftUpdate: Nft[] = [];
       const metadataHashes: MetadataHashes = untypedMetadataHashes;
-      if (nftContract && balance && balance.toNumber && balance.toNumber() > 0) {
+      if (address && nftContract && balance && balance.toNumber && balance.toNumber() > 0) {
         for (let tokenIndex = 0; tokenIndex < balance.toNumber(); tokenIndex++) {
           try {
             const tokenId: BigNumber = await nftContract.tokenOfOwnerByIndex(address, tokenIndex);
             const tokenURI: string = await nftContract.tokenURI(tokenId);
-            const hash: string = tokenURI.split("/").pop()!;
+            const hash: string | undefined = tokenURI.split("/").pop();
+            if (!hash) continue;
             const tokenType = metadataHashes[hash];
             const nftData = ASSETS[tokenType as keyof typeof ASSETS];
 
             const nft: Nft = {
               id: tokenId,
               uri: tokenURI,
-              owner: address!,
+              owner: address,
               tokenType: tokenType,
               name: nftData.name,
               talk: nftData.talk,

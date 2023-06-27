@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 /**
  * Not Allowed Screen
  */
@@ -5,7 +7,7 @@ export const NotAllowed = () => {
   return (
     <div className="flex flex-col items-center justify-center py-2">
       <div className="max-w-96 p-8">
-        <img src="/bg.png" alt="Event Wallet Logo" className="max-w-[30px] absolute top-0 left-0 m-5" />
+        <Image src="/bg.png" alt="Event Wallet Logo" width={30} height={43} className="absolute top-0 left-0 m-5" />
         <div className="flex flex-col gap-2 pt-2">
           <p className="text-center text-5xl">⚠️</p>
           <p className="text-center text-xl">

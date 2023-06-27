@@ -70,7 +70,7 @@ const Leaderboard: NextPage = () => {
       }
     };
     updateLeaderboard();
-  }, [isLoadingMintEvents, tokenContract]);
+  }, [isLoadingMintEvents, tokenContract, mintEvents]);
 
   return (
     <div className="flex flex-col items-center justify-center py-2">
