@@ -3,24 +3,33 @@ import type { NextPage } from "next";
 import { useInterval } from "usehooks-ts";
 import { Board } from "~~/components/CheckedIn/Board";
 import scaffoldConfig from "~~/scaffold.config";
+import { notification } from "~~/utils/scaffold-eth";
 
 const Leaderboard: NextPage = () => {
   const [loadingCheckedIn, setLoadingCheckedIn] = useState(true);
   const [checkedInAddresses, setCheckedInAddresses] = useState<string[]>([]);
 
   const fetchPeopleCheckedIn = async () => {
-    const response = await fetch("/api/admin/checked-in", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    try {
+      const response = await fetch("/api/admin/checked-in", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-    const data = await response.json();
+      const data = await response.json();
 
-    setCheckedInAddresses(data);
-
-    setLoadingCheckedIn(false);
+      if (response.ok) {
+        setCheckedInAddresses(data);
+      } else {
+        notification.error(data.error);
+      }
+    } catch (e) {
+      console.log("Error fetching checked in addresses", e);
+    } finally {
+      setLoadingCheckedIn(false);
+    }
   };
 
   useInterval(async () => {

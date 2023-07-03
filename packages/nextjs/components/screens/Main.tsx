@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
-import { toast } from "react-hot-toast";
 import { useAccount } from "wagmi";
 import { loadBurnerSK } from "~~/hooks/scaffold-eth";
 import scaffoldConfig from "~~/scaffold.config";
+import { notification } from "~~/utils/scaffold-eth";
 
 /**
  * Main Screen
@@ -16,7 +16,7 @@ export const Main = () => {
 
   useEffect(() => {
     const updateCheckedIn = async () => {
-      if (address) {
+      try {
         setLoadingCheckedIn(true);
         const response = await fetch(`/api/checked-in/${address}`, {
           method: "GET",
@@ -27,12 +27,20 @@ export const Main = () => {
 
         if (response.ok) {
           setCheckedIn(true);
+        } else {
+          const result = await response.json();
+          notification.error(result.error);
         }
-
+      } catch (e) {
+        console.log("Error checking if user is checked in", e);
+      } finally {
         setLoadingCheckedIn(false);
       }
     };
-    updateCheckedIn();
+
+    if (address) {
+      updateCheckedIn();
+    }
   }, [address]);
 
   const handleClick = async () => {
@@ -58,17 +66,16 @@ export const Main = () => {
         body: JSON.stringify({ signature, signerAddress: address }),
       });
 
-      const result = await response.json();
-
       if (!response.ok) {
-        throw new Error(result.error);
+        notification.success("Checked in!");
+      } else {
+        const result = await response.json();
+        notification.error(result.error);
       }
 
-      toast.success("Checked in!");
       setCheckedIn(true);
-    } catch (err) {
-      // @ts-ignore
-      toast.error(err.message);
+    } catch (e) {
+      console.log("Error checking in the user", e);
     } finally {
       setProcessing(false);
     }
