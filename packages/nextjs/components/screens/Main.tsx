@@ -66,7 +66,7 @@ export const Main = () => {
         body: JSON.stringify({ signature, signerAddress: address }),
       });
 
-      if (!response.ok) {
+      if (response.ok) {
         notification.success("Checked in!");
       } else {
         const result = await response.json();
