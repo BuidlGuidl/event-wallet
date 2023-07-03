@@ -25,7 +25,7 @@ const scaffoldConfig = {
   pollingInterval: 5000,
 
   tokenEmoji: "💎",
-  eventName: "EVENT",
+  eventName: "THE TALK",
   hideHeader: true,
 
   // This is ours Alchemy's default API key.
