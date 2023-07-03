@@ -1,8 +1,8 @@
-# Event Wallet
+# Talk Wallet
 
-This **forkable** project provides a web-based crypto (burner) wallet, aiming to enhance the experience of attendees at your event, by providing a gamification element. This allows interaction with other attendees, as well as the organizers and sponsors of the event.
+This **forkable** project provides a web-based crypto (burner) wallet, aiming to enhance the experience of attendees at your talk, by providing a gamification element. This allows interaction with other attendees, as well as the organizers.
 
-**Event Wallet** is designed for both crypto natives and newcomers to complete a series of activities, allowing them to have a more immersive experience within your crypto event, experimenting with common use-cases of the crypto space, like sending / receiving tokens, and minting NFTs.
+**Talk Wallet** is designed for both crypto natives and newcomers to complete a series of activities, allowing them to have a more immersive experience within your crypto event, experimenting with common use-cases of the crypto space, like sending / receiving tokens, and minting NFTs.
 
 ## Event Wallet features
 
