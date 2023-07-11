@@ -8,6 +8,7 @@ import { AddressMain } from "~~/components/scaffold-eth/AddressMain";
 import { TokenBalance } from "~~/components/scaffold-eth/TokenBalance";
 import { Collectibles, Main, Receive, Send } from "~~/components/screens";
 import { Mint } from "~~/components/screens/Mint";
+import { QuestionShow } from "~~/components/screens/QuestionShow";
 import { useAutoConnect, useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 import { useAppStore } from "~~/services/store/store";
 
@@ -17,6 +18,7 @@ const screens = {
   receive: <Receive />,
   collectibles: <Collectibles />,
   mint: <Mint />,
+  questionShow: <QuestionShow />,
 };
 
 const Home: NextPage = () => {

@@ -46,6 +46,7 @@ export const Main = () => {
   const handleClick = async () => {
     setProcessing(true);
     if (!address) {
+      setProcessing(false);
       return;
     }
 
@@ -67,13 +68,12 @@ export const Main = () => {
       });
 
       if (response.ok) {
+        setCheckedIn(true);
         notification.success("Checked in!");
       } else {
         const result = await response.json();
         notification.error(result.error);
       }
-
-      setCheckedIn(true);
     } catch (e) {
       console.log("Error checking in the user", e);
     } finally {
