@@ -19,11 +19,12 @@ export const QuestionShow = () => {
 
   const { address } = useAccount();
   const [processing, setProcessing] = useState(false);
-  const [loadingQuestionOpened, setLoadingQuestionOpened] = useState(true);
-  const [questionOpened, setQuestionOpened] = useState<boolean>(false);
+  const [loadingQuestionStatus, setLoadingQuestionStatus] = useState(true);
+  const [questionStatus, setQuestionStatus] = useState<string>("closed");
+  const [questionRightOption, setQuestionRightOption] = useState<number>();
   const [selectedOption, setSelectedOption] = useState<string>();
 
-  const fetchQuestionOpened = async () => {
+  const fetchQuestionStatus = async () => {
     try {
       const response = await fetch(`/api/questions/${id}`, {
         method: "GET",
@@ -37,19 +38,30 @@ export const QuestionShow = () => {
       console.log("data", data);
 
       if (response.ok) {
-        setQuestionOpened(data.open);
+        setQuestionStatus(data.status);
+        if (data.status === "reveal") {
+          setQuestionRightOption(data.option);
+        }
       } else {
         notification.error(data.error);
       }
     } catch (e) {
       console.log("Error fetching questions opened", e);
     } finally {
-      setLoadingQuestionOpened(false);
+      setLoadingQuestionStatus(false);
     }
   };
 
+  useEffect(() => {
+    (async () => {
+      if (question) {
+        await fetchQuestionStatus();
+      }
+    })();
+  }, [question]);
+
   useInterval(async () => {
-    await fetchQuestionOpened();
+    await fetchQuestionStatus();
   }, scaffoldConfig.pollingInterval);
 
   useEffect(() => {
@@ -142,7 +154,7 @@ export const QuestionShow = () => {
           {question && question.question}
           {question && question.value && ` (${question.value})`}
         </h1>
-        <h2 className="text-2xl font-bold">{questionOpened ? "Select your answers..." : "Closed"}</h2>
+        <h2 className="text-2xl font-bold">{questionStatus === "open" ? "Select your answers..." : "Closed"}</h2>
       </div>
       <div className="flex flex-col pt-2 gap-[100px] md:flex-row">
         <ol>
@@ -152,16 +164,18 @@ export const QuestionShow = () => {
                 <div
                   className={`flex flex-row items-center p-3 m-3 outline outline-2 outline-black ${
                     selectedOption == (index as unknown as string) ? "bg-primary" : ""
-                  }`}
+                  } ${questionStatus === "reveal" && questionRightOption === index ? "border-green-500 border-4" : ""}`}
                 >
                   <label
-                    className={`p-2 ${processing || loadingQuestionOpened || !questionOpened ? "" : "cursor-pointer"}`}
+                    className={`p-2 ${
+                      processing || loadingQuestionStatus || questionStatus !== "open" ? "" : "cursor-pointer"
+                    }`}
                   >
                     <input
                       type="radio"
                       name="token"
                       value={index}
-                      disabled={processing || loadingQuestionOpened || !questionOpened}
+                      disabled={processing || loadingQuestionStatus || questionStatus !== "open"}
                       className="w-0 h-0"
                       onChange={t => setSelectedOption(t.target.value)}
                     />
@@ -175,11 +189,11 @@ export const QuestionShow = () => {
         </ol>
       </div>
       <button
-        className={`btn btn-primary w-80 mt-4 ${processing || loadingQuestionOpened ? "loading" : ""}`}
-        disabled={processing || loadingQuestionOpened || !questionOpened}
+        className={`btn btn-primary w-80 mt-4 ${processing || loadingQuestionStatus ? "loading" : ""}`}
+        disabled={processing || loadingQuestionStatus || questionStatus !== "open"}
         onClick={handleSave}
       >
-        {loadingQuestionOpened ? "..." : "Save"}
+        {loadingQuestionStatus ? "..." : "Save"}
       </button>
     </div>
   );

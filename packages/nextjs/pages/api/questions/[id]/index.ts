@@ -40,9 +40,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const questionKey = `question:${id}`;
 
-    const open = await kv.hget<boolean>(questionKey, "open");
+    const status = await kv.hget<string>(questionKey, "status");
 
-    if (!open) {
+    if (status !== "open") {
       res.status(400).json({ error: "Question not opened." });
       return;
     }
@@ -59,21 +59,28 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const questionAnswer: Record<string, string> = {};
     questionAnswer[`question:${id}`] = option;
 
-    await kv.hset(key, questionAnswer);
-
     const alreadyAnswered = await kv.sismember(`questions:${id}:answered`, signerAddress);
 
     // we allow to change the answer
     if (!alreadyAnswered) {
       await kv.sadd(`questions:${id}:answered`, signerAddress);
+    } else {
+      const previousOption = await kv.hget<string>(key, `question:${id}`);
+      if (previousOption) {
+        await kv.srem(`questions:${id}:${previousOption}`, signerAddress);
+      }
     }
+
+    await kv.hset(key, questionAnswer);
+    await kv.sadd(`questions:${id}:${option}`, signerAddress);
 
     res.status(200).json({ message: "Answered!" });
   } else if (req.method === "GET") {
     const { id } = req.query;
-    const open = await kv.hget<boolean>(`question:${id}`, "open");
+    const status = await kv.hget<boolean>(`question:${id}`, "status");
+    const option = await kv.hget<boolean>(`question:${id}`, "option");
     const addresses = await kv.smembers(`questions:${id}:answered`);
 
-    res.status(200).json({ open, addresses });
+    res.status(200).json({ status, addresses, option });
   }
 }

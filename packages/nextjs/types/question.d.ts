@@ -9,3 +9,8 @@ export type Question = {
   value: number;
   options: QuestionOption[];
 };
+
+export type QuestionsLeaderboard = {
+  address: string;
+  score: number;
+};

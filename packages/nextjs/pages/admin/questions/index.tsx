@@ -12,10 +12,11 @@ const Questions: NextPage = () => {
 
   const [loadingQuestions, setLoadingQuestions] = useState(true);
   const [questionsOpened, setQuestionsOpened] = useState<number[]>([]);
+  const [questionsRevealed, setQuestionsRevealed] = useState<number[]>([]);
 
-  const fetchQuestionsOpened = async () => {
+  const fetchQuestionsStatus = async () => {
     try {
-      const response = await fetch("/api/admin/questions/opened", {
+      const response = await fetch("/api/admin/questions/status", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -27,19 +28,20 @@ const Questions: NextPage = () => {
       console.log("data", data);
 
       if (response.ok) {
-        setQuestionsOpened(data);
+        setQuestionsOpened(data.open);
+        setQuestionsRevealed(data.reveal);
       } else {
         notification.error(data.error);
       }
     } catch (e) {
-      console.log("Error fetching questions opened", e);
+      console.log("Error fetching questions status", e);
     } finally {
       setLoadingQuestions(false);
     }
   };
 
   useInterval(async () => {
-    await fetchQuestionsOpened();
+    await fetchQuestionsStatus();
   }, scaffoldConfig.pollingInterval);
 
   return (
@@ -48,7 +50,12 @@ const Questions: NextPage = () => {
         <h1 className="text-4xl font-bold">Questions</h1>
       </div>
       <div className="flex flex-col pt-2 gap-[100px] md:flex-row">
-        <List questions={questions} isLoading={loadingQuestions} questionsOpened={questionsOpened} />
+        <List
+          questions={questions}
+          isLoading={loadingQuestions}
+          questionsOpened={questionsOpened}
+          questionsRevealed={questionsRevealed}
+        />
       </div>
     </div>
   );

@@ -4,10 +4,12 @@ export const List = ({
   questions,
   isLoading,
   questionsOpened,
+  questionsRevealed,
 }: {
   questions: Question[];
   isLoading: boolean;
   questionsOpened: number[];
+  questionsRevealed: number[];
 }) => {
   if (isLoading) {
     return (
@@ -34,6 +36,7 @@ export const List = ({
               <th>ID</th>
               <th>Question</th>
               <th>Open</th>
+              <th>Reveal</th>
             </tr>
           </thead>
           <tbody>
@@ -46,6 +49,7 @@ export const List = ({
                   <a href={`/admin/questions/${question.id}`}>{question.question}</a>
                 </td>
                 <td>{questionsOpened.includes(question.id) ? "✓" : "×"}</td>
+                <td>{questionsRevealed.includes(question.id) ? "✓" : "×"}</td>
               </tr>
             ))}
           </tbody>

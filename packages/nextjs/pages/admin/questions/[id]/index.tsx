@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import type { NextPage } from "next";
 import { useInterval } from "usehooks-ts";
@@ -16,8 +17,9 @@ const AdminQuestionShow: NextPage = () => {
   const question: Question | undefined = untypedQuestions.find(q => q.id === questionId);
 
   const [loadingQuestionData, setLoadingQuestionData] = useState(true);
-  const [questionOpened, setQuestionOpened] = useState<boolean>(false);
+  const [questionStatus, setQuestionStatus] = useState<string>("closed");
   const [addressesAnswered, setAddressesAnswered] = useState<string[]>([]);
+  const [addressesSuccess, setAddressesSuccess] = useState<string[]>([]);
   const [processing, setProcessing] = useState(false);
 
   const fetchQuestionData = async () => {
@@ -34,35 +36,59 @@ const AdminQuestionShow: NextPage = () => {
       console.log("data", data);
 
       if (response.ok) {
-        setQuestionOpened(data.open);
+        setQuestionStatus(data.status);
         setAddressesAnswered(data.addresses);
       } else {
         notification.error(data.error);
       }
     } catch (e) {
-      console.log("Error fetching question opened", e);
+      console.log("Error fetching question data", e);
     } finally {
       setLoadingQuestionData(false);
     }
   };
 
+  useEffect(() => {
+    (async () => {
+      if (question) {
+        await fetchQuestionData();
+      }
+    })();
+  }, [question]);
+
   useInterval(async () => {
-    await fetchQuestionData();
+    if (questionStatus !== "reveal") {
+      await fetchQuestionData();
+    }
   }, scaffoldConfig.pollingInterval);
 
-  const handleOpen = async () => {
+  const handleChangeStatus = async (newStatus: string) => {
+    if (!question) return;
+
     setProcessing(true);
+
+    type ReqBody = {
+      newStatus: string;
+      option?: number;
+      value?: number;
+    };
+
+    const bodyData: ReqBody = { newStatus };
+    if (newStatus === "reveal") {
+      bodyData.option = question.options.findIndex(o => o.ok);
+      bodyData.value = question.value;
+    }
     try {
-      const response = await fetch(`/api/admin/questions/${id}/open`, {
+      const response = await fetch(`/api/admin/questions/${id}/status`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
+        body: JSON.stringify(bodyData),
       });
 
       if (response.ok) {
-        setQuestionOpened(true);
-        notification.success("Opened!");
+        setQuestionStatus(newStatus);
       } else {
         const result = await response.json();
         notification.error(result.error);
@@ -74,29 +100,34 @@ const AdminQuestionShow: NextPage = () => {
     }
   };
 
-  const handleClose = async () => {
-    setProcessing(true);
-    try {
-      const response = await fetch(`/api/admin/questions/${id}/close`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+  useEffect(() => {
+    const getRightOptionAddresses = async () => {
+      if (question && questionStatus === "reveal") {
+        try {
+          const option = question.options.findIndex(o => o.ok);
+          const response = await fetch(`/api/admin/questions/${id}/option/${option}`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
 
-      if (response.ok) {
-        setQuestionOpened(false);
-        notification.success("Closed!");
-      } else {
-        const result = await response.json();
-        notification.error(result.error);
+          const data = await response.json();
+
+          console.log("data", data);
+
+          if (response.ok && data !== null) {
+            setAddressesSuccess(data);
+          } else {
+            notification.error(data.error);
+          }
+        } catch (e) {
+          console.log("Error fetching addresses success", e);
+        }
       }
-    } catch (e) {
-      console.log("Error closing question", e);
-    } finally {
-      setProcessing(false);
-    }
-  };
+    };
+    getRightOptionAddresses();
+  }, [id, question, questionStatus]);
 
   if (question === undefined) {
     return (
@@ -111,28 +142,34 @@ const AdminQuestionShow: NextPage = () => {
   return (
     <div className="flex flex-col items-center justify-center py-2">
       <div className="max-w-96 p-8">
+        <Link href="/admin/questions">Questions</Link>
         <h1 className="text-4xl font-bold">
           {question && question.question}
           {question && question.value && ` (${question.value})`}
         </h1>
         <h2 className="text-2xl font-bold">
-          {loadingQuestionData ? (
-            "Loading..."
-          ) : questionOpened ? (
-            <>
-              Open
-              <button className="btn btn-primary ml-2" disabled={processing} onClick={handleClose}>
-                Close
-              </button>
-            </>
-          ) : (
+          {loadingQuestionData && "Loading..."}
+          {!loadingQuestionData && (questionStatus === "closed" || questionStatus === null) && (
             <>
               Closed
-              <button className="btn btn-primary ml-2" disabled={processing} onClick={handleOpen}>
+              <button className="btn btn-primary ml-2" disabled={processing} onClick={() => handleChangeStatus("open")}>
                 Open
               </button>
             </>
           )}
+          {!loadingQuestionData && questionStatus === "open" && (
+            <>
+              Open
+              <button
+                className="btn btn-primary ml-2"
+                disabled={processing}
+                onClick={() => handleChangeStatus("reveal")}
+              >
+                Reveal Answer
+              </button>
+            </>
+          )}
+          {!loadingQuestionData && questionStatus === "reveal" && <>Revealed</>}
         </h2>
       </div>
       <div className="flex flex-col pt-2 gap-[100px] md:flex-row">
@@ -140,7 +177,11 @@ const AdminQuestionShow: NextPage = () => {
           {question &&
             question.options.map((option, index) => (
               <li key={index}>
-                <div className="flex flex-row items-center p-3">
+                <div
+                  className={`flex flex-row items-center p-3 ${
+                    !loadingQuestionData && questionStatus === "reveal" && option.ok ? "bg-success" : ""
+                  }`}
+                >
                   <div className="w-8 h-8 mr-2 rounded-full bg-gray-200 flex justify-center items-center">
                     {index + 1}
                   </div>
@@ -151,7 +192,14 @@ const AdminQuestionShow: NextPage = () => {
         </ol>
       </div>
       <div className="max-w-96 mt-8">
-        <h2 className="text-2xl font-bold">Responses</h2>
+        <h2 className="text-2xl font-bold">
+          Responses
+          {!loadingQuestionData && questionStatus === "reveal" && (
+            <span className="ml-2">
+              ({addressesSuccess.length} correct of {addressesAnswered.length})
+            </span>
+          )}
+        </h2>
       </div>
       <div className="flex flex-col gap-[100px] md:flex-row">
         {loadingQuestionData ? (
@@ -161,7 +209,12 @@ const AdminQuestionShow: NextPage = () => {
         ) : (
           <ol>
             {addressesAnswered.map((address, index) => (
-              <li key={index} className="m-4">
+              <li
+                key={index}
+                className={`m-4 p-2 ${
+                  questionStatus === "reveal" && addressesSuccess.includes(address) ? "bg-success" : ""
+                }`}
+              >
                 <Address address={address} />
               </li>
             ))}
