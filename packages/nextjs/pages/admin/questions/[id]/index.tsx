@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import type { NextPage } from "next";
+import QRCode from "react-qr-code";
 import { useInterval } from "usehooks-ts";
 import { Address } from "~~/components/scaffold-eth";
 import untypedQuestions from "~~/questions.json";
@@ -172,7 +173,7 @@ const AdminQuestionShow: NextPage = () => {
           {!loadingQuestionData && questionStatus === "reveal" && <>Revealed</>}
         </h2>
       </div>
-      <div className="flex flex-col pt-2 gap-[100px] md:flex-row">
+      <div className="flex flex-col pt-2 gap-[100px] md:flex-row mb-10">
         <ol>
           {question &&
             question.options.map((option, index) => (
@@ -191,6 +192,7 @@ const AdminQuestionShow: NextPage = () => {
             ))}
         </ol>
       </div>
+      <QRCode size={300} value={`${scaffoldConfig.liveUrl}/questions#${id}`} viewBox="0 0 150 150" />
       <div className="max-w-96 mt-8">
         <h2 className="text-2xl font-bold">
           Responses
