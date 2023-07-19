@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { NextPage } from "next";
 import { useInterval } from "usehooks-ts";
 import { List } from "~~/components/Questions/List";
@@ -39,6 +39,12 @@ const Questions: NextPage = () => {
       setLoadingQuestions(false);
     }
   };
+
+  useEffect(() => {
+    (async () => {
+      await fetchQuestionsStatus();
+    })();
+  }, []);
 
   useInterval(async () => {
     await fetchQuestionsStatus();

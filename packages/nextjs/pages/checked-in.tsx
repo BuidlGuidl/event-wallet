@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { NextPage } from "next";
 import { useInterval } from "usehooks-ts";
 import { Board } from "~~/components/CheckedIn/Board";
@@ -31,6 +31,12 @@ const Leaderboard: NextPage = () => {
       setLoadingCheckedIn(false);
     }
   };
+
+  useEffect(() => {
+    (async () => {
+      await fetchPeopleCheckedIn();
+    })();
+  }, []);
 
   useInterval(async () => {
     await fetchPeopleCheckedIn();
