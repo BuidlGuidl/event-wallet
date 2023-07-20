@@ -14,3 +14,9 @@ export type QuestionsLeaderboard = {
   address: string;
   score: number;
 };
+
+export type UserData = {
+  checkin: string;
+  // "question:i": number;
+  score: number;
+};

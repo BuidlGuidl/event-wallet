@@ -9,12 +9,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return;
   }
 
-  const checkIn = await kv.hget<string>(`user:${address}`, "checkin");
+  const userData = await kv.hgetall<any>(`user:${address}`);
 
-  if (!checkIn) {
+  if (!userData || !userData.checkin) {
     res.status(404).json({ error: "Not checked in!" });
     return;
   }
 
-  res.status(200).json({ address, checkIn });
+  res.status(200).json(userData);
 }

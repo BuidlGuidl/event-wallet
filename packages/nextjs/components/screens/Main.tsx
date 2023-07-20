@@ -18,14 +18,16 @@ export const Main = () => {
     const updateCheckedIn = async () => {
       try {
         setLoadingCheckedIn(true);
-        const response = await fetch(`/api/checked-in/${address}`, {
+        const response = await fetch(`/api/users/${address}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
           },
         });
 
-        if (response.ok) {
+        const data = await response.json();
+
+        if (response.ok && data.checkin) {
           setCheckedIn(true);
         } else {
           const result = await response.json();
