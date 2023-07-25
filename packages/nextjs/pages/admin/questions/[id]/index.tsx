@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { ethers } from "ethers";
 import type { NextPage } from "next";
 import QRCode from "react-qr-code";
 import { useInterval } from "usehooks-ts";
 import { Address } from "~~/components/scaffold-eth";
+import { loadBurnerSK } from "~~/hooks/scaffold-eth";
 import untypedQuestions from "~~/questions.json";
 import scaffoldConfig from "~~/scaffold.config";
 import { Question } from "~~/types/question";
@@ -72,14 +74,22 @@ const AdminQuestionShow: NextPage = () => {
       newStatus: string;
       option?: number;
       value?: number;
+      signature: string;
     };
 
-    const bodyData: ReqBody = { newStatus };
-    if (newStatus === "reveal") {
-      bodyData.option = question.options.findIndex(o => o.ok);
-      bodyData.value = question.value;
-    }
     try {
+      const burnerPK = loadBurnerSK();
+      const signer = new ethers.Wallet(burnerPK);
+
+      const message = JSON.stringify({ action: "question-change-status", questionId: id, status: newStatus });
+      const signature = await signer.signMessage(message);
+      const bodyData: ReqBody = { newStatus, signature };
+
+      if (newStatus === "reveal") {
+        bodyData.option = question.options.findIndex(o => o.ok);
+        bodyData.value = question.value;
+      }
+
       const response = await fetch(`/api/admin/questions/${id}/status`, {
         method: "PATCH",
         headers: {

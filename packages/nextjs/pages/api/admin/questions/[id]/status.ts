@@ -1,5 +1,7 @@
 import { kv } from "@vercel/kv";
+import { verifyMessage } from "ethers/lib/utils";
 import { NextApiRequest, NextApiResponse } from "next";
+import admins from "~~/admins.json";
 import untypedQuestions from "~~/questions.json";
 import { Question } from "~~/types/question";
 
@@ -7,15 +9,35 @@ type ReqBody = {
   newStatus: string;
   option?: number;
   value?: number;
+  signature: string;
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "PATCH") {
     const { id } = req.query;
-    const { newStatus, option, value }: ReqBody = req.body;
+    const { newStatus, option, value, signature }: ReqBody = req.body;
 
     if (!id) {
       res.status(400).json({ error: "Missing ID." });
+      return;
+    }
+
+    if (!signature) {
+      res.status(400).json({ error: "Missing signature." });
+      return;
+    }
+
+    let recoveredAddress: string;
+    try {
+      const message = JSON.stringify({ action: "question-change-status", questionId: id, status: newStatus });
+      recoveredAddress = verifyMessage(message, signature);
+    } catch (error) {
+      res.status(400).json({ error: "Error recovering the signature" });
+      return;
+    }
+
+    if (!admins.includes(recoveredAddress)) {
+      res.status(403).json({ error: "The signature is not valid" });
       return;
     }
 

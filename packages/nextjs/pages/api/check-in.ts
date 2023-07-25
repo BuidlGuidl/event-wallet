@@ -35,6 +35,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   if (!checkIn) {
     await kv.hset(key, { checkin: new Date() });
+    await kv.sadd("users:checkin", signerAddress);
     res.status(200).json({ message: "Checked in!" });
     return;
   }
