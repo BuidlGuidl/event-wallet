@@ -1,6 +1,9 @@
 import { Address } from "~~/components/scaffold-eth";
+import { useAliases } from "~~/hooks/wallet";
 
 export const Board = ({ addresses, isLoading }: { addresses: string[]; isLoading: boolean }) => {
+  const aliases = useAliases({});
+
   if (isLoading) {
     return (
       <div>
@@ -32,7 +35,7 @@ export const Board = ({ addresses, isLoading }: { addresses: string[]; isLoading
               <tr className="text-center" key={address}>
                 <td>{index + 1}</td>
                 <td>
-                  <Address address={address} />
+                  <Address address={address} alias={aliases[address]} />
                 </td>
               </tr>
             ))}

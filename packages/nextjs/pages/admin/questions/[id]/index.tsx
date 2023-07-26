@@ -7,6 +7,7 @@ import QRCode from "react-qr-code";
 import { useInterval } from "usehooks-ts";
 import { Address } from "~~/components/scaffold-eth";
 import { loadBurnerSK } from "~~/hooks/scaffold-eth";
+import { useAliases } from "~~/hooks/wallet";
 import untypedQuestions from "~~/questions.json";
 import scaffoldConfig from "~~/scaffold.config";
 import { Question } from "~~/types/question";
@@ -24,6 +25,8 @@ const AdminQuestionShow: NextPage = () => {
   const [addressesAnswered, setAddressesAnswered] = useState<string[]>([]);
   const [addressesSuccess, setAddressesSuccess] = useState<string[]>([]);
   const [processing, setProcessing] = useState(false);
+
+  const aliases = useAliases({});
 
   const fetchQuestionData = async () => {
     try {
@@ -227,7 +230,7 @@ const AdminQuestionShow: NextPage = () => {
                   questionStatus === "reveal" && addressesSuccess.includes(address) ? "bg-success" : ""
                 }`}
               >
-                <Address address={address} />
+                <Address address={address} alias={aliases[address]} />
               </li>
             ))}
           </ol>

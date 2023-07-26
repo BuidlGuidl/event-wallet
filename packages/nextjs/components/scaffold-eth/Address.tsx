@@ -3,26 +3,20 @@ import { ethers } from "ethers";
 import Blockies from "react-blockies";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { CheckCircleIcon, DocumentDuplicateIcon } from "@heroicons/react/24/outline";
-import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 import { getBlockExplorerAddressLink, getTargetNetwork } from "~~/utils/scaffold-eth";
 
 type TAddressProps = {
   address?: string;
   disableAddressLink?: boolean;
   format?: "short" | "long";
+  alias?: string;
 };
 
 /**
  * Displays an address (or ENS) with a Blockie image and option to copy address.
  */
-export const Address = ({ address, disableAddressLink, format }: TAddressProps) => {
+export const Address = ({ address, disableAddressLink, format, alias }: TAddressProps) => {
   const [addressCopied, setAddressCopied] = useState(false);
-
-  const { data: alias } = useScaffoldContractRead({
-    contractName: "EventAliases",
-    functionName: "aliases",
-    args: [address],
-  });
 
   // Skeleton UI
   if (!address) {

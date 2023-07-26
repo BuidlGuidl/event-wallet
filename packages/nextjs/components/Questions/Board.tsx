@@ -1,7 +1,10 @@
 import { Address } from "~~/components/scaffold-eth";
+import { useAliases } from "~~/hooks/wallet";
 import { QuestionsLeaderboard } from "~~/types/question";
 
 export const Board = ({ leaderboard, isLoading }: { leaderboard: QuestionsLeaderboard[]; isLoading: boolean }) => {
+  const aliases = useAliases({});
+
   if (isLoading) {
     return (
       <div>
@@ -13,7 +16,7 @@ export const Board = ({ leaderboard, isLoading }: { leaderboard: QuestionsLeader
   if (leaderboard.length === 0) {
     return (
       <div>
-        <p>No check-ins yet</p>
+        <p>No answers yet</p>
       </div>
     );
   }
@@ -34,7 +37,7 @@ export const Board = ({ leaderboard, isLoading }: { leaderboard: QuestionsLeader
               <tr className="text-center" key={ranking.address}>
                 <td>{index + 1}</td>
                 <td>
-                  <Address address={ranking.address} />
+                  <Address address={ranking.address} alias={aliases[ranking.address]} />
                 </td>
                 <td>{ranking.score}</td>
               </tr>
