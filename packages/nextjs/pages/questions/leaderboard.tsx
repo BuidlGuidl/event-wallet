@@ -1,17 +1,21 @@
 import { useEffect, useState } from "react";
 import type { NextPage } from "next";
-import { useInterval } from "usehooks-ts";
-import { Board } from "~~/components/CheckedIn/Board";
-import scaffoldConfig from "~~/scaffold.config";
+import { Board } from "~~/components/Questions/Board";
+import { QuestionsLeaderboard } from "~~/types/question";
 import { notification } from "~~/utils/scaffold-eth";
 
-const Leaderboard: NextPage = () => {
-  const [loadingCheckedIn, setLoadingCheckedIn] = useState(true);
-  const [checkedInAddresses, setCheckedInAddresses] = useState<string[]>([]);
+type Leaderboard = {
+  address: string;
+  score: number;
+};
 
-  const fetchPeopleCheckedIn = async () => {
+const Leaderboard: NextPage = () => {
+  const [loading, setLoading] = useState(true);
+  const [leaderboard, setLeaderboard] = useState<QuestionsLeaderboard[]>([]);
+
+  const fetchLeaderboard = async () => {
     try {
-      const response = await fetch("/api/admin/checked-in", {
+      const response = await fetch("/api/questions/leaderboard", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -21,34 +25,36 @@ const Leaderboard: NextPage = () => {
       const data = await response.json();
 
       if (response.ok) {
-        setCheckedInAddresses(data);
+        setLeaderboard(data);
       } else {
         notification.error(data.error);
       }
     } catch (e) {
-      console.log("Error fetching checked in addresses", e);
+      console.log("Error fetching questions leaderboard", e);
     } finally {
-      setLoadingCheckedIn(false);
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     (async () => {
-      await fetchPeopleCheckedIn();
+      await fetchLeaderboard();
     })();
   }, []);
 
+  /*
   useInterval(async () => {
-    await fetchPeopleCheckedIn();
+    await fetchLeaderboard();
   }, scaffoldConfig.pollingInterval);
+  */
 
   return (
     <div className="flex flex-col items-center justify-center py-2">
       <div className="max-w-96 p-8">
-        <h1 className="text-4xl font-bold">People Checked-in</h1>
+        <h1 className="text-4xl font-bold">Questions Leaderboard</h1>
       </div>
       <div className="flex flex-col pt-2 gap-[100px] md:flex-row">
-        <Board addresses={checkedInAddresses} isLoading={loadingCheckedIn} />
+        <Board leaderboard={leaderboard} isLoading={loading} />
       </div>
     </div>
   );

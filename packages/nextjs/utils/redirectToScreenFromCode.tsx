@@ -35,6 +35,14 @@ export const redirectToScreenFromCode = (
         </>,
       );
       break;
+    case "questions":
+      setScreen("questionShow", { questionId: payload });
+      notification.info(
+        <>
+          <p className="my-0">Question scanned!</p>
+        </>,
+      );
+      break;
     case "pk":
     case "ticket":
       let privateKey = payload;

@@ -18,14 +18,16 @@ export const Main = () => {
     const updateCheckedIn = async () => {
       try {
         setLoadingCheckedIn(true);
-        const response = await fetch(`/api/checked-in/${address}`, {
+        const response = await fetch(`/api/users/${address}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
           },
         });
 
-        if (response.ok) {
+        const data = await response.json();
+
+        if (response.ok && data.checkin) {
           setCheckedIn(true);
         } else {
           const result = await response.json();
@@ -46,6 +48,7 @@ export const Main = () => {
   const handleClick = async () => {
     setProcessing(true);
     if (!address) {
+      setProcessing(false);
       return;
     }
 
@@ -67,13 +70,12 @@ export const Main = () => {
       });
 
       if (response.ok) {
+        setCheckedIn(true);
         notification.success("Checked in!");
       } else {
         const result = await response.json();
         notification.error(result.error);
       }
-
-      setCheckedIn(true);
     } catch (e) {
       console.log("Error checking in the user", e);
     } finally {

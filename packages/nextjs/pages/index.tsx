@@ -1,15 +1,26 @@
+import { useEffect, useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import type { NextPage } from "next";
 import { useAccount } from "wagmi";
-import { ArrowDownTrayIcon, HomeIcon, PaperAirplaneIcon, PhotoIcon } from "@heroicons/react/24/outline";
+import {
+  AcademicCapIcon,
+  ArrowDownTrayIcon,
+  CheckIcon,
+  HomeIcon,
+  PaperAirplaneIcon,
+  PhotoIcon,
+} from "@heroicons/react/24/outline";
 import { Balance, FaucetButton } from "~~/components/scaffold-eth";
 import { AddressMain } from "~~/components/scaffold-eth/AddressMain";
 import { TokenBalance } from "~~/components/scaffold-eth/TokenBalance";
 import { Collectibles, Main, Receive, Send } from "~~/components/screens";
 import { Mint } from "~~/components/screens/Mint";
+import { QuestionShow } from "~~/components/screens/QuestionShow";
 import { useAutoConnect, useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 import { useAppStore } from "~~/services/store/store";
+import { UserData } from "~~/types/question";
+import { notification } from "~~/utils/scaffold-eth";
 
 const screens = {
   main: <Main />,
@@ -17,6 +28,7 @@ const screens = {
   receive: <Receive />,
   collectibles: <Collectibles />,
   mint: <Mint />,
+  questionShow: <QuestionShow />,
 };
 
 const Home: NextPage = () => {
@@ -24,6 +36,9 @@ const Home: NextPage = () => {
 
   const screen = useAppStore(state => state.screen);
   const setScreen = useAppStore(state => state.setScreen);
+
+  const [loadingUserData, setLoadingUserData] = useState(true);
+  const [userData, setUserData] = useState<UserData>();
 
   const { address } = useAccount();
   const { data: balance } = useScaffoldContractRead({
@@ -37,6 +52,37 @@ const Home: NextPage = () => {
     functionName: "balanceOf",
     args: [address],
   });
+
+  const updateUserData = async () => {
+    try {
+      setLoadingUserData(true);
+      const response = await fetch(`/api/users/${address}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setUserData(data);
+      } else {
+        const result = await response.json();
+        notification.error(result.error);
+      }
+    } catch (e) {
+      console.log("Error getting user data", e);
+    } finally {
+      setLoadingUserData(false);
+    }
+  };
+
+  useEffect(() => {
+    if (address) {
+      updateUserData();
+    }
+  }, [address]);
 
   const screenRender = screens[screen];
 
@@ -65,7 +111,17 @@ const Home: NextPage = () => {
                 <AddressMain address={address} disableAddressLink={true} />
                 <div className="flex gap-4 items-center">
                   <TokenBalance amount={balance} />
-                  <span className="text-xl">/</span>
+                  <div className="text-xl font-bold flex gap-1">
+                    <AcademicCapIcon className="w-4" />
+                    {loadingUserData ? (
+                      "..."
+                    ) : (
+                      <>
+                        {userData ? userData.score : 0}
+                        {userData && userData.checkin ? <CheckIcon className="w-4 text-green-800" /> : null}
+                      </>
+                    )}
+                  </div>
                   <div className="text-xl font-bold flex gap-1">
                     <PhotoIcon className="w-4" />
                     {balanceSBT?.toString()}
