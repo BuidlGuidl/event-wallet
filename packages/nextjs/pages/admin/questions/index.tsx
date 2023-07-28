@@ -52,8 +52,11 @@ const Questions: NextPage = () => {
 
   return (
     <div className="flex flex-col items-center justify-center py-2">
-      <div className="max-w-96 p-8">
-        <h1 className="text-4xl font-bold">Questions</h1>
+      <div className="max-w-96 p-8 pb-4 text-center">
+        <h1 className="text-3xl font-bold">Questions</h1>
+        <p className="text-sm mt-0">
+          Questions defined in <span className="bg-base-300 italic">packages/nextjs/questions.json</span>
+        </p>
       </div>
       <div className="flex flex-col pt-2 gap-[100px] md:flex-row">
         <List
