@@ -149,12 +149,11 @@ export const QuestionShow = () => {
 
   return (
     <div className="flex flex-col items-center justify-center py-2">
-      <div className="max-w-96 p-8">
-        <h1 className="text-4xl font-bold">
+      <div className="max-w-96 p-8 pb-4">
+        <h1 className="text-3xl font-bold text-center">
           {question && question.question}
           {question && question.value && ` (${question.value})`}
         </h1>
-        <h2 className="text-2xl font-bold">{questionStatus === "open" ? "Select your answers..." : "Closed"}</h2>
       </div>
       <div className="flex flex-col pt-2 gap-[100px] md:flex-row">
         <ol>
@@ -162,12 +161,12 @@ export const QuestionShow = () => {
             question.options.map((option: { text: string }, index: number) => (
               <li key={index}>
                 <div
-                  className={`flex flex-row items-center p-3 m-3 outline outline-2 outline-black ${
-                    selectedOption == (index as unknown as string) ? "bg-primary" : ""
-                  } ${questionStatus === "reveal" && questionRightOption === index ? "border-green-500 border-4" : ""}`}
+                  className={`flex flex-row items-center m-3 border border-gray-300 outline-black ${
+                    selectedOption == (index as unknown as string) ? "bg-secondary" : ""
+                  } ${questionStatus === "reveal" && questionRightOption === index ? "bg-success" : ""}`}
                 >
                   <label
-                    className={`p-2 ${
+                    className={`p-6 w-full flex ${
                       processing || loadingQuestionStatus || questionStatus !== "open" ? "" : "cursor-pointer"
                     }`}
                   >
@@ -179,8 +178,11 @@ export const QuestionShow = () => {
                       className="w-0 h-0"
                       onChange={t => setSelectedOption(t.target.value)}
                     />
-                    <div className="text-lg font-bold">
-                      {index + 1}_ {option.text}
+                    <div className="flex items-center">
+                      <div className="w-8 h-8 mr-2 rounded-full bg-gray-200 flex justify-center items-center">
+                        {index + 1}
+                      </div>
+                      <span>{option.text}</span>
                     </div>
                   </label>
                 </div>
@@ -193,7 +195,7 @@ export const QuestionShow = () => {
         disabled={processing || loadingQuestionStatus || questionStatus !== "open"}
         onClick={handleSave}
       >
-        {loadingQuestionStatus ? "..." : "Save"}
+        {loadingQuestionStatus ? "..." : "Send Answer"}
       </button>
     </div>
   );
