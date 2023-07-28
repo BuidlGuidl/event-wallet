@@ -33,23 +33,37 @@ export const List = ({
         <table className="table table-zebra self-start">
           <thead>
             <tr className="text-center">
-              <th>ID</th>
-              <th>Question</th>
-              <th>Open</th>
-              <th>Reveal</th>
+              <th className="bg-primary text-white">ID</th>
+              <th className="bg-primary text-white">Question</th>
+              <th className="bg-primary text-white">Open</th>
+              <th className="bg-primary text-white">Reveal</th>
             </tr>
           </thead>
           <tbody>
             {questions.map(question => (
-              <tr className="text-center" key={question.id}>
+              <tr className="text-center border-b border-primary last:border-0" key={question.id}>
                 <td>
                   <a href={`/admin/questions/${question.id}`}>{question.id}</a>
                 </td>
                 <td>
-                  <a href={`/admin/questions/${question.id}`}>{question.question}</a>
+                  <a href={`/admin/questions/${question.id}`} className="link link-hover">
+                    {question.question}
+                  </a>
                 </td>
-                <td>{questionsOpened.includes(question.id) ? "✓" : "×"}</td>
-                <td>{questionsRevealed.includes(question.id) ? "✓" : "×"}</td>
+                <td>
+                  {questionsOpened.includes(question.id) ? (
+                    <span className="text-success">✓</span>
+                  ) : (
+                    <span className="text-error">×</span>
+                  )}
+                </td>
+                <td>
+                  {questionsRevealed.includes(question.id) ? (
+                    <span className="text-success">✓</span>
+                  ) : (
+                    <span className="text-error">×</span>
+                  )}
+                </td>
               </tr>
             ))}
           </tbody>
