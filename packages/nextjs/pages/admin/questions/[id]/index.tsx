@@ -39,8 +39,6 @@ const AdminQuestionShow: NextPage = () => {
 
       const data = await response.json();
 
-      console.log("data", data);
-
       if (response.ok) {
         setQuestionStatus(data.status);
         setAddressesAnswered(data.addresses);
@@ -128,8 +126,6 @@ const AdminQuestionShow: NextPage = () => {
 
           const data = await response.json();
 
-          console.log("data", data);
-
           if (response.ok && data !== null) {
             setAddressesSuccess(data);
           } else {
@@ -155,36 +151,46 @@ const AdminQuestionShow: NextPage = () => {
 
   return (
     <div className="flex flex-col items-center justify-center py-2">
-      <div className="max-w-96 p-8">
-        <Link href="/admin/questions">Questions</Link>
-        <h1 className="text-4xl font-bold">
+      <div className="max-w-96 p-8 pb-4">
+        <Link href="/admin/questions" className="link link-hover text-sm">
+          {"<"} Back to Questions
+        </Link>
+        <h1 className="text-3xl font-bold">
           {question && question.question}
           {question && question.value && ` (${question.value})`}
         </h1>
-        <h2 className="text-2xl font-bold">
+        <div>
           {loadingQuestionData && "Loading..."}
           {!loadingQuestionData && (questionStatus === "closed" || questionStatus === null) && (
-            <>
-              Closed
-              <button className="btn btn-primary ml-2" disabled={processing} onClick={() => handleChangeStatus("open")}>
+            <div className="flex flex-col items-center gap-2">
+              <div>
+                Status: <span className="badge badge-outline">Closed</span>
+              </div>
+              <button
+                className="btn btn-sm btn-primary ml-2 w-1/2"
+                disabled={processing}
+                onClick={() => handleChangeStatus("open")}
+              >
                 Open
               </button>
-            </>
+            </div>
           )}
           {!loadingQuestionData && questionStatus === "open" && (
-            <>
-              Open
+            <div className="flex flex-col items-center gap-2">
+              <div>
+                Status: <span className="badge badge-outline">Open</span>
+              </div>
               <button
-                className="btn btn-primary ml-2"
+                className="btn btn-sm btn-secondary ml-2 w-1/2"
                 disabled={processing}
                 onClick={() => handleChangeStatus("reveal")}
               >
                 Reveal Answer
               </button>
-            </>
+            </div>
           )}
           {!loadingQuestionData && questionStatus === "reveal" && <>Revealed</>}
-        </h2>
+        </div>
       </div>
       <div className="flex flex-col pt-2 gap-[100px] md:flex-row mb-10">
         <ol>
