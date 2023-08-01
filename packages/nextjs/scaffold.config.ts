@@ -17,12 +17,11 @@ export type ScaffoldConfig = {
 
 const scaffoldConfig = {
   // The network where your DApp lives in
-  targetNetwork: chains.mainnet,
+  targetNetwork: chains.sepolia,
   liveUrl: process.env.NEXT_PUBLIC_LIVE_URL || "http://localhost:3000",
 
-  // The interval at which your front-end polls the RPC servers for new data
-  // it has no effect on the local network
-  pollingInterval: 5000,
+  // The interval at which your front-end polls the RPC servers and backend API for new data
+  pollingInterval: 15000,
 
   tokenEmoji: "💎",
   eventName: "THE TALK",

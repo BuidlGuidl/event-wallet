@@ -2,7 +2,7 @@ import { Address } from "~~/components/scaffold-eth";
 import { useAliases } from "~~/hooks/wallet";
 
 export const Board = ({ addresses, isLoading }: { addresses: string[]; isLoading: boolean }) => {
-  const aliases = useAliases({});
+  const aliases = useAliases({ enablePolling: true });
 
   if (isLoading) {
     return (
