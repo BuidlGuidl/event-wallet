@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import type { NextPage } from "next";
-import { useInterval } from "usehooks-ts";
 import { List } from "~~/components/Questions/List";
 import untypedQuestions from "~~/questions.json";
-import scaffoldConfig from "~~/scaffold.config";
 import { Question } from "~~/types/question";
 import { notification } from "~~/utils/scaffold-eth";
 
@@ -45,10 +43,6 @@ const Questions: NextPage = () => {
       await fetchQuestionsStatus();
     })();
   }, []);
-
-  useInterval(async () => {
-    await fetchQuestionsStatus();
-  }, scaffoldConfig.pollingInterval);
 
   return (
     <div className="flex flex-col items-center justify-center py-2">

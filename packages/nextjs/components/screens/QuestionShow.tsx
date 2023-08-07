@@ -61,7 +61,9 @@ export const QuestionShow = () => {
   }, [question]);
 
   useInterval(async () => {
-    await fetchQuestionStatus();
+    if (questionStatus !== "reveal") {
+      await fetchQuestionStatus();
+    }
   }, scaffoldConfig.pollingInterval);
 
   useEffect(() => {
