@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { ethers } from "ethers";
 import type { NextPage } from "next";
 import QRCode from "react-qr-code";
 import { useInterval } from "usehooks-ts";
 import { Address } from "~~/components/scaffold-eth";
-import { loadBurnerSK } from "~~/hooks/scaffold-eth";
+import { BurnerSigner } from "~~/components/scaffold-eth/BurnerSigner";
 import { useAliases } from "~~/hooks/wallet";
 import untypedQuestions from "~~/questions.json";
 import scaffoldConfig from "~~/scaffold.config";
@@ -25,6 +24,11 @@ const AdminQuestionShow: NextPage = () => {
   const [addressesAnswered, setAddressesAnswered] = useState<string[]>([]);
   const [addressesSuccess, setAddressesSuccess] = useState<string[]>([]);
   const [processing, setProcessing] = useState(false);
+
+  const message = {
+    action: "question-change-status",
+    questionId: id,
+  };
 
   const aliases = useAliases({});
 
@@ -66,7 +70,7 @@ const AdminQuestionShow: NextPage = () => {
     }
   }, scaffoldConfig.pollingInterval);
 
-  const handleChangeStatus = async (newStatus: string) => {
+  const handleChangeStatus = async (signature: string, newStatus: string) => {
     if (!question) return;
 
     setProcessing(true);
@@ -79,11 +83,6 @@ const AdminQuestionShow: NextPage = () => {
     };
 
     try {
-      const burnerPK = loadBurnerSK();
-      const signer = new ethers.Wallet(burnerPK);
-
-      const message = JSON.stringify({ action: "question-change-status", questionId: id, status: newStatus });
-      const signature = await signer.signMessage(message);
       const bodyData: ReqBody = { newStatus, signature };
 
       if (newStatus === "reveal") {
@@ -110,6 +109,14 @@ const AdminQuestionShow: NextPage = () => {
     } finally {
       setProcessing(false);
     }
+  };
+
+  const handleSignatureOpen = async ({ signature }: { signature: string }) => {
+    await handleChangeStatus(signature, "open");
+  };
+
+  const handleSignatureReveal = async ({ signature }: { signature: string }) => {
+    await handleChangeStatus(signature, "reveal");
   };
 
   useEffect(() => {
@@ -166,13 +173,15 @@ const AdminQuestionShow: NextPage = () => {
               <div>
                 Status: <span className="badge badge-outline">Closed</span>
               </div>
-              <button
-                className="btn btn-sm btn-primary ml-2 w-1/2"
+              <BurnerSigner
+                className="btn btn-sm btn-primary w-20"
                 disabled={processing}
-                onClick={() => handleChangeStatus("open")}
+                message={{ ...message, status: "open" }}
+                handleSignature={handleSignatureOpen}
+                confirmation={false}
               >
                 Open
-              </button>
+              </BurnerSigner>
             </div>
           )}
           {!loadingQuestionData && questionStatus === "open" && (
@@ -180,13 +189,15 @@ const AdminQuestionShow: NextPage = () => {
               <div>
                 Status: <span className="badge badge-outline">Open</span>
               </div>
-              <button
-                className="btn btn-sm btn-secondary ml-2 w-1/2"
+              <BurnerSigner
+                className="btn btn-sm btn-secondary w-30"
                 disabled={processing}
-                onClick={() => handleChangeStatus("reveal")}
+                message={{ ...message, status: "reveal" }}
+                handleSignature={handleSignatureReveal}
+                confirmation={false}
               >
                 Reveal Answer
-              </button>
+              </BurnerSigner>
             </div>
           )}
           {!loadingQuestionData && questionStatus === "reveal" && <>Revealed</>}

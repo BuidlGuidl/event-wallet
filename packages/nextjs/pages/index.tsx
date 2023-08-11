@@ -20,7 +20,6 @@ import { QuestionShow } from "~~/components/screens/QuestionShow";
 import { useAutoConnect, useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 import { useAppStore } from "~~/services/store/store";
 import { UserData } from "~~/types/question";
-import { notification } from "~~/utils/scaffold-eth";
 
 const screens = {
   main: <Main />,
@@ -63,13 +62,9 @@ const Home: NextPage = () => {
         },
       });
 
-      const data = await response.json();
-
       if (response.ok) {
+        const data = await response.json();
         setUserData(data);
-      } else {
-        const result = await response.json();
-        notification.error(result.error);
       }
     } catch (e) {
       console.log("Error getting user data", e);

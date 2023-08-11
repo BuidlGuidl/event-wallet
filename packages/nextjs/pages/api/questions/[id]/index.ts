@@ -26,8 +26,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     let recoveredAddress: string;
     try {
-      // The message is the option
-      recoveredAddress = verifyMessage(option, signature);
+      const message = JSON.stringify({ action: "question-answer", questionId: id, option });
+      recoveredAddress = verifyMessage(message, signature);
     } catch (error) {
       res.status(400).json({ error: "Error recovering the signature" });
       return;
