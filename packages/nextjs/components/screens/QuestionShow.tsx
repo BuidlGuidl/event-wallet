@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
-import { ethers } from "ethers";
+import { useCallback, useEffect, useState } from "react";
 import { useInterval } from "usehooks-ts";
 import { useAccount } from "wagmi";
-import { loadBurnerSK } from "~~/hooks/scaffold-eth";
+import { BurnerSigner } from "~~/components/scaffold-eth/BurnerSigner";
 import untypedQuestions from "~~/questions.json";
 import scaffoldConfig from "~~/scaffold.config";
 import { useAppStore } from "~~/services/store/store";
@@ -24,7 +23,13 @@ export const QuestionShow = () => {
   const [questionRightOption, setQuestionRightOption] = useState<number>();
   const [selectedOption, setSelectedOption] = useState<string>();
 
-  const fetchQuestionStatus = async () => {
+  const message = {
+    action: "question-answer",
+    questionId: id,
+    option: selectedOption,
+  };
+
+  const fetchQuestionStatus = useCallback(async () => {
     try {
       const response = await fetch(`/api/questions/${id}`, {
         method: "GET",
@@ -34,8 +39,6 @@ export const QuestionShow = () => {
       });
 
       const data = await response.json();
-
-      console.log("data", data);
 
       if (response.ok) {
         setQuestionStatus(data.status);
@@ -50,7 +53,7 @@ export const QuestionShow = () => {
     } finally {
       setLoadingQuestionStatus(false);
     }
-  };
+  }, [id]);
 
   useEffect(() => {
     (async () => {
@@ -58,7 +61,7 @@ export const QuestionShow = () => {
         await fetchQuestionStatus();
       }
     })();
-  }, [question]);
+  }, [question, fetchQuestionStatus]);
 
   useInterval(async () => {
     if (questionStatus !== "reveal") {
@@ -77,14 +80,9 @@ export const QuestionShow = () => {
             },
           });
 
-          const data = await response.json();
-
-          console.log("data", data);
-
-          if (response.ok && data !== null) {
+          if (response.ok) {
+            const data = await response.json();
             setSelectedOption(data);
-          } else {
-            notification.error(data.error);
           }
         } catch (e) {
           console.log("Error fetching questions opened", e);
@@ -94,7 +92,7 @@ export const QuestionShow = () => {
     updateQuestionAnswer();
   }, [id, address]);
 
-  const handleSave = async () => {
+  const handleSave = async ({ signature }: { signature: string }) => {
     setProcessing(true);
     if (!address) {
       setProcessing(false);
@@ -108,14 +106,6 @@ export const QuestionShow = () => {
     }
 
     try {
-      // Initialize Web3 provider
-      const burnerPK = loadBurnerSK();
-      const signer = new ethers.Wallet(burnerPK);
-
-      // Sign the message
-      const signature = await signer.signMessage(selectedOption);
-
-      // Post the signed message to the API
       const response = await fetch(`/api/questions/${id}`, {
         method: "POST",
         headers: {
@@ -192,13 +182,14 @@ export const QuestionShow = () => {
             ))}
         </ol>
       </div>
-      <button
+      <BurnerSigner
         className={`btn btn-primary w-80 mt-4 ${processing || loadingQuestionStatus ? "loading" : ""}`}
         disabled={processing || loadingQuestionStatus || questionStatus !== "open"}
-        onClick={handleSave}
+        message={message}
+        handleSignature={handleSave}
       >
         {loadingQuestionStatus ? "..." : "Send Answer"}
-      </button>
+      </BurnerSigner>
     </div>
   );
 };

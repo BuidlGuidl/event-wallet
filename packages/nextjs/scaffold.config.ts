@@ -11,6 +11,7 @@ export type ScaffoldConfig = {
   burnerWallet: {
     enabled: boolean;
     onlyLocal: boolean;
+    signConfirmation: boolean;
   };
   walletAutoConnect: boolean;
 };
@@ -39,6 +40,7 @@ const scaffoldConfig = {
     enabled: true,
     // Only show the Burner Wallet when running on hardhat network
     onlyLocal: false,
+    signConfirmation: true,
   },
 
   /**

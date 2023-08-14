@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import type { NextPage } from "next";
@@ -20,7 +20,6 @@ import { QuestionShow } from "~~/components/screens/QuestionShow";
 import { useAutoConnect, useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 import { useAppStore } from "~~/services/store/store";
 import { UserData } from "~~/types/question";
-import { notification } from "~~/utils/scaffold-eth";
 
 const screens = {
   main: <Main />,
@@ -53,7 +52,7 @@ const Home: NextPage = () => {
     args: [address],
   });
 
-  const updateUserData = async () => {
+  const updateUserData = useCallback(async () => {
     try {
       setLoadingUserData(true);
       const response = await fetch(`/api/users/${address}`, {
@@ -63,26 +62,22 @@ const Home: NextPage = () => {
         },
       });
 
-      const data = await response.json();
-
       if (response.ok) {
+        const data = await response.json();
         setUserData(data);
-      } else {
-        const result = await response.json();
-        notification.error(result.error);
       }
     } catch (e) {
       console.log("Error getting user data", e);
     } finally {
       setLoadingUserData(false);
     }
-  };
+  }, [address]);
 
   useEffect(() => {
     if (address) {
       updateUserData();
     }
-  }, [address]);
+  }, [address, updateUserData]);
 
   const screenRender = screens[screen];
 

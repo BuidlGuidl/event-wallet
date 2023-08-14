@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import { ethers } from "ethers";
 import { useAccount } from "wagmi";
-import { loadBurnerSK } from "~~/hooks/scaffold-eth";
+import { BurnerSigner } from "~~/components/scaffold-eth/BurnerSigner";
 import scaffoldConfig from "~~/scaffold.config";
 import { notification } from "~~/utils/scaffold-eth";
 
@@ -14,6 +13,11 @@ export const Main = () => {
   const [loadingCheckedIn, setLoadingCheckedIn] = useState(true);
   const [checkedIn, setCheckedIn] = useState(false);
 
+  const message = {
+    action: "user-checkin",
+    address: address,
+  };
+
   useEffect(() => {
     const updateCheckedIn = async () => {
       try {
@@ -25,13 +29,8 @@ export const Main = () => {
           },
         });
 
-        const data = await response.json();
-
-        if (response.ok && data.checkin) {
+        if (response.ok) {
           setCheckedIn(true);
-        } else {
-          const result = await response.json();
-          notification.error(result.error);
         }
       } catch (e) {
         console.log("Error checking if user is checked in", e);
@@ -45,7 +44,7 @@ export const Main = () => {
     }
   }, [address]);
 
-  const handleClick = async () => {
+  const handleSignature = async ({ signature }: { signature: string }) => {
     setProcessing(true);
     if (!address) {
       setProcessing(false);
@@ -53,13 +52,6 @@ export const Main = () => {
     }
 
     try {
-      // Initialize Web3 provider
-      const burnerPK = loadBurnerSK();
-      const signer = new ethers.Wallet(burnerPK);
-
-      // Sign the message
-      const signature = await signer.signMessage(address);
-
       // Post the signed message to the API
       const response = await fetch("/api/check-in", {
         method: "POST",
@@ -92,13 +84,15 @@ export const Main = () => {
           of each speaker. You can also collect and trade {scaffoldConfig.tokenEmoji} gems, a pop up currency for the
           event.
         </p>
-        <button
+
+        <BurnerSigner
           className={`btn btn-primary w-full mt-4 ${processing || loadingCheckedIn ? "loading" : ""}`}
           disabled={processing || loadingCheckedIn || checkedIn}
-          onClick={handleClick}
+          message={message}
+          handleSignature={handleSignature}
         >
           {loadingCheckedIn ? "..." : checkedIn ? "Checked-in" : "Check-in"}
-        </button>
+        </BurnerSigner>
       </div>
     </>
   );
