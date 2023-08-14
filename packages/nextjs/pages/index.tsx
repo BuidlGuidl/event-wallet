@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import type { NextPage } from "next";
@@ -52,7 +52,7 @@ const Home: NextPage = () => {
     args: [address],
   });
 
-  const updateUserData = async () => {
+  const updateUserData = useCallback(async () => {
     try {
       setLoadingUserData(true);
       const response = await fetch(`/api/users/${address}`, {
@@ -71,13 +71,13 @@ const Home: NextPage = () => {
     } finally {
       setLoadingUserData(false);
     }
-  };
+  }, [address]);
 
   useEffect(() => {
     if (address) {
       updateUserData();
     }
-  }, [address]);
+  }, [address, updateUserData]);
 
   const screenRender = screens[screen];
 

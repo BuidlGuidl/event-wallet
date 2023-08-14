@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useInterval } from "usehooks-ts";
 import { useAccount } from "wagmi";
 import { BurnerSigner } from "~~/components/scaffold-eth/BurnerSigner";
@@ -29,7 +29,7 @@ export const QuestionShow = () => {
     option: selectedOption,
   };
 
-  const fetchQuestionStatus = async () => {
+  const fetchQuestionStatus = useCallback(async () => {
     try {
       const response = await fetch(`/api/questions/${id}`, {
         method: "GET",
@@ -53,7 +53,7 @@ export const QuestionShow = () => {
     } finally {
       setLoadingQuestionStatus(false);
     }
-  };
+  }, [id]);
 
   useEffect(() => {
     (async () => {
@@ -61,7 +61,7 @@ export const QuestionShow = () => {
         await fetchQuestionStatus();
       }
     })();
-  }, [question]);
+  }, [question, fetchQuestionStatus]);
 
   useInterval(async () => {
     if (questionStatus !== "reveal") {

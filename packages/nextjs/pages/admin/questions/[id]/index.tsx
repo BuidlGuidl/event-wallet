@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import type { NextPage } from "next";
@@ -32,7 +32,7 @@ const AdminQuestionShow: NextPage = () => {
 
   const aliases = useAliases({});
 
-  const fetchQuestionData = async () => {
+  const fetchQuestionData = useCallback(async () => {
     try {
       const response = await fetch(`/api/questions/${id}`, {
         method: "GET",
@@ -54,7 +54,7 @@ const AdminQuestionShow: NextPage = () => {
     } finally {
       setLoadingQuestionData(false);
     }
-  };
+  }, [id]);
 
   useEffect(() => {
     (async () => {
@@ -62,7 +62,7 @@ const AdminQuestionShow: NextPage = () => {
         await fetchQuestionData();
       }
     })();
-  }, [question]);
+  }, [question, fetchQuestionData]);
 
   useInterval(async () => {
     if (questionStatus !== "reveal") {
