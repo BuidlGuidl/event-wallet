@@ -109,8 +109,7 @@ const Home: NextPage = () => {
                   <PaperAirplaneIcon className="w-8" />
                 </button>
                 <button
-                  className={`${screen === "collectibles" ? "bg-primary" : "bg-secondary"
-                    } text-white rounded-full p-3`}
+                  className={`${screen === "collectibles" ? "bg-primary" : "bg-secondary"} text-white rounded-full p-3`}
                   onClick={() => setScreen("collectibles")}
                 >
                   <PhotoIcon className="w-8" />
