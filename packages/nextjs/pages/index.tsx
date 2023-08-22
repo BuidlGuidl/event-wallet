@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import { BigNumber } from "ethers";
@@ -10,8 +9,7 @@ import { AddressMain } from "~~/components/scaffold-eth/AddressMain";
 import { TokenBalance } from "~~/components/scaffold-eth/TokenBalance";
 import { Collectibles, Main, Receive, Send } from "~~/components/screens";
 import { Mint } from "~~/components/screens/Mint";
-import { NotAllowed } from "~~/components/screens/NotAllowed";
-import { isBurnerWalletloaded, useAutoConnect, useScaffoldContractRead } from "~~/hooks/scaffold-eth";
+import { useAutoConnect, useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 import scaffoldConfig from "~~/scaffold.config";
 import { useAppStore } from "~~/services/store/store";
 import { ContractName } from "~~/utils/scaffold-eth/contract";
@@ -27,12 +25,10 @@ const screens = {
 const Home: NextPage = () => {
   useAutoConnect();
 
-  const [isLoadingBurnerWallet, setIsLoadingBurnerWallet] = useState(true);
-
   const screen = useAppStore(state => state.screen);
   const setScreen = useAppStore(state => state.setScreen);
 
-  const { address, isConnected } = useAccount();
+  const { address } = useAccount();
 
   const balances: { [key: string]: BigNumber } = {};
 
@@ -58,18 +54,6 @@ const Home: NextPage = () => {
   });
 
   const screenRender = screens[screen];
-  const isBurnerWalletSet = isBurnerWalletloaded();
-
-  useEffect(() => {
-    // Check if isBurnerWalletSet is true OR false
-    if (isBurnerWalletSet || isBurnerWalletSet === false) {
-      setIsLoadingBurnerWallet(false);
-    }
-  }, [isBurnerWalletSet]);
-
-  if (!isBurnerWalletSet && !isLoadingBurnerWallet) {
-    return <NotAllowed />;
-  }
 
   return (
     <>
@@ -91,55 +75,47 @@ const Home: NextPage = () => {
             </div>
           </div>
           <div className="flex flex-col gap-2 pt-2">
-            {!isConnected && isLoadingBurnerWallet ? (
-              <div className="flex flex-col items-center justify-center my-16">
-                <span className="animate-bounce text-8xl">{scaffoldConfig.tokenEmoji}</span>
-              </div>
-            ) : (
-              <>
-                <div className="flex flex-col items-center mb-6 gap-4">
-                  <AddressMain address={address} disableAddressLink={true} />
-                  <div className="flex gap-4 items-center">
-                    {scaffoldConfig.tokens.map(token => (
-                      <TokenBalance key={token.symbol} emoji={token.emoji} amount={balances[token.symbol]} />
-                    ))}
-                    <span className="text-xl">/</span>
-                    <div className="text-xl font-bold flex gap-1">
-                      <PhotoIcon className="w-4" />
-                      {balanceSBT?.toString()}
-                    </div>
+            <>
+              <div className="flex flex-col items-center mb-6 gap-4">
+                <AddressMain address={address} disableAddressLink={true} />
+                <div className="flex gap-4 items-center">
+                  {scaffoldConfig.tokens.map(token => (
+                    <TokenBalance key={token.symbol} emoji={token.emoji} amount={balances[token.symbol]} />
+                  ))}
+                  <span className="text-xl">/</span>
+                  <div className="text-xl font-bold flex gap-1">
+                    <PhotoIcon className="w-4" />
+                    {balanceSBT?.toString()}
                   </div>
                 </div>
-                <div className="flex gap-6 justify-center mb-8">
-                  <button
-                    className={`${screen === "main" ? "bg-primary" : "bg-secondary"} text-white rounded-full p-3`}
-                    onClick={() => setScreen("main")}
-                  >
-                    <HomeIcon className="w-8" />
-                  </button>
-                  <button
-                    className={`${screen === "receive" ? "bg-primary" : "bg-secondary"} text-white rounded-full p-3`}
-                    onClick={() => setScreen("receive")}
-                  >
-                    <ArrowDownTrayIcon className="w-8" />
-                  </button>
-                  <button
-                    className={`${screen === "send" ? "bg-primary" : "bg-secondary"} text-white rounded-full p-3`}
-                    onClick={() => setScreen("send")}
-                  >
-                    <PaperAirplaneIcon className="w-8" />
-                  </button>
-                  <button
-                    className={`${
-                      screen === "collectibles" ? "bg-primary" : "bg-secondary"
-                    } text-white rounded-full p-3`}
-                    onClick={() => setScreen("collectibles")}
-                  >
-                    <PhotoIcon className="w-8" />
-                  </button>
-                </div>
-              </>
-            )}
+              </div>
+              <div className="flex gap-6 justify-center mb-8">
+                <button
+                  className={`${screen === "main" ? "bg-primary" : "bg-secondary"} text-white rounded-full p-3`}
+                  onClick={() => setScreen("main")}
+                >
+                  <HomeIcon className="w-8" />
+                </button>
+                <button
+                  className={`${screen === "receive" ? "bg-primary" : "bg-secondary"} text-white rounded-full p-3`}
+                  onClick={() => setScreen("receive")}
+                >
+                  <ArrowDownTrayIcon className="w-8" />
+                </button>
+                <button
+                  className={`${screen === "send" ? "bg-primary" : "bg-secondary"} text-white rounded-full p-3`}
+                  onClick={() => setScreen("send")}
+                >
+                  <PaperAirplaneIcon className="w-8" />
+                </button>
+                <button
+                  className={`${screen === "collectibles" ? "bg-primary" : "bg-secondary"} text-white rounded-full p-3`}
+                  onClick={() => setScreen("collectibles")}
+                >
+                  <PhotoIcon className="w-8" />
+                </button>
+              </div>
+            </>
           </div>
 
           <div>{screenRender}</div>

@@ -53,15 +53,6 @@ export const loadBurnerSK = (): string => {
   }
 };
 
-export const isBurnerWalletloaded = (): boolean => {
-  let currentSk = "";
-  if (typeof window != "undefined" && window != null) {
-    currentSk = window?.localStorage?.getItem?.(burnerStorageKey)?.replaceAll('"', "") ?? "";
-  }
-
-  return !!currentSk && isValidSk(currentSk);
-};
-
 /**
  * #### Summary
  * Return type of useBurnerSigner:
