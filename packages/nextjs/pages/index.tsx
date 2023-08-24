@@ -3,11 +3,11 @@ import Image from "next/image";
 import { BigNumber } from "ethers";
 import type { NextPage } from "next";
 import { useAccount } from "wagmi";
-import { ArrowDownTrayIcon, HomeIcon, PaperAirplaneIcon, PhotoIcon } from "@heroicons/react/24/outline";
+import { ArrowDownTrayIcon, ArrowPathIcon, HomeIcon, PaperAirplaneIcon, PhotoIcon } from "@heroicons/react/24/outline";
 import { Balance, FaucetButton } from "~~/components/scaffold-eth";
 import { AddressMain } from "~~/components/scaffold-eth/AddressMain";
 import { TokenBalance } from "~~/components/scaffold-eth/TokenBalance";
-import { Collectibles, Main, Receive, Send } from "~~/components/screens";
+import { Collectibles, Main, Receive, Send, Swap } from "~~/components/screens";
 import { Mint } from "~~/components/screens/Mint";
 import { useAutoConnect, useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 import scaffoldConfig from "~~/scaffold.config";
@@ -20,6 +20,7 @@ const screens = {
   receive: <Receive />,
   collectibles: <Collectibles />,
   mint: <Mint />,
+  swap: <Swap />,
 };
 
 const Home: NextPage = () => {
@@ -95,6 +96,12 @@ const Home: NextPage = () => {
                   onClick={() => setScreen("main")}
                 >
                   <HomeIcon className="w-8" />
+                </button>
+                <button
+                  className={`${screen === "swap" ? "bg-primary" : "bg-secondary"} text-white rounded-full p-3`}
+                  onClick={() => setScreen("swap")}
+                >
+                  <ArrowPathIcon className="w-8" />
                 </button>
                 <button
                   className={`${screen === "receive" ? "bg-primary" : "bg-secondary"} text-white rounded-full p-3`}

@@ -30,6 +30,7 @@ const scaffoldConfig = {
   hideHeader: true,
 
   tokens: [
+    { contractName: "SaltToken", name: "Salt", symbol: "SALT", emoji: "🧂" },
     { contractName: "AvocadoToken", name: "Avocado", symbol: "AVC", emoji: "🥑" },
     { contractName: "BananaToken", name: "Banana", symbol: "BNN", emoji: "🍌" },
     { contractName: "TomatoToken", name: "Tomato", symbol: "TMT", emoji: "🍅" },

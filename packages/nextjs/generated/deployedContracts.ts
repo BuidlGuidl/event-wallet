@@ -5,7 +5,7 @@ const contracts = {
       chainId: "31337",
       contracts: {
         EventAliases: {
-          address: "0xc6e7DF5E7b4f2A278906862b61205850344D4e7d",
+          address: "0x40a42Baf86Fc821f972Ad2aC878729063CeEF403",
           abi: [
             {
               anonymous: false,
@@ -130,8 +130,560 @@ const contracts = {
             },
           ],
         },
+        SaltToken: {
+          address: "0x96F3Ce39Ad2BfDCf92C0F6E2C2CAbF83874660Fc",
+          abi: [
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "_owner",
+                  type: "address",
+                },
+              ],
+              stateMutability: "nonpayable",
+              type: "constructor",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: true,
+                  internalType: "address",
+                  name: "owner",
+                  type: "address",
+                },
+                {
+                  indexed: true,
+                  internalType: "address",
+                  name: "spender",
+                  type: "address",
+                },
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "value",
+                  type: "uint256",
+                },
+              ],
+              name: "Approval",
+              type: "event",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: true,
+                  internalType: "bytes32",
+                  name: "role",
+                  type: "bytes32",
+                },
+                {
+                  indexed: true,
+                  internalType: "bytes32",
+                  name: "previousAdminRole",
+                  type: "bytes32",
+                },
+                {
+                  indexed: true,
+                  internalType: "bytes32",
+                  name: "newAdminRole",
+                  type: "bytes32",
+                },
+              ],
+              name: "RoleAdminChanged",
+              type: "event",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: true,
+                  internalType: "bytes32",
+                  name: "role",
+                  type: "bytes32",
+                },
+                {
+                  indexed: true,
+                  internalType: "address",
+                  name: "account",
+                  type: "address",
+                },
+                {
+                  indexed: true,
+                  internalType: "address",
+                  name: "sender",
+                  type: "address",
+                },
+              ],
+              name: "RoleGranted",
+              type: "event",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: true,
+                  internalType: "bytes32",
+                  name: "role",
+                  type: "bytes32",
+                },
+                {
+                  indexed: true,
+                  internalType: "address",
+                  name: "account",
+                  type: "address",
+                },
+                {
+                  indexed: true,
+                  internalType: "address",
+                  name: "sender",
+                  type: "address",
+                },
+              ],
+              name: "RoleRevoked",
+              type: "event",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: true,
+                  internalType: "address",
+                  name: "from",
+                  type: "address",
+                },
+                {
+                  indexed: true,
+                  internalType: "address",
+                  name: "to",
+                  type: "address",
+                },
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "value",
+                  type: "uint256",
+                },
+              ],
+              name: "Transfer",
+              type: "event",
+            },
+            {
+              inputs: [],
+              name: "DEFAULT_ADMIN_ROLE",
+              outputs: [
+                {
+                  internalType: "bytes32",
+                  name: "",
+                  type: "bytes32",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "MINTER_ROLE",
+              outputs: [
+                {
+                  internalType: "bytes32",
+                  name: "",
+                  type: "bytes32",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "owner",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "spender",
+                  type: "address",
+                },
+              ],
+              name: "allowance",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "spender",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "amount",
+                  type: "uint256",
+                },
+              ],
+              name: "approve",
+              outputs: [
+                {
+                  internalType: "bool",
+                  name: "",
+                  type: "bool",
+                },
+              ],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "account",
+                  type: "address",
+                },
+              ],
+              name: "balanceOf",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "decimals",
+              outputs: [
+                {
+                  internalType: "uint8",
+                  name: "",
+                  type: "uint8",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "spender",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "subtractedValue",
+                  type: "uint256",
+                },
+              ],
+              name: "decreaseAllowance",
+              outputs: [
+                {
+                  internalType: "bool",
+                  name: "",
+                  type: "bool",
+                },
+              ],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "bytes32",
+                  name: "role",
+                  type: "bytes32",
+                },
+              ],
+              name: "getRoleAdmin",
+              outputs: [
+                {
+                  internalType: "bytes32",
+                  name: "",
+                  type: "bytes32",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "bytes32",
+                  name: "role",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "address",
+                  name: "account",
+                  type: "address",
+                },
+              ],
+              name: "grantRole",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "bytes32",
+                  name: "role",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "address",
+                  name: "account",
+                  type: "address",
+                },
+              ],
+              name: "hasRole",
+              outputs: [
+                {
+                  internalType: "bool",
+                  name: "",
+                  type: "bool",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "spender",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "addedValue",
+                  type: "uint256",
+                },
+              ],
+              name: "increaseAllowance",
+              outputs: [
+                {
+                  internalType: "bool",
+                  name: "",
+                  type: "bool",
+                },
+              ],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "to",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "amount",
+                  type: "uint256",
+                },
+              ],
+              name: "mint",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address[]",
+                  name: "_wallets",
+                  type: "address[]",
+                },
+                {
+                  internalType: "uint256",
+                  name: "amount",
+                  type: "uint256",
+                },
+              ],
+              name: "mintMultiple",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "name",
+              outputs: [
+                {
+                  internalType: "string",
+                  name: "",
+                  type: "string",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "bytes32",
+                  name: "role",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "address",
+                  name: "account",
+                  type: "address",
+                },
+              ],
+              name: "renounceRole",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "bytes32",
+                  name: "role",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "address",
+                  name: "account",
+                  type: "address",
+                },
+              ],
+              name: "revokeRole",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "bytes4",
+                  name: "interfaceId",
+                  type: "bytes4",
+                },
+              ],
+              name: "supportsInterface",
+              outputs: [
+                {
+                  internalType: "bool",
+                  name: "",
+                  type: "bool",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "symbol",
+              outputs: [
+                {
+                  internalType: "string",
+                  name: "",
+                  type: "string",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "totalSupply",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "to",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "amount",
+                  type: "uint256",
+                },
+              ],
+              name: "transfer",
+              outputs: [
+                {
+                  internalType: "bool",
+                  name: "",
+                  type: "bool",
+                },
+              ],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "from",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "to",
+                  type: "address",
+                },
+                {
+                  internalType: "uint256",
+                  name: "amount",
+                  type: "uint256",
+                },
+              ],
+              name: "transferFrom",
+              outputs: [
+                {
+                  internalType: "bool",
+                  name: "",
+                  type: "bool",
+                },
+              ],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "newOwner",
+                  type: "address",
+                },
+              ],
+              name: "transferOwnership",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+          ],
+        },
         AvocadoToken: {
-          address: "0x59b670e9fA9D0A427751Af201D676719a970857b",
+          address: "0x986aaa537b8cc170761FDAC6aC4fc7F9d8a20A8C",
           abi: [
             {
               inputs: [
@@ -669,7 +1221,7 @@ const contracts = {
           ],
         },
         BananaToken: {
-          address: "0x4ed7c70F96B99c776995fB64377f0d4aB3B0e1C1",
+          address: "0xde2Bd2ffEA002b8E84ADeA96e5976aF664115E2c",
           abi: [
             {
               inputs: [
@@ -1207,7 +1759,7 @@ const contracts = {
           ],
         },
         TomatoToken: {
-          address: "0x322813Fd9A801c5507c9de605d63CEA4f2CE6c44",
+          address: "0xefc1aB2475ACb7E60499Efb171D173be19928a05",
           abi: [
             {
               inputs: [
@@ -1745,7 +2297,7 @@ const contracts = {
           ],
         },
         EventSBT: {
-          address: "0xa85233C63b9Ee964Add6F2cffe00Fd84eb32338f",
+          address: "0x870526b7973b56163a6997bB7C886F5E4EA53638",
           abi: [
             {
               inputs: [
@@ -2358,8 +2910,1223 @@ const contracts = {
             },
           ],
         },
+        BasicDexAvocado: {
+          address: "0xe1Fd27F4390DcBE165f4D60DBF821e4B9Bb02dEd",
+          abi: [
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "_creditToken",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "_assetToken",
+                  type: "address",
+                },
+              ],
+              stateMutability: "nonpayable",
+              type: "constructor",
+            },
+            {
+              inputs: [],
+              name: "InitError",
+              type: "error",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "uint256",
+                  name: "_liquidityAvailable",
+                  type: "uint256",
+                },
+              ],
+              name: "InsufficientLiquidityError",
+              type: "error",
+            },
+            {
+              inputs: [],
+              name: "SlippageError",
+              type: "error",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "_token",
+                  type: "address",
+                },
+              ],
+              name: "TokenTransferError",
+              type: "error",
+            },
+            {
+              inputs: [],
+              name: "ZeroQuantityError",
+              type: "error",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: false,
+                  internalType: "address",
+                  name: "_user",
+                  type: "address",
+                },
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "_liquidityMinted",
+                  type: "uint256",
+                },
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "_creditTokenAdded",
+                  type: "uint256",
+                },
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "_assetTokenAdded",
+                  type: "uint256",
+                },
+              ],
+              name: "LiquidityProvided",
+              type: "event",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: false,
+                  internalType: "address",
+                  name: "_user",
+                  type: "address",
+                },
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "_liquidityAmount",
+                  type: "uint256",
+                },
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "_creditTokenAmount",
+                  type: "uint256",
+                },
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "_assetTokenAmount",
+                  type: "uint256",
+                },
+              ],
+              name: "LiquidityRemoved",
+              type: "event",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: false,
+                  internalType: "address",
+                  name: "_user",
+                  type: "address",
+                },
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "_tradeDirection",
+                  type: "uint256",
+                },
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "_tokensSwapped",
+                  type: "uint256",
+                },
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "_tokensReceived",
+                  type: "uint256",
+                },
+              ],
+              name: "TokenSwap",
+              type: "event",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "uint256",
+                  name: "creditIn",
+                  type: "uint256",
+                },
+              ],
+              name: "assetPrice",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "assetOut",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "uint256",
+                  name: "tokensIn",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "minTokensBack",
+                  type: "uint256",
+                },
+              ],
+              name: "assetToCredit",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "tokenOutput",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "assetToken",
+              outputs: [
+                {
+                  internalType: "contract IERC20",
+                  name: "",
+                  type: "address",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "uint256",
+                  name: "assetIn",
+                  type: "uint256",
+                },
+              ],
+              name: "creditPrice",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "creditOut",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "uint256",
+                  name: "tokensIn",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "minTokensBack",
+                  type: "uint256",
+                },
+              ],
+              name: "creditToAsset",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "tokenOutput",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "creditToken",
+              outputs: [
+                {
+                  internalType: "contract IERC20",
+                  name: "",
+                  type: "address",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "uint256",
+                  name: "creditTokenDeposited",
+                  type: "uint256",
+                },
+              ],
+              name: "deposit",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "liquidityMinted",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "_user",
+                  type: "address",
+                },
+              ],
+              name: "getLiquidity",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "uint256",
+                  name: "tokens",
+                  type: "uint256",
+                },
+              ],
+              name: "init",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "",
+                  type: "address",
+                },
+              ],
+              name: "liquidity",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "uint256",
+                  name: "xInput",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "xReserves",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "yReserves",
+                  type: "uint256",
+                },
+              ],
+              name: "price",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "yOutput",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "pure",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "totalLiquidity",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "uint256",
+                  name: "amount",
+                  type: "uint256",
+                },
+              ],
+              name: "withdraw",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "creditTokenAmount",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "assetTokenAmount",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+          ],
+        },
+        BasicDexBanana: {
+          address: "0xc582Bc0317dbb0908203541971a358c44b1F3766",
+          abi: [
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "_creditToken",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "_assetToken",
+                  type: "address",
+                },
+              ],
+              stateMutability: "nonpayable",
+              type: "constructor",
+            },
+            {
+              inputs: [],
+              name: "InitError",
+              type: "error",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "uint256",
+                  name: "_liquidityAvailable",
+                  type: "uint256",
+                },
+              ],
+              name: "InsufficientLiquidityError",
+              type: "error",
+            },
+            {
+              inputs: [],
+              name: "SlippageError",
+              type: "error",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "_token",
+                  type: "address",
+                },
+              ],
+              name: "TokenTransferError",
+              type: "error",
+            },
+            {
+              inputs: [],
+              name: "ZeroQuantityError",
+              type: "error",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: false,
+                  internalType: "address",
+                  name: "_user",
+                  type: "address",
+                },
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "_liquidityMinted",
+                  type: "uint256",
+                },
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "_creditTokenAdded",
+                  type: "uint256",
+                },
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "_assetTokenAdded",
+                  type: "uint256",
+                },
+              ],
+              name: "LiquidityProvided",
+              type: "event",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: false,
+                  internalType: "address",
+                  name: "_user",
+                  type: "address",
+                },
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "_liquidityAmount",
+                  type: "uint256",
+                },
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "_creditTokenAmount",
+                  type: "uint256",
+                },
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "_assetTokenAmount",
+                  type: "uint256",
+                },
+              ],
+              name: "LiquidityRemoved",
+              type: "event",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: false,
+                  internalType: "address",
+                  name: "_user",
+                  type: "address",
+                },
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "_tradeDirection",
+                  type: "uint256",
+                },
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "_tokensSwapped",
+                  type: "uint256",
+                },
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "_tokensReceived",
+                  type: "uint256",
+                },
+              ],
+              name: "TokenSwap",
+              type: "event",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "uint256",
+                  name: "creditIn",
+                  type: "uint256",
+                },
+              ],
+              name: "assetPrice",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "assetOut",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "uint256",
+                  name: "tokensIn",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "minTokensBack",
+                  type: "uint256",
+                },
+              ],
+              name: "assetToCredit",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "tokenOutput",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "assetToken",
+              outputs: [
+                {
+                  internalType: "contract IERC20",
+                  name: "",
+                  type: "address",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "uint256",
+                  name: "assetIn",
+                  type: "uint256",
+                },
+              ],
+              name: "creditPrice",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "creditOut",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "uint256",
+                  name: "tokensIn",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "minTokensBack",
+                  type: "uint256",
+                },
+              ],
+              name: "creditToAsset",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "tokenOutput",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "creditToken",
+              outputs: [
+                {
+                  internalType: "contract IERC20",
+                  name: "",
+                  type: "address",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "uint256",
+                  name: "creditTokenDeposited",
+                  type: "uint256",
+                },
+              ],
+              name: "deposit",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "liquidityMinted",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "_user",
+                  type: "address",
+                },
+              ],
+              name: "getLiquidity",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "uint256",
+                  name: "tokens",
+                  type: "uint256",
+                },
+              ],
+              name: "init",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "",
+                  type: "address",
+                },
+              ],
+              name: "liquidity",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "uint256",
+                  name: "xInput",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "xReserves",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "yReserves",
+                  type: "uint256",
+                },
+              ],
+              name: "price",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "yOutput",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "pure",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "totalLiquidity",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "uint256",
+                  name: "amount",
+                  type: "uint256",
+                },
+              ],
+              name: "withdraw",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "creditTokenAmount",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "assetTokenAmount",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+          ],
+        },
+        BasicDexTomato: {
+          address: "0xB2b580ce436E6F77A5713D80887e14788Ef49c9A",
+          abi: [
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "_creditToken",
+                  type: "address",
+                },
+                {
+                  internalType: "address",
+                  name: "_assetToken",
+                  type: "address",
+                },
+              ],
+              stateMutability: "nonpayable",
+              type: "constructor",
+            },
+            {
+              inputs: [],
+              name: "InitError",
+              type: "error",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "uint256",
+                  name: "_liquidityAvailable",
+                  type: "uint256",
+                },
+              ],
+              name: "InsufficientLiquidityError",
+              type: "error",
+            },
+            {
+              inputs: [],
+              name: "SlippageError",
+              type: "error",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "_token",
+                  type: "address",
+                },
+              ],
+              name: "TokenTransferError",
+              type: "error",
+            },
+            {
+              inputs: [],
+              name: "ZeroQuantityError",
+              type: "error",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: false,
+                  internalType: "address",
+                  name: "_user",
+                  type: "address",
+                },
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "_liquidityMinted",
+                  type: "uint256",
+                },
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "_creditTokenAdded",
+                  type: "uint256",
+                },
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "_assetTokenAdded",
+                  type: "uint256",
+                },
+              ],
+              name: "LiquidityProvided",
+              type: "event",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: false,
+                  internalType: "address",
+                  name: "_user",
+                  type: "address",
+                },
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "_liquidityAmount",
+                  type: "uint256",
+                },
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "_creditTokenAmount",
+                  type: "uint256",
+                },
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "_assetTokenAmount",
+                  type: "uint256",
+                },
+              ],
+              name: "LiquidityRemoved",
+              type: "event",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: false,
+                  internalType: "address",
+                  name: "_user",
+                  type: "address",
+                },
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "_tradeDirection",
+                  type: "uint256",
+                },
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "_tokensSwapped",
+                  type: "uint256",
+                },
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "_tokensReceived",
+                  type: "uint256",
+                },
+              ],
+              name: "TokenSwap",
+              type: "event",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "uint256",
+                  name: "creditIn",
+                  type: "uint256",
+                },
+              ],
+              name: "assetPrice",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "assetOut",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "uint256",
+                  name: "tokensIn",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "minTokensBack",
+                  type: "uint256",
+                },
+              ],
+              name: "assetToCredit",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "tokenOutput",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "assetToken",
+              outputs: [
+                {
+                  internalType: "contract IERC20",
+                  name: "",
+                  type: "address",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "uint256",
+                  name: "assetIn",
+                  type: "uint256",
+                },
+              ],
+              name: "creditPrice",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "creditOut",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "uint256",
+                  name: "tokensIn",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "minTokensBack",
+                  type: "uint256",
+                },
+              ],
+              name: "creditToAsset",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "tokenOutput",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "creditToken",
+              outputs: [
+                {
+                  internalType: "contract IERC20",
+                  name: "",
+                  type: "address",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "uint256",
+                  name: "creditTokenDeposited",
+                  type: "uint256",
+                },
+              ],
+              name: "deposit",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "liquidityMinted",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "_user",
+                  type: "address",
+                },
+              ],
+              name: "getLiquidity",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "uint256",
+                  name: "tokens",
+                  type: "uint256",
+                },
+              ],
+              name: "init",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "",
+                  type: "address",
+                },
+              ],
+              name: "liquidity",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "uint256",
+                  name: "xInput",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "xReserves",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "yReserves",
+                  type: "uint256",
+                },
+              ],
+              name: "price",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "yOutput",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "pure",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "totalLiquidity",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "uint256",
+                  name: "amount",
+                  type: "uint256",
+                },
+              ],
+              name: "withdraw",
+              outputs: [
+                {
+                  internalType: "uint256",
+                  name: "creditTokenAmount",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "assetTokenAmount",
+                  type: "uint256",
+                },
+              ],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+          ],
+        },
         CongratsVIPLounge: {
-          address: "0x7a2088a1bFc9d81c55368AE168C2C02570cB814F",
+          address: "0x5D42EBdBBa61412295D7b0302d6F50aC449Ddb4F",
           abi: [
             {
               anonymous: false,

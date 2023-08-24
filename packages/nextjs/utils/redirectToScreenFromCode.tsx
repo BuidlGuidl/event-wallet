@@ -27,6 +27,9 @@ export const redirectToScreenFromCode = (
         );
       }
       break;
+    case "swap":
+      setScreen("swap");
+      break;
     case "mint":
       setScreen("mint", { nftId: payload });
       notification.info(
