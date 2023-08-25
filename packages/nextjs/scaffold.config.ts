@@ -12,6 +12,7 @@ export type ScaffoldConfig = {
   burnerWallet: {
     enabled: boolean;
     onlyLocal: boolean;
+    signConfirmation: boolean;
   };
   walletAutoConnect: boolean;
 };
@@ -23,10 +24,10 @@ const scaffoldConfig = {
 
   // The interval at which your front-end polls the RPC servers for new data
   // it has no effect on the local network
-  pollingInterval: 5000,
+  pollingInterval: 15000,
 
   tokenEmoji: "💎",
-  eventName: "EVENT",
+  eventName: "Game",
   hideHeader: true,
 
   tokens: [
@@ -48,6 +49,7 @@ const scaffoldConfig = {
     enabled: true,
     // Only show the Burner Wallet when running on hardhat network
     onlyLocal: false,
+    signConfirmation: false,
   },
 
   /**

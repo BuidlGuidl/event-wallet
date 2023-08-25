@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import Blockies from "react-blockies";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { CheckCircleIcon, DocumentDuplicateIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
 import { InputBase } from "~~/components/scaffold-eth/Input";
-import { useScaffoldContractRead, useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
+import { loadBurnerSK } from "~~/hooks/scaffold-eth";
 import { getBlockExplorerAddressLink, getTargetNetwork, notification } from "~~/utils/scaffold-eth";
 
 type TAddressProps = {
@@ -20,18 +20,32 @@ export const AddressMain = ({ address, disableAddressLink, format }: TAddressPro
   const [addressCopied, setAddressCopied] = useState(false);
   const [aliasModalOpen, setAliasModalOpen] = useState(false);
   const [aliasValue, setAliasValue] = useState("");
+  const [alias, setAlias] = useState("");
+  const [processing, setProcessing] = useState(false);
 
-  const { data: alias } = useScaffoldContractRead({
-    contractName: "EventAliases",
-    functionName: "aliases",
-    args: [address],
-  });
+  useEffect(() => {
+    const updateAlias = async () => {
+      if (address) {
+        try {
+          const response = await fetch(`/api/alias/${address}`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
 
-  const { writeAsync } = useScaffoldContractWrite({
-    contractName: "EventAliases",
-    functionName: "setName",
-    args: [aliasValue],
-  });
+          const data = await response.json();
+
+          if (response.ok && data) {
+            setAlias(data);
+          }
+        } catch (e) {
+          console.log("Error checking if user has alias", e);
+        }
+      }
+    };
+    updateAlias();
+  }, [address]);
 
   // Skeleton UI
   if (!address) {
@@ -58,14 +72,48 @@ export const AddressMain = ({ address, disableAddressLink, format }: TAddressPro
     displayAddress = address;
   }
 
-  const handleUpdateAlias = () => {
-    if (aliasValue.length < 3) {
-      notification.error("Alias must be at least 3 characters");
+  const handleUpdateAlias = async () => {
+    if (aliasValue.length < 3 || aliasValue.length > 64) {
+      notification.error("Alias must be between 3 and 64 characters");
       return;
     }
-    setAliasModalOpen(false);
-    setAliasValue("");
-    writeAsync();
+
+    setProcessing(true);
+    if (!address) {
+      setProcessing(false);
+      return;
+    }
+
+    try {
+      const burnerPK = loadBurnerSK();
+      const signer = new ethers.Wallet(burnerPK);
+
+      const message = JSON.stringify({ action: "save-alias", address, alias: aliasValue });
+      const signature = await signer.signMessage(message);
+
+      // Post the signed message to the API
+      const response = await fetch("/api/alias", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ signature, signerAddress: address, alias: aliasValue }),
+      });
+
+      if (response.ok) {
+        setAlias(aliasValue);
+        setAliasModalOpen(false);
+        setAliasValue("");
+        notification.success("Alias saved!");
+      } else {
+        const result = await response.json();
+        notification.error(result.error);
+      }
+    } catch (e) {
+      console.log("Error saving alias", e);
+    } finally {
+      setProcessing(false);
+    }
   };
 
   return (
@@ -141,7 +189,7 @@ export const AddressMain = ({ address, disableAddressLink, format }: TAddressPro
             />
           </div>
           <div className="text-center mt-2">
-            <button className="btn btn-primary" onClick={handleUpdateAlias}>
+            <button className="btn btn-primary" disabled={processing} onClick={handleUpdateAlias}>
               Set Alias
             </button>
           </div>

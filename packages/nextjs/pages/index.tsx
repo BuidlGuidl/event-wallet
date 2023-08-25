@@ -1,9 +1,19 @@
+import { useEffect, useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import { BigNumber } from "ethers";
 import type { NextPage } from "next";
 import { useAccount } from "wagmi";
-import { ArrowDownTrayIcon, ArrowPathIcon, HomeIcon, PaperAirplaneIcon, PhotoIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowDownTrayIcon,
+  ArrowPathIcon,
+  CheckCircleIcon,
+  EllipsisHorizontalCircleIcon,
+  ExclamationCircleIcon,
+  HomeIcon,
+  PaperAirplaneIcon,
+  PhotoIcon,
+} from "@heroicons/react/24/outline";
 import { Balance, FaucetButton } from "~~/components/scaffold-eth";
 import { AddressMain } from "~~/components/scaffold-eth/AddressMain";
 import { TokenBalance } from "~~/components/scaffold-eth/TokenBalance";
@@ -12,6 +22,7 @@ import { Mint } from "~~/components/screens/Mint";
 import { useAutoConnect, useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 import scaffoldConfig from "~~/scaffold.config";
 import { useAppStore } from "~~/services/store/store";
+import { notification } from "~~/utils/scaffold-eth";
 import { ContractName } from "~~/utils/scaffold-eth/contract";
 
 const screens = {
@@ -23,11 +34,18 @@ const screens = {
   swap: <Swap />,
 };
 
+type UserData = {
+  checkin: string;
+};
+
 const Home: NextPage = () => {
   useAutoConnect();
 
   const screen = useAppStore(state => state.screen);
   const setScreen = useAppStore(state => state.setScreen);
+
+  const [loadingUserData, setLoadingUserData] = useState(true);
+  const [userData, setUserData] = useState<UserData>();
 
   const { address } = useAccount();
 
@@ -53,6 +71,37 @@ const Home: NextPage = () => {
     functionName: "balanceOf",
     args: [address],
   });
+
+  const updateUserData = async () => {
+    try {
+      setLoadingUserData(true);
+      const response = await fetch(`/api/users/${address}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setUserData(data);
+      } else {
+        const result = await response.json();
+        notification.error(result.error);
+      }
+    } catch (e) {
+      console.log("Error getting user data", e);
+    } finally {
+      setLoadingUserData(false);
+    }
+  };
+
+  useEffect(() => {
+    if (address) {
+      updateUserData();
+    }
+  }, [address]);
 
   const screenRender = screens[screen];
 
@@ -83,7 +132,23 @@ const Home: NextPage = () => {
                   {scaffoldConfig.tokens.map(token => (
                     <TokenBalance key={token.symbol} emoji={token.emoji} amount={balances[token.symbol]} />
                   ))}
-                  <span className="text-xl">/</span>
+                  <div className="text-xl font-bold flex gap-1">
+                    {loadingUserData ? (
+                      <EllipsisHorizontalCircleIcon className="w-4" />
+                    ) : (
+                      <>
+                        {userData && userData.checkin ? (
+                          <span title="Checked-in">
+                            <CheckCircleIcon className="w-4 text-green-800" />
+                          </span>
+                        ) : (
+                          <span title="Not checked-in">
+                            <ExclamationCircleIcon className="w-4 text-red-800" />
+                          </span>
+                        )}
+                      </>
+                    )}
+                  </div>
                   <div className="text-xl font-bold flex gap-1">
                     <PhotoIcon className="w-4" />
                     {balanceSBT?.toString()}
