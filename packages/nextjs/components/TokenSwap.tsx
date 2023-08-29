@@ -132,14 +132,14 @@ export const TokenSwap = ({ token }: { token: ContractName }) => {
           await approveSalt();
         }
         await creditToAsset();
-        notification.success(`Swapped ${amountIn} 🧂 for ${amountOut} ${tokenEmoji}!`);
+        // notification.success(`Swapped ${amountIn} 🧂 for ${amountOut} ${tokenEmoji}!`);
       } else {
         console.log("tokenAllowance: ", tokenAllowance?.toString());
         if (tokenAllowance && tokenAllowance.lt(parsedAmountIn)) {
           await approveToken();
         }
         await assetToCredit();
-        notification.success(`Swapped ${amountIn} ${tokenEmoji} for ${amountOut} 🧂!`);
+        // notification.success(`Swapped ${amountIn} ${tokenEmoji} for ${amountOut} 🧂!`);
       }
       setAmountIn("");
       setAmountOut("");
