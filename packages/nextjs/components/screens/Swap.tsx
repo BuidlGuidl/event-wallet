@@ -9,7 +9,12 @@ export const Swap = () => {
         {scaffoldConfig.tokens
           .filter(token => token.name != "Salt")
           .map(token => (
-            <TokenSwap key={token.contractName} token={token.contractName as ContractName} />
+            <TokenSwap
+              key={token.contractName}
+              token={token.contractName as ContractName}
+              defaultAmountIn="1"
+              defaultAmountOut="1"
+            />
           ))}
       </div>
     </div>

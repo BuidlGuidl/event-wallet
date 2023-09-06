@@ -1,18 +1,15 @@
 import { useEffect, useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
-import { BigNumber } from "ethers";
 import type { NextPage } from "next";
 import { useAccount } from "wagmi";
 import {
   ArrowDownTrayIcon,
-  ArrowPathIcon,
   CheckCircleIcon,
   EllipsisHorizontalCircleIcon,
   ExclamationCircleIcon,
   HomeIcon,
   PaperAirplaneIcon,
-  PhotoIcon,
 } from "@heroicons/react/24/outline";
 import { Balance, FaucetButton } from "~~/components/scaffold-eth";
 import { AddressMain } from "~~/components/scaffold-eth/AddressMain";
@@ -23,7 +20,6 @@ import { useAutoConnect, useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 import scaffoldConfig from "~~/scaffold.config";
 import { useAppStore } from "~~/services/store/store";
 import { notification } from "~~/utils/scaffold-eth";
-import { ContractName } from "~~/utils/scaffold-eth/contract";
 
 const screens = {
   main: <Main />,
@@ -49,25 +45,10 @@ const Home: NextPage = () => {
 
   const { address } = useAccount();
 
-  const balances: { [key: string]: BigNumber } = {};
+  const saltToken = scaffoldConfig.tokens[0];
 
-  scaffoldConfig.tokens.forEach(token => {
-    balances[token.symbol] = BigNumber.from(0);
-    const contractName: ContractName = `${token.name}Token` as ContractName;
-    // The tokens array should not change, so this should be safe. Anyway, we can refactor this later.
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const { data: balance } = useScaffoldContractRead({
-      contractName: contractName,
-      functionName: "balanceOf",
-      args: [address],
-    });
-    if (balance) {
-      balances[token.symbol] = balance;
-    }
-  });
-
-  const { data: balanceSBT } = useScaffoldContractRead({
-    contractName: "EventSBT",
+  const { data: balance } = useScaffoldContractRead({
+    contractName: "SaltToken",
     functionName: "balanceOf",
     args: [address],
   });
@@ -129,9 +110,7 @@ const Home: NextPage = () => {
               <div className="flex flex-col items-center mb-6 gap-4">
                 <AddressMain address={address} disableAddressLink={true} />
                 <div className="flex gap-4 items-center">
-                  {scaffoldConfig.tokens.map(token => (
-                    <TokenBalance key={token.symbol} emoji={token.emoji} amount={balances[token.symbol]} />
-                  ))}
+                  <TokenBalance key={saltToken.symbol} emoji={saltToken.emoji} amount={balance} />
                   <div className="text-xl font-bold flex gap-1">
                     {loadingUserData ? (
                       <EllipsisHorizontalCircleIcon className="w-4" />
@@ -149,10 +128,6 @@ const Home: NextPage = () => {
                       </>
                     )}
                   </div>
-                  <div className="text-xl font-bold flex gap-1">
-                    <PhotoIcon className="w-4" />
-                    {balanceSBT?.toString()}
-                  </div>
                 </div>
               </div>
               <div className="flex gap-6 justify-center mb-8">
@@ -161,12 +136,6 @@ const Home: NextPage = () => {
                   onClick={() => setScreen("main")}
                 >
                   <HomeIcon className="w-8" />
-                </button>
-                <button
-                  className={`${screen === "swap" ? "bg-primary" : "bg-secondary"} text-white rounded-full p-3`}
-                  onClick={() => setScreen("swap")}
-                >
-                  <ArrowPathIcon className="w-8" />
                 </button>
                 <button
                   className={`${screen === "receive" ? "bg-primary" : "bg-secondary"} text-white rounded-full p-3`}
@@ -179,12 +148,6 @@ const Home: NextPage = () => {
                   onClick={() => setScreen("send")}
                 >
                   <PaperAirplaneIcon className="w-8" />
-                </button>
-                <button
-                  className={`${screen === "collectibles" ? "bg-primary" : "bg-secondary"} text-white rounded-full p-3`}
-                  onClick={() => setScreen("collectibles")}
-                >
-                  <PhotoIcon className="w-8" />
                 </button>
               </div>
             </>

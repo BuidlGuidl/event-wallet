@@ -73,7 +73,11 @@ const Leaderboard: NextPage = () => {
         tokenContracts &&
         tokenContracts.length > 0 &&
         checkedInAddresses &&
-        checkedInAddresses.length > 0
+        checkedInAddresses.length > 0 &&
+        tokenContracts.filter(token => token.contract !== null).length === tokenContracts.length &&
+        dexContracts["Avocado"] !== null &&
+        dexContracts["Banana"] !== null &&
+        dexContracts["Tomato"] !== null
       ) {
         let leaderboardData: LeaderboardData[] = [];
         for (let i = 0; i < checkedInAddresses.length; i++) {
@@ -101,7 +105,15 @@ const Leaderboard: NextPage = () => {
       }
     };
     updateLeaderboard();
-  }, [loadingCheckedIn, tokenContracts.length, checkedInAddresses]);
+  }, [
+    loadingCheckedIn,
+    tokenContracts.length,
+    tokenContracts.filter(token => token.contract !== null).length,
+    dexContracts["Avocado"] !== null,
+    dexContracts["Banana"] !== null,
+    dexContracts["Tomato"] !== null,
+    checkedInAddresses,
+  ]);
 
   return (
     <div className="flex flex-col items-center justify-center py-2">

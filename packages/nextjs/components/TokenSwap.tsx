@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ethers } from "ethers";
+import { BigNumber, ethers } from "ethers";
 import { useAccount } from "wagmi";
 import { ChevronUpDownIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import { InputBase } from "~~/components/scaffold-eth";
@@ -10,10 +10,24 @@ import { ContractName } from "~~/utils/scaffold-eth/contract";
 
 type TokenName = "Avocado" | "Banana" | "Tomato";
 
-export const TokenSwap = ({ token }: { token: ContractName }) => {
+export const TokenSwap = ({
+  token,
+  defaultAmountIn,
+  defaultAmountOut,
+  close,
+  balanceSalt,
+  balanceToken,
+}: {
+  token: ContractName;
+  defaultAmountIn: string;
+  defaultAmountOut: string;
+  close?: () => void;
+  balanceSalt?: BigNumber;
+  balanceToken?: BigNumber;
+}) => {
   const { address } = useAccount();
-  const [amountIn, setAmountIn] = useState("");
-  const [amountOut, setAmountOut] = useState("");
+  const [amountIn, setAmountIn] = useState<string>(defaultAmountIn);
+  const [amountOut, setAmountOut] = useState<string>(defaultAmountOut);
   const [saltToToken, setSaltToToken] = useState(true);
 
   const tokenName: TokenName = token.replace("Token", "") as TokenName;
@@ -21,14 +35,6 @@ export const TokenSwap = ({ token }: { token: ContractName }) => {
   const saltEmoji = "🧂";
 
   const dexContractName: ContractName = `BasicDex${tokenName}` as ContractName;
-
-  /*
-  const { data: price } = useScaffoldContractRead({
-    contractName: "BasicDexAvocado",
-    functionName: "assetPrice",
-    args: [ethers.utils.parseEther(amount || "0")],
-  });
-*/
 
   const { data: dexContract, isLoading: isLoadingDex } = useScaffoldContract({ contractName: dexContractName });
 
@@ -63,13 +69,13 @@ export const TokenSwap = ({ token }: { token: ContractName }) => {
   const { writeAsync: approveSalt, isMining: isMiningApproveSalt } = useScaffoldContractWrite({
     contractName: "SaltToken",
     functionName: "approve",
-    args: [dexContract?.address, ethers.utils.parseEther(amountIn || "0")],
+    args: [dexContract?.address, ethers.utils.parseEther("100000")],
   });
 
   const { writeAsync: approveToken, isMining: isMiningApproveToken } = useScaffoldContractWrite({
     contractName: token,
     functionName: "approve",
-    args: [dexContract?.address, ethers.utils.parseEther(amountIn || "0")],
+    args: [dexContract?.address, ethers.utils.parseEther("100000")],
   });
 
   const isLoading =
@@ -82,9 +88,9 @@ export const TokenSwap = ({ token }: { token: ContractName }) => {
     if (dexContract && parsedAmount.gt(0)) {
       let price = 0;
       if (saltToToken) {
-        price = await dexContract.assetPrice(parsedAmount);
+        price = await dexContract.creditInPrice(parsedAmount);
       } else {
-        price = await dexContract.creditPrice(parsedAmount);
+        price = await dexContract.assetInPrice(parsedAmount);
       }
       setAmountIn(amount);
       setAmountOut(ethers.utils.formatUnits(price));
@@ -97,12 +103,14 @@ export const TokenSwap = ({ token }: { token: ContractName }) => {
   const changeAmountOut = async (amount: string) => {
     const parsedAmount = ethers.utils.parseEther(amount || "0");
 
+    console.log("changeAmountOut", amount, parsedAmount.toString());
+
     if (dexContract && parsedAmount.gt(0)) {
       let price = 0;
       if (saltToToken) {
-        price = await dexContract.creditPrice(parsedAmount);
+        price = await dexContract.assetOutPrice(parsedAmount);
       } else {
-        price = await dexContract.assetPrice(parsedAmount);
+        price = await dexContract.creditOutPrice(parsedAmount);
       }
       setAmountOut(amount);
       setAmountIn(ethers.utils.formatUnits(price));
@@ -143,6 +151,9 @@ export const TokenSwap = ({ token }: { token: ContractName }) => {
       }
       setAmountIn("");
       setAmountOut("");
+      if (close) {
+        close();
+      }
     } catch (e) {
       console.error("Error swapping tokens: ", e);
       notification.error("Error swapping tokens");
@@ -155,18 +166,40 @@ export const TokenSwap = ({ token }: { token: ContractName }) => {
         {saltEmoji} ⇔ {tokenEmoji}
       </div>
       <div className="flex">
-        <span>{saltToToken ? saltEmoji : tokenEmoji}</span>
-        <InputBase
-          type="number"
-          value={amountIn}
-          onChange={async v => {
-            // Protect underflow (e.g. 0.0000000000000000001)
-            if (v.length < 21) {
-              await changeAmountIn(v);
+        <span className="text-2xl">{saltToToken ? saltEmoji : tokenEmoji}</span>
+        <div className="w-[200px]">
+          <InputBase
+            type="number"
+            value={amountIn}
+            onChange={async v => {
+              // Protect underflow (e.g. 0.0000000000000000001)
+              if (v.length < 21) {
+                await changeAmountIn(v);
+              }
+            }}
+            placeholder="0"
+          />
+        </div>
+        <button
+          className="ml-1 mt-3 text-primary"
+          onClick={() => {
+            if (saltToToken) {
+              if (balanceSalt) {
+                changeAmountIn(ethers.utils.formatUnits(balanceSalt));
+              } else {
+                changeAmountIn("0");
+              }
+            } else {
+              if (balanceToken) {
+                changeAmountIn(ethers.utils.formatUnits(balanceToken));
+              } else {
+                changeAmountIn("0");
+              }
             }
           }}
-          placeholder="0"
-        />
+        >
+          Max
+        </button>
       </div>
       <div className="flex justify-center">
         <ChevronUpDownIcon
@@ -179,18 +212,20 @@ export const TokenSwap = ({ token }: { token: ContractName }) => {
         />
       </div>
       <div className="flex">
-        <span>{saltToToken ? tokenEmoji : saltEmoji}</span>
-        <InputBase
-          type="number"
-          value={amountOut}
-          onChange={async v => {
-            // Protect underflow (e.g. 0.0000000000000000001)
-            if (v.length < 21) {
-              await changeAmountOut(v);
-            }
-          }}
-          placeholder="0"
-        />
+        <span className="text-2xl">{saltToToken ? tokenEmoji : saltEmoji}</span>
+        <div className="w-[200px]">
+          <InputBase
+            type="number"
+            value={amountOut}
+            onChange={async v => {
+              // Protect underflow (e.g. 0.0000000000000000001)
+              if (v.length < 21) {
+                await changeAmountOut(v);
+              }
+            }}
+            placeholder="0"
+          />
+        </div>
       </div>
       <div>
         <button

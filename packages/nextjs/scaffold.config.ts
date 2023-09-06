@@ -1,4 +1,5 @@
 import * as chains from "wagmi/chains";
+import { TTokenInfo } from "~~/types/wallet";
 
 export type ScaffoldConfig = {
   targetNetwork: chains.Chain;
@@ -8,7 +9,7 @@ export type ScaffoldConfig = {
   tokenEmoji: string;
   eventName: string;
   hideHeader: boolean;
-  tokens: { contractName: string; name: string; symbol: string; emoji: string }[];
+  tokens: TTokenInfo[];
   burnerWallet: {
     enabled: boolean;
     onlyLocal: boolean;
