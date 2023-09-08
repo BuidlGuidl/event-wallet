@@ -54,16 +54,18 @@ export const TokenSwap = ({
 
   console.log("tokenAllowance", token, tokenAllowance?.toString());
 
+  const slippage = BigNumber.from("105").div("100");
+
   const { writeAsync: creditToAsset, isMining: isMiningCreditToAsset } = useScaffoldContractWrite({
     contractName: dexContractName,
     functionName: "creditToAsset",
-    args: [ethers.utils.parseEther(amountIn || "0"), ethers.utils.parseEther(amountOut || "0")],
+    args: [ethers.utils.parseEther(amountIn || "0").mul(slippage), ethers.utils.parseEther(amountOut || "0")],
   });
 
   const { writeAsync: assetToCredit, isMining: isMiningAssetToCredit } = useScaffoldContractWrite({
     contractName: dexContractName,
     functionName: "assetToCredit",
-    args: [ethers.utils.parseEther(amountIn || "0"), ethers.utils.parseEther(amountOut || "0")],
+    args: [ethers.utils.parseEther(amountIn || "0").mul(slippage), ethers.utils.parseEther(amountOut || "0")],
   });
 
   const { writeAsync: approveSalt, isMining: isMiningApproveSalt } = useScaffoldContractWrite({
