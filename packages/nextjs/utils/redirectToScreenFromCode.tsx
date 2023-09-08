@@ -30,6 +30,9 @@ export const redirectToScreenFromCode = (
     case "swap":
       setScreen("swap");
       break;
+    case "checkedIn":
+      setScreen("checkedIn");
+      break;
     case "mint":
       setScreen("mint", { nftId: payload });
       notification.info(

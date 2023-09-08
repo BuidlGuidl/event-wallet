@@ -1,8 +1,57 @@
+import { useState } from "react";
+import { BigNumber, ethers } from "ethers";
+import { isAddress } from "ethers/lib/utils";
+import { useSigner } from "wagmi";
 import { Address } from "~~/components/scaffold-eth";
+import { useScaffoldContract } from "~~/hooks/scaffold-eth";
+import { useTransactor } from "~~/hooks/scaffold-eth";
 import { useAliases } from "~~/hooks/wallet";
+import { notification } from "~~/utils/scaffold-eth";
 
-export const Board = ({ addresses, isLoading }: { addresses: string[]; isLoading: boolean }) => {
+type LeaderboardData = {
+  address: string;
+  balance: BigNumber;
+  salt: BigNumber;
+};
+
+export const Board = ({ addresses, isLoading }: { addresses: LeaderboardData[]; isLoading: boolean }) => {
   const aliases = useAliases({ enablePolling: true });
+  const { data: signer } = useSigner();
+  const [sending, setSending] = useState(false);
+
+  const writeTx = useTransactor();
+
+  const { data: saltContract } = useScaffoldContract({
+    contractName: "SaltToken",
+    signerOrProvider: signer || undefined,
+  });
+
+  const handleSendSalt = async (address: string) => {
+    if (!isAddress(address)) {
+      notification.error("Please enter a valid address");
+      return;
+    }
+    setSending(true);
+    // @ts-ignore
+    await writeTx(saltContract?.transfer(address, ethers.utils.parseEther("25")));
+    setSending(false);
+  };
+
+  const handleSendTip = async (address: string) => {
+    if (!isAddress(address)) {
+      notification.error("Please enter a valid address");
+      return;
+    }
+
+    const tx = {
+      to: address,
+      value: ethers.utils.parseEther("0.01"),
+    };
+
+    setSending(true);
+    await writeTx(tx);
+    setSending(false);
+  };
 
   if (isLoading) {
     return (
@@ -28,14 +77,39 @@ export const Board = ({ addresses, isLoading }: { addresses: string[]; isLoading
             <tr className="text-center">
               <th>#</th>
               <th>Address</th>
+              <th>Balance</th>
+              <th>Salt</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
-            {addresses.map((address, index) => (
-              <tr className="text-center" key={address}>
+            {addresses.map((addressData, index) => (
+              <tr className="text-center" key={addressData.address}>
                 <td>{index + 1}</td>
                 <td>
-                  <Address address={address} alias={aliases[address]} />
+                  <Address address={addressData.address} alias={aliases[addressData.address]} />
+                </td>
+                <td>{ethers.utils.formatEther(addressData.balance.sub(addressData.balance.mod(1e14)))}</td>
+                <td>{ethers.utils.formatEther(addressData.salt.sub(addressData.salt.mod(1e14)))}</td>
+                <td>
+                  <button
+                    className="btn btn-outline btn-sm"
+                    disabled={sending}
+                    onClick={() => {
+                      handleSendTip(addressData.address);
+                    }}
+                  >
+                    Send Tip
+                  </button>
+                  <button
+                    className="btn btn-outline btn-sm ml-2"
+                    disabled={sending}
+                    onClick={() => {
+                      handleSendSalt(addressData.address);
+                    }}
+                  >
+                    Send Salt
+                  </button>
                 </td>
               </tr>
             ))}

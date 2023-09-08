@@ -1,13 +1,27 @@
 import { useEffect, useState } from "react";
-import type { NextPage } from "next";
+import { fetchBalance } from "@wagmi/core";
+import { BigNumber } from "ethers";
 import { useInterval } from "usehooks-ts";
 import { Board } from "~~/components/CheckedIn/Board";
+import { useScaffoldContract } from "~~/hooks/scaffold-eth";
 import scaffoldConfig from "~~/scaffold.config";
 import { notification } from "~~/utils/scaffold-eth";
 
-const Leaderboard: NextPage = () => {
+type LeaderboardData = {
+  address: string;
+  balance: BigNumber;
+  salt: BigNumber;
+};
+
+export const CheckedIn = () => {
   const [loadingCheckedIn, setLoadingCheckedIn] = useState(true);
   const [checkedInAddresses, setCheckedInAddresses] = useState<string[]>([]);
+  const [leaderboard, setLeaderboard] = useState<LeaderboardData[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const { data: saltContract } = useScaffoldContract({
+    contractName: "SaltToken",
+  });
 
   const fetchPeopleCheckedIn = async () => {
     try {
@@ -42,16 +56,33 @@ const Leaderboard: NextPage = () => {
     await fetchPeopleCheckedIn();
   }, scaffoldConfig.pollingInterval);
 
+  useEffect(() => {
+    const updateLeaderboard = async () => {
+      if (!loadingCheckedIn && saltContract && checkedInAddresses && checkedInAddresses.length > 0) {
+        let leaderboardData: LeaderboardData[] = [];
+        for (let i = 0; i < checkedInAddresses.length; i++) {
+          const address = checkedInAddresses[i];
+          const salt = await saltContract.balanceOf(address);
+          const balanceResult = await fetchBalance({ address });
+          const balance = balanceResult.value;
+          leaderboardData.push({ address, balance, salt });
+        }
+        leaderboardData = leaderboardData.sort((a, b) => (b.balance.gte(a.balance) ? 1 : -1));
+        setLeaderboard(leaderboardData);
+        setIsLoading(false);
+      }
+    };
+    updateLeaderboard();
+  }, [loadingCheckedIn, checkedInAddresses, saltContract]);
+
   return (
     <div className="flex flex-col items-center justify-center py-2">
       <div className="max-w-96 p-8">
         <h1 className="text-4xl font-bold">People Checked-in</h1>
       </div>
       <div className="flex flex-col pt-2 gap-[100px] md:flex-row">
-        <Board addresses={checkedInAddresses} isLoading={loadingCheckedIn} />
+        <Board addresses={leaderboard} isLoading={isLoading} />
       </div>
     </div>
   );
 };
-
-export default Leaderboard;
