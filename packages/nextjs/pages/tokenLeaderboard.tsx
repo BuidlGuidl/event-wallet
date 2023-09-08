@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BigNumber } from "ethers";
+import { BigNumber, ethers } from "ethers";
 import type { NextPage } from "next";
 import { Board } from "~~/components/TokenLeaderboard/Board";
 import { useScaffoldContract } from "~~/hooks/scaffold-eth";
@@ -80,18 +80,23 @@ const Leaderboard: NextPage = () => {
         dexContracts["Tomato"] !== null
       ) {
         let leaderboardData: LeaderboardData[] = [];
+        const prices: { [key: string]: BigNumber } = {};
+        for (let j = 0; j < tokenContracts.length; j++) {
+          const tokenName = tokenContracts[j].name;
+          if (tokenName !== "Salt") {
+            const price: BigNumber = await dexContracts[tokenName].assetOutPrice(ethers.utils.parseEther("1"));
+            prices[tokenName] = price;
+          }
+        }
         for (let i = 0; i < checkedInAddresses.length; i++) {
           const address = checkedInAddresses[i];
           let balance = BigNumber.from(0);
           for (let j = 0; j < tokenContracts.length; j++) {
             const tokenName = tokenContracts[j].name;
             const tokenBalance: BigNumber = await tokenContracts[j].contract.balanceOf(address);
-            console.log("tokenBalance", tokenName, tokenBalance.toString());
             if (tokenBalance.isZero()) continue;
             if (tokenName !== "Salt") {
-              const dexContract = dexContracts[tokenName];
-              const saltBalance: BigNumber = await dexContract.creditPrice(tokenBalance);
-              console.log("saltBalance", saltBalance.toString());
+              const saltBalance: BigNumber = tokenBalance.mul(prices[tokenName]).div(ethers.utils.parseEther("1"));
               balance = balance.add(saltBalance);
             } else {
               balance = balance.add(tokenBalance);
