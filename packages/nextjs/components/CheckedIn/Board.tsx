@@ -14,10 +14,15 @@ type LeaderboardData = {
   salt: BigNumber;
 };
 
+type TSending = {
+  [key: string]: boolean;
+};
+
 export const Board = ({ addresses, isLoading }: { addresses: LeaderboardData[]; isLoading: boolean }) => {
   const aliases = useAliases({ enablePolling: true });
   const { data: signer } = useSigner();
-  const [sending, setSending] = useState(false);
+  const [sendingTip, setSendingTip] = useState<TSending>({});
+  const [sendingSalt, setSendingSalt] = useState<TSending>({});
 
   const writeTx = useTransactor();
 
@@ -31,10 +36,10 @@ export const Board = ({ addresses, isLoading }: { addresses: LeaderboardData[]; 
       notification.error("Please enter a valid address");
       return;
     }
-    setSending(true);
+    setSendingSalt({ ...sendingSalt, [address]: true });
     // @ts-ignore
     await writeTx(saltContract?.transfer(address, ethers.utils.parseEther("25")));
-    setSending(false);
+    setSendingSalt({ ...sendingSalt, [address]: false });
   };
 
   const handleSendTip = async (address: string) => {
@@ -45,12 +50,12 @@ export const Board = ({ addresses, isLoading }: { addresses: LeaderboardData[]; 
 
     const tx = {
       to: address,
-      value: ethers.utils.parseEther("0.01"),
+      value: ethers.utils.parseEther("0.1"),
     };
 
-    setSending(true);
+    setSendingTip({ ...sendingTip, [address]: true });
     await writeTx(tx);
-    setSending(false);
+    setSendingTip({ ...sendingTip, [address]: false });
   };
 
   if (isLoading) {
@@ -94,7 +99,7 @@ export const Board = ({ addresses, isLoading }: { addresses: LeaderboardData[]; 
                 <td>
                   <button
                     className="btn btn-outline btn-sm"
-                    disabled={sending}
+                    disabled={sendingTip[addressData.address]}
                     onClick={() => {
                       handleSendTip(addressData.address);
                     }}
@@ -103,7 +108,7 @@ export const Board = ({ addresses, isLoading }: { addresses: LeaderboardData[]; 
                   </button>
                   <button
                     className="btn btn-outline btn-sm ml-2"
-                    disabled={sending}
+                    disabled={sendingSalt[addressData.address]}
                     onClick={() => {
                       handleSendSalt(addressData.address);
                     }}
