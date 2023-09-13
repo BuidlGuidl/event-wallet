@@ -3,6 +3,7 @@ import { InputBase } from "../scaffold-eth";
 import { BigNumber, ethers } from "ethers";
 import { useAccount } from "wagmi";
 import { BackwardIcon } from "@heroicons/react/24/outline";
+import PriceChart from "~~/components/PriceChart";
 import { TokenSwap } from "~~/components/TokenSwap";
 import { BurnerSigner } from "~~/components/scaffold-eth/BurnerSigner";
 import { TokenBalanceRow } from "~~/components/scaffold-eth/TokenBalanceRow";
@@ -16,6 +17,8 @@ import { ContractName } from "~~/utils/scaffold-eth/contract";
  * Main Screen
  */
 export const Main = () => {
+  const tokens = scaffoldConfig.tokens.slice(1);
+
   const { address } = useAccount();
   const [processing, setProcessing] = useState(false);
   const [loadingCheckedIn, setLoadingCheckedIn] = useState(true);
@@ -23,6 +26,7 @@ export const Main = () => {
   const [alias, setAlias] = useState("");
   const [swapToken, setSwapToken] = useState<TTokenInfo>(scaffoldConfig.tokens[1]);
   const [showSwap, setShowSwap] = useState(false);
+  const [selectedTokenName, setSelectedTokenName] = useState<string>(tokens[0].name);
 
   const message = {
     action: "user-checkin",
@@ -36,7 +40,6 @@ export const Main = () => {
     args: [address],
   });
 
-  const tokens = scaffoldConfig.tokens.slice(1);
   const tokensData: { [key: string]: TTokenBalance } = {};
 
   tokens.forEach(token => {
@@ -162,29 +165,57 @@ export const Main = () => {
         )}
 
         {checkedIn && !showSwap && (
-          <div className="bg-base-300 rounded-xl">
-            <table className="table-auto border-separate border-spacing-4">
-              <thead>
-                <tr>
-                  <th>Token</th>
-                  <th>Price</th>
-                  <th>Balance</th>
-                  <th>Value</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {tokens.map(token => (
-                  <TokenBalanceRow
-                    key={token.symbol}
-                    tokenInfo={token}
-                    tokenBalance={tokensData[token.symbol]}
-                    handleShowSwap={handleShowSwap}
-                  />
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <>
+            <div className="bg-base-300 rounded-xl">
+              <table className="table-auto border-separate border-spacing-4">
+                <thead>
+                  <tr>
+                    <th>Token</th>
+                    <th>Price</th>
+                    <th>Balance</th>
+                    <th>Value</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {tokens.map(token => (
+                    <TokenBalanceRow
+                      key={token.symbol}
+                      tokenInfo={token}
+                      tokenBalance={tokensData[token.symbol]}
+                      handleShowSwap={handleShowSwap}
+                    />
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {scaffoldConfig.showChart && (
+              <>
+                <div className="flex gap-4 text-3xl mt-8">
+                  {tokens.map(token => (
+                    <label
+                      key={token.symbol}
+                      className={`p-2 cursor-pointer ${
+                        selectedTokenName === token.name ? "bg-primary outline outline-2 outline-black" : ""
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        name="token"
+                        value={token.name}
+                        className="w-0 h-0"
+                        onChange={t => setSelectedTokenName(t.target.value)}
+                      />
+                      {token.emoji}
+                    </label>
+                  ))}
+                </div>
+
+                <PriceChart tokenName={selectedTokenName} />
+              </>
+            )}
+          </>
         )}
 
         {checkedIn && showSwap && (
