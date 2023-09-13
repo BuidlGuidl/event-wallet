@@ -10,6 +10,7 @@ export type ScaffoldConfig = {
   eventName: string;
   hideHeader: boolean;
   tokens: TTokenInfo[];
+  showChart: boolean;
   burnerWallet: {
     enabled: boolean;
     onlyLocal: boolean;
@@ -37,6 +38,8 @@ const scaffoldConfig = {
     { contractName: "BananaToken", name: "Banana", symbol: "BNN", emoji: "🍌" },
     { contractName: "TomatoToken", name: "Tomato", symbol: "TMT", emoji: "🍅" },
   ],
+
+  showChart: false,
 
   // This is ours Alchemy's default API key.
   // You can get your own at https://dashboard.alchemyapi.io
