@@ -67,7 +67,7 @@ export const CheckedIn = () => {
           const balance = balanceResult.value;
           leaderboardData.push({ address, balance, salt });
         }
-        leaderboardData = leaderboardData.sort((a, b) => (b.balance.gte(a.balance) ? 1 : -1));
+        leaderboardData = leaderboardData.sort((a, b) => (b.address > a.address ? 1 : -1));
         setLeaderboard(leaderboardData);
         setIsLoading(false);
       }

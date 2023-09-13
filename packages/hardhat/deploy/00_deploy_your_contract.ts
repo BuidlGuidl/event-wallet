@@ -20,8 +20,10 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   */
   const { deployer } = await hre.getNamedAccounts();
   const { deploy } = hre.deployments;
+  const signer = await hre.ethers.getSigner(deployer);
 
   const ownerAddress = deployer;
+  const frontendAddress = "0x92C8Fd39A4582E6Fe8bb5Be6e7Fdf6533566EA69";
 
   await deploy("EventAliases", {
     from: deployer,
@@ -80,25 +82,50 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
     eventSBT.address,
   );
 
-  const avocadoDex = await deploy("BasicDex", {
+  const disperseFunds = await deploy("DisperseFunds", {
+    from: deployer,
+    args: [salt.address],
+    log: true,
+    autoMine: true,
+  });
+
+  const disperseFundsContract = await hre.ethers.getContract("DisperseFunds", deployer);
+
+  await disperseFundsContract.grantRole(
+    hre.ethers.utils.keccak256(hre.ethers.utils.toUtf8Bytes("DISPENSER_ROLE")),
+    frontendAddress,
+  );
+
+  await saltContract.transfer(disperseFunds.address, hre.ethers.utils.parseEther("10000"));
+
+  const sendXDai = await signer.sendTransaction({
+    to: disperseFunds.address,
+    value: hre.ethers.utils.parseEther("1"),
+  });
+  sendXDai.wait();
+
+  const avocadoDex = await deploy("BasicDexAvocado", {
     from: deployer,
     args: [salt.address, avocado.address],
     log: true,
     autoMine: true,
+    contract: "BasicDex",
   });
 
-  const bananaDex = await deploy("BasicDex", {
+  const bananaDex = await deploy("BasicDexBanana", {
     from: deployer,
     args: [salt.address, banana.address],
     log: true,
     autoMine: true,
+    contract: "BasicDex",
   });
 
-  const tomatoDex = await deploy("BasicDex", {
+  const tomatoDex = await deploy("BasicDexTomato", {
     from: deployer,
     args: [salt.address, tomato.address],
     log: true,
     autoMine: true,
+    contract: "BasicDex",
   });
 
   const avocadoDexContract = await hre.ethers.getContractAt("BasicDex", avocadoDex.address, deployer);
