@@ -7,6 +7,8 @@ dotenv.config();
 const disperseAddress = deployedContracts[100][0]["contracts"]["DisperseFunds"]["address"];
 //@ts-expect-error Contract currently not deployed so abi will be undefined
 const disperseAbi = deployedContracts[100][0]["contracts"]["DisperseFunds"]["abi"];
+const saltAddress = deployedContracts[100][0]["contracts"]["SaltToken"]["address"];
+const saltAbi = deployedContracts[100][0]["contracts"]["SaltToken"]["abi"];
 
 const gnosisRpc = process.env.GNOSIS_RPC!;
 const privateKey = process.env.DEPLOYER_PRIVATE_KEY!;
@@ -17,8 +19,24 @@ const wallet = new ethers.Wallet(privateKey, provider);
 const intervalFreq = 60_000; // 1 minute
 
 const disperseContract = new ethers.Contract(disperseAddress, disperseAbi, wallet);
+const saltTokenContract = new ethers.Contract(saltAddress, saltAbi, wallet);
 
 let dispersedTo: string[] = [];
+
+async function fundContract(saltAmount: string, xDaiAmount: string) {
+  try {
+    const sendSalt = await saltTokenContract.transfer(disperseAddress, ethers.utils.parseEther(saltAmount));
+    sendSalt.wait();
+    const sendXDai = await wallet.sendTransaction({
+      to: disperseAddress,
+      value: ethers.utils.parseEther(xDaiAmount),
+    });
+    sendXDai.wait();
+    console.log("DisperseFunds contract funded");
+  } catch {
+    console.log("Something went wrong, DisperseFunds contract NOT funded");
+  }
+}
 
 /**
  * Fetches latest array of checked in addresses from frontends api
@@ -43,6 +61,8 @@ async function sendFunds() {
   console.log(dispersedTo);
 }
 
+// send 1000 $SALT & 1 $XDAI to the disperse funds contract
+fundContract("1000", "1");
 /**
  * Repeat the sendFunds function every intervalFreq to make sure users who join late are given their starting allowance
  */
