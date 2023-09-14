@@ -8927,7 +8927,7 @@ const contracts = {
           ],
         },
         DisperseFunds: {
-          address: "0xe8D2A1E88c91DCd5433208d4152Cc4F399a7e91d",
+          address: "0x14685f19b363463ae4c765c05ab46694598a307c",
           abi: [
             {
               inputs: [
