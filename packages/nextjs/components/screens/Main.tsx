@@ -4,7 +4,8 @@ import { BigNumber, ethers } from "ethers";
 import { useAccount } from "wagmi";
 import { BackwardIcon } from "@heroicons/react/24/outline";
 import PriceChart from "~~/components/PriceChart";
-import { TokenSwap } from "~~/components/TokenSwap";
+import { TokenBuy } from "~~/components/TokenBuy";
+import { TokenSell } from "~~/components/TokenSell";
 import { BurnerSigner } from "~~/components/scaffold-eth/BurnerSigner";
 import { TokenBalanceRow } from "~~/components/scaffold-eth/TokenBalanceRow";
 import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
@@ -25,7 +26,8 @@ export const Main = () => {
   const [checkedIn, setCheckedIn] = useState(false);
   const [alias, setAlias] = useState("");
   const [swapToken, setSwapToken] = useState<TTokenInfo>(scaffoldConfig.tokens[1]);
-  const [showSwap, setShowSwap] = useState(false);
+  const [showBuy, setShowBuy] = useState(false);
+  const [showSell, setShowSell] = useState(false);
   const [selectedTokenName, setSelectedTokenName] = useState<string>(tokens[0].name);
 
   const message = {
@@ -130,15 +132,21 @@ export const Main = () => {
     }
   };
 
-  const handleShowSwap = (selectedToken: TTokenInfo) => {
+  const handleShowBuy = (selectedToken: TTokenInfo) => {
     console.log("selectedToken emoji: ", selectedToken.emoji);
     setSwapToken(selectedToken);
-    setShowSwap(true);
+    setShowBuy(true);
+  };
+
+  const handleShowSell = (selectedToken: TTokenInfo) => {
+    console.log("selectedToken emoji: ", selectedToken.emoji);
+    setSwapToken(selectedToken);
+    setShowSell(true);
   };
 
   return (
     <>
-      <div className="flex flex-col gap-2 max-w-[400px] text-center m-auto">
+      <div className="flex flex-col gap-2 max-w-[430px] text-center m-auto">
         <p className="font-bold">Welcome to {scaffoldConfig.eventName}!</p>
 
         {!checkedIn && !loadingCheckedIn && (
@@ -164,7 +172,7 @@ export const Main = () => {
           </div>
         )}
 
-        {checkedIn && !showSwap && (
+        {checkedIn && !showBuy && !showSell && (
           <>
             <div className="bg-base-300 rounded-xl">
               <table className="table-auto border-separate border-spacing-4">
@@ -183,7 +191,8 @@ export const Main = () => {
                       key={token.symbol}
                       tokenInfo={token}
                       tokenBalance={tokensData[token.symbol]}
-                      handleShowSwap={handleShowSwap}
+                      handleShowBuy={handleShowBuy}
+                      handleShowSell={handleShowSell}
                     />
                   ))}
                 </tbody>
@@ -218,20 +227,36 @@ export const Main = () => {
           </>
         )}
 
-        {checkedIn && showSwap && (
+        {checkedIn && showBuy && (
           <div className="bg-base-300 rounded-xl p-4">
-            <button className="btn btn-primary" onClick={() => setShowSwap(false)}>
+            <button className="btn btn-primary" onClick={() => setShowBuy(false)}>
               <BackwardIcon className="h-5 w-5 mr-2" /> Go Back
             </button>
-            <TokenSwap
+            <TokenBuy
               token={swapToken.contractName as ContractName}
               defaultAmountOut={"1"}
               defaultAmountIn={ethers.utils.formatEther(
                 tokensData[swapToken.symbol].price.sub(tokensData[swapToken.symbol].price.mod(1e14)).add(1e14),
               )}
-              balanceSalt={balanceSalt}
+              balanceSalt={balanceSalt || BigNumber.from("0")}
+              close={() => setShowBuy(false)}
+            />
+          </div>
+        )}
+
+        {checkedIn && showSell && (
+          <div className="bg-base-300 rounded-xl p-4">
+            <button className="btn btn-primary" onClick={() => setShowSell(false)}>
+              <BackwardIcon className="h-5 w-5 mr-2" /> Go Back
+            </button>
+            <TokenSell
+              token={swapToken.contractName as ContractName}
+              defaultAmountOut={"1"}
+              defaultAmountIn={ethers.utils.formatEther(
+                tokensData[swapToken.symbol].price.sub(tokensData[swapToken.symbol].price.mod(1e14)).add(1e14),
+              )}
               balanceToken={tokensData[swapToken.symbol].balance}
-              close={() => setShowSwap(false)}
+              close={() => setShowSell(false)}
             />
           </div>
         )}

@@ -4,13 +4,14 @@ import { TTokenBalance, TTokenInfo } from "~~/types/wallet";
 type TTokenBalanceProps = {
   tokenInfo: TTokenInfo;
   tokenBalance?: TTokenBalance;
-  handleShowSwap: (selectedToken: TTokenInfo) => void;
+  handleShowBuy: (selectedToken: TTokenInfo) => void;
+  handleShowSell: (selectedToken: TTokenInfo) => void;
 };
 
 /**
  * Display row with balance of a token
  */
-export const TokenBalanceRow = ({ tokenInfo, tokenBalance, handleShowSwap }: TTokenBalanceProps) => {
+export const TokenBalanceRow = ({ tokenInfo, tokenBalance, handleShowBuy, handleShowSell }: TTokenBalanceProps) => {
   return (
     <tr>
       <td>{tokenInfo.emoji}</td>
@@ -29,9 +30,12 @@ export const TokenBalanceRow = ({ tokenInfo, tokenBalance, handleShowSwap }: TTo
           tokenBalance.value &&
           ethers.utils.formatEther(tokenBalance.value.sub(tokenBalance.value.mod(1e14)))}
       </td>
-      <td>
-        <button onClick={() => handleShowSwap(tokenInfo)} className="btn btn-primary">
-          Swap
+      <td className="flex">
+        <button onClick={() => handleShowBuy(tokenInfo)} className="btn btn-primary btn-sm">
+          Buy
+        </button>
+        <button onClick={() => handleShowSell(tokenInfo)} className="btn btn-primary btn-sm ml-2">
+          Sell
         </button>
       </td>
     </tr>
