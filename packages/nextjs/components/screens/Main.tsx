@@ -73,6 +73,16 @@ export const Main = () => {
     if (price && balance) {
       tokensData[token.symbol].value = price.mul(balance).div(ethers.utils.parseEther("1"));
     }
+    // The tokens array should not change, so this should be safe. Anyway, we can refactor this later.
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const { data: priceIn } = useScaffoldContractRead({
+      contractName: contractDexName,
+      functionName: "assetInPrice",
+      args: [ethers.utils.parseEther("1")],
+    });
+    if (priceIn) {
+      tokensData[token.symbol].priceIn = priceIn;
+    }
   });
 
   useEffect(() => {
@@ -251,10 +261,8 @@ export const Main = () => {
             </button>
             <TokenSell
               token={swapToken.contractName as ContractName}
-              defaultAmountOut={"1"}
-              defaultAmountIn={ethers.utils.formatEther(
-                tokensData[swapToken.symbol].price.sub(tokensData[swapToken.symbol].price.mod(1e14)).add(1e14),
-              )}
+              defaultAmountOut={ethers.utils.formatUnits(tokensData[swapToken.symbol].priceIn)}
+              defaultAmountIn={"1"}
               balanceToken={tokensData[swapToken.symbol].balance}
               close={() => setShowSell(false)}
             />

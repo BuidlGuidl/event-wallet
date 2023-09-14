@@ -67,22 +67,20 @@ export const TokenSell = ({
 
   const isLoading = isLoadingDex || isMiningAssetToCredit || isMiningApproveToken;
   const disabled =
-    isLoading || amountIn === "" || amountOut === "" || ethers.utils.parseEther(amountOut || "0").gt(balanceToken);
+    isLoading || amountIn === "" || amountOut === "" || ethers.utils.parseEther(amountIn || "0").gt(balanceToken);
 
-  const changeAmountOut = async (amount: string) => {
+  const changeAmountIn = async (amount: string) => {
     const parsedAmount = ethers.utils.parseEther(amount || "0");
-
-    console.log("changeAmountOut", amount, parsedAmount.toString());
 
     if (dexContract && parsedAmount.gt(0)) {
       let price = 0;
-      price = await dexContract.creditOutPrice(parsedAmount);
+      price = await dexContract.assetInPrice(parsedAmount);
 
-      setAmountOut(amount);
-      setAmountIn(ethers.utils.formatUnits(price));
+      setAmountIn(amount);
+      setAmountOut(ethers.utils.formatUnits(price));
     } else {
-      setAmountOut("");
       setAmountIn("");
+      setAmountOut("");
     }
   };
 
@@ -124,11 +122,11 @@ export const TokenSell = ({
         <div className="w-[200px]">
           <InputBase
             type="number"
-            value={amountOut}
+            value={amountIn}
             onChange={async v => {
               // Protect underflow (e.g. 0.0000000000000000001)
               if (v.length < 21) {
-                await changeAmountOut(v);
+                await changeAmountIn(v);
               }
             }}
             placeholder="0"
@@ -138,8 +136,8 @@ export const TokenSell = ({
       <div className="flex justify-center">
         <div className="w-[200px]">
           {saltEmoji}{" "}
-          <span className={`${ethers.utils.parseEther(amountOut || "0").gt(balanceToken) ? "text-red-600" : ""}`}>
-            {amountIn.slice(0, amountIn.indexOf(".") + 5)}
+          <span className={`${ethers.utils.parseEther(amountIn || "0").gt(balanceToken) ? "text-red-600" : ""}`}>
+            {amountOut.slice(0, amountOut.indexOf(".") + 5)}
           </span>
         </div>
       </div>
@@ -150,7 +148,7 @@ export const TokenSell = ({
           disabled={disabled}
         >
           <PaperAirplaneIcon className="h-5 w-5 mr-2" aria-hidden="true" />
-          Swap
+          Sell
         </button>
       </div>
     </div>

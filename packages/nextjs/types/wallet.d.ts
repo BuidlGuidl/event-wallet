@@ -8,5 +8,6 @@ export type TTokenInfo = {
 export type TTokenBalance = {
   balance?: BigNumber;
   price?: BigNumber;
+  priceIn?: BigNumber;
   value?: BigNumber;
 };
