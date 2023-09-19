@@ -1,4 +1,3 @@
-import { ethers } from "ethers";
 import { Address } from "~~/components/scaffold-eth";
 import { useAliases } from "~~/hooks/wallet";
 import scaffoldConfig from "~~/scaffold.config";
@@ -40,7 +39,7 @@ export const Board = ({ leaderboard, isLoading }: { leaderboard: any[]; isLoadin
                 <td>
                   <Address address={data.address} alias={aliases[data.address]} />
                 </td>
-                <td>{ethers.utils.formatEther(data.balance.sub(data.balance.mod(1e14)) || "0")}</td>
+                <td>{data.balance}</td>
               </tr>
             ))}
           </tbody>

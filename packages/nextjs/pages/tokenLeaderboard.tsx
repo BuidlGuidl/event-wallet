@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import { BigNumber, ethers } from "ethers";
+import { BigNumber } from "ethers";
 import type { NextPage } from "next";
+import { useInterval } from "usehooks-ts";
 import { Board } from "~~/components/TokenLeaderboard/Board";
-import { useScaffoldContract } from "~~/hooks/scaffold-eth";
 import scaffoldConfig from "~~/scaffold.config";
 import { notification } from "~~/utils/scaffold-eth";
-import { ContractName } from "~~/utils/scaffold-eth/contract";
 
 const Leaderboard: NextPage = () => {
   type LeaderboardData = {
@@ -15,12 +14,10 @@ const Leaderboard: NextPage = () => {
 
   const [leaderboard, setLeaderboard] = useState<LeaderboardData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [loadingCheckedIn, setLoadingCheckedIn] = useState(true);
-  const [checkedInAddresses, setCheckedInAddresses] = useState<string[]>([]);
 
-  const fetchPeopleCheckedIn = async () => {
+  const fetchTokenLeaderboard = async () => {
     try {
-      const response = await fetch("/api/admin/checked-in", {
+      const response = await fetch("/api/admin/token-leaderboard", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -30,95 +27,26 @@ const Leaderboard: NextPage = () => {
       const data = await response.json();
 
       if (response.ok) {
-        setCheckedInAddresses(data);
+        setLeaderboard(data);
       } else {
         notification.error(data.error);
       }
     } catch (e) {
-      console.log("Error fetching checked in addresses", e);
+      console.log("Error fetching leaderboard", e);
     } finally {
-      setLoadingCheckedIn(false);
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
     (async () => {
-      await fetchPeopleCheckedIn();
+      await fetchTokenLeaderboard();
     })();
   }, []);
 
-  const tokenContracts: any[] = [];
-  const dexContracts: { [key: string]: any } = {};
-
-  scaffoldConfig.tokens.forEach(token => {
-    const tokenName = token.name;
-    // eslint-disable-next-line react-hooks/rules-of-hooks -- I think it's safe, scaffoldConfig.tokens should not change, let disable it for now
-    const { data: tokenContract } = useScaffoldContract({
-      contractName: token.contractName as ContractName,
-    });
-    tokenContracts.push({ name: tokenName, contract: tokenContract });
-    if (tokenName !== "Salt") {
-      // eslint-disable-next-line react-hooks/rules-of-hooks -- I think it's safe, scaffoldConfig.tokens should not change, let disable it for now
-      const { data: dexContract } = useScaffoldContract({
-        contractName: `BasicDex${tokenName}` as ContractName,
-      });
-      dexContracts[tokenName] = dexContract;
-    }
-  });
-
-  useEffect(() => {
-    const updateLeaderboard = async () => {
-      if (
-        !loadingCheckedIn &&
-        tokenContracts &&
-        tokenContracts.length > 0 &&
-        checkedInAddresses &&
-        checkedInAddresses.length > 0 &&
-        tokenContracts.filter(token => token.contract !== null).length === tokenContracts.length &&
-        dexContracts["Avocado"] !== null &&
-        dexContracts["Banana"] !== null &&
-        dexContracts["Tomato"] !== null
-      ) {
-        let leaderboardData: LeaderboardData[] = [];
-        const prices: { [key: string]: BigNumber } = {};
-        for (let j = 0; j < tokenContracts.length; j++) {
-          const tokenName = tokenContracts[j].name;
-          if (tokenName !== "Salt") {
-            const price: BigNumber = await dexContracts[tokenName].assetOutPrice(ethers.utils.parseEther("1"));
-            prices[tokenName] = price;
-          }
-        }
-        for (let i = 0; i < checkedInAddresses.length; i++) {
-          const address = checkedInAddresses[i];
-          let balance = BigNumber.from(0);
-          for (let j = 0; j < tokenContracts.length; j++) {
-            const tokenName = tokenContracts[j].name;
-            const tokenBalance: BigNumber = await tokenContracts[j].contract.balanceOf(address);
-            if (tokenBalance.isZero()) continue;
-            if (tokenName !== "Salt") {
-              const saltBalance: BigNumber = tokenBalance.mul(prices[tokenName]).div(ethers.utils.parseEther("1"));
-              balance = balance.add(saltBalance);
-            } else {
-              balance = balance.add(tokenBalance);
-            }
-          }
-          leaderboardData.push({ address, balance });
-        }
-        leaderboardData = leaderboardData.sort((a, b) => (b.balance.gte(a.balance) ? 1 : -1));
-        setLeaderboard(leaderboardData);
-        setIsLoading(false);
-      }
-    };
-    updateLeaderboard();
-  }, [
-    loadingCheckedIn,
-    tokenContracts.length,
-    tokenContracts.filter(token => token.contract !== null).length,
-    dexContracts["Avocado"] !== null,
-    dexContracts["Banana"] !== null,
-    dexContracts["Tomato"] !== null,
-    checkedInAddresses,
-  ]);
+  useInterval(async () => {
+    await fetchTokenLeaderboard();
+  }, scaffoldConfig.tokenLeaderboardPollingInterval);
 
   return (
     <div className="flex flex-col items-center justify-center py-2">

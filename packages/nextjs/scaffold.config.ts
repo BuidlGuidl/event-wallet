@@ -4,6 +4,7 @@ import { TTokenInfo } from "~~/types/wallet";
 export type ScaffoldConfig = {
   targetNetwork: chains.Chain;
   pollingInterval: number;
+  tokenLeaderboardPollingInterval: number;
   alchemyApiKey: string;
   liveUrl: string;
   tokenEmoji: string;
@@ -26,7 +27,8 @@ const scaffoldConfig = {
 
   // The interval at which your front-end polls the RPC servers for new data
   // it has no effect on the local network
-  pollingInterval: 15000,
+  pollingInterval: 5000,
+  tokenLeaderboardPollingInterval: 60000,
 
   tokenEmoji: "💎",
   eventName: "Game",
