@@ -132,6 +132,18 @@ export const TokenSell = ({
             placeholder="0"
           />
         </div>
+        <button
+          className="ml-1 mt-3 text-primary"
+          onClick={() => {
+            if (balanceToken) {
+              changeAmountIn(ethers.utils.formatUnits(balanceToken));
+            } else {
+              changeAmountIn("0");
+            }
+          }}
+        >
+          Max
+        </button>
       </div>
       <div className="flex justify-center">
         <div className="w-[200px]">

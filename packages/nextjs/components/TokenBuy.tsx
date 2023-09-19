@@ -86,6 +86,21 @@ export const TokenBuy = ({
     }
   };
 
+  const changeAmountIn = async (amount: string) => {
+    const parsedAmount = ethers.utils.parseEther(amount || "0");
+
+    if (dexContract && parsedAmount.gt(0)) {
+      let price = 0;
+      price = await dexContract.creditInPrice(parsedAmount);
+
+      setAmountIn(amount);
+      setAmountOut(ethers.utils.formatUnits(price));
+    } else {
+      setAmountIn("");
+      setAmountOut("");
+    }
+  };
+
   const handleSend = async () => {
     const parsedAmountOut = ethers.utils.parseEther(amountOut || "0");
     if (parsedAmountOut.lte(0)) {
@@ -134,6 +149,18 @@ export const TokenBuy = ({
             placeholder="0"
           />
         </div>
+        <button
+          className="ml-1 mt-3 text-primary"
+          onClick={() => {
+            if (balanceSalt) {
+              changeAmountIn(ethers.utils.formatUnits(balanceSalt));
+            } else {
+              changeAmountIn("0");
+            }
+          }}
+        >
+          Max
+        </button>
       </div>
       <div className="flex justify-center">
         <div className="w-[200px]">
