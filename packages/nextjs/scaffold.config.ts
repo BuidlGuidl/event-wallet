@@ -1,17 +1,21 @@
 import * as chains from "wagmi/chains";
+import { TTokenInfo } from "~~/types/wallet";
 
 export type ScaffoldConfig = {
   targetNetwork: chains.Chain;
   pollingInterval: number;
+  tokenLeaderboardPollingInterval: number;
   alchemyApiKey: string;
   liveUrl: string;
   tokenEmoji: string;
   eventName: string;
   hideHeader: boolean;
-  tokens: { contractName: string; name: string; symbol: string; emoji: string }[];
+  tokens: TTokenInfo[];
+  showChart: boolean;
   burnerWallet: {
     enabled: boolean;
     onlyLocal: boolean;
+    signConfirmation: boolean;
   };
   walletAutoConnect: boolean;
 };
@@ -24,16 +28,20 @@ const scaffoldConfig = {
   // The interval at which your front-end polls the RPC servers for new data
   // it has no effect on the local network
   pollingInterval: 5000,
+  tokenLeaderboardPollingInterval: 60000,
 
   tokenEmoji: "💎",
-  eventName: "EVENT",
+  eventName: "Game",
   hideHeader: true,
 
   tokens: [
+    { contractName: "SaltToken", name: "Salt", symbol: "SALT", emoji: "💸" },
     { contractName: "AvocadoToken", name: "Avocado", symbol: "AVC", emoji: "🥑" },
     { contractName: "BananaToken", name: "Banana", symbol: "BNN", emoji: "🍌" },
     { contractName: "TomatoToken", name: "Tomato", symbol: "TMT", emoji: "🍅" },
   ],
+
+  showChart: false,
 
   // This is ours Alchemy's default API key.
   // You can get your own at https://dashboard.alchemyapi.io
@@ -47,6 +55,7 @@ const scaffoldConfig = {
     enabled: true,
     // Only show the Burner Wallet when running on hardhat network
     onlyLocal: false,
+    signConfirmation: false,
   },
 
   /**

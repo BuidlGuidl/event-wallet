@@ -21,9 +21,9 @@ module.exports = {
           "base-300": "#DAE8FF",
           "base-content": "#212638",
           info: "#93BBFB",
-          success: "#34EEB6",
+          success: "#13b081",
           warning: "#FFCF72",
-          error: "#FF8863",
+          error: "#c4461b",
 
           "--rounded-btn": "9999rem",
 

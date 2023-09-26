@@ -1848,12 +1848,14 @@ __metadata:
     "@heroicons/react": ^2.0.11
     "@rainbow-me/rainbowkit": ^0.11.0
     "@trivago/prettier-plugin-sort-imports": ^4.1.1
+    "@types/highcharts": ^7.0.0
     "@types/node": ^17.0.35
     "@types/react": ^18.0.9
     "@types/react-blockies": ^1.4.1
     "@types/react-copy-to-clipboard": ^5.0.4
     "@typescript-eslint/eslint-plugin": ^5.39.0
     "@uniswap/sdk": ^3.0.3
+    "@vercel/kv": ^0.2.2
     autoprefixer: ^10.4.12
     daisyui: ^2.31.0
     eslint: ^8.15.0
@@ -1861,6 +1863,8 @@ __metadata:
     eslint-config-prettier: ^8.5.0
     eslint-plugin-prettier: ^4.2.1
     ethers: ^5.0.0
+    highcharts: ^11.1.0
+    highcharts-react-official: ^3.2.1
     next: ^13.1.6
     nextjs-progressbar: ^0.0.16
     postcss: ^8.4.16
@@ -2438,6 +2442,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/highcharts@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "@types/highcharts@npm:7.0.0"
+  dependencies:
+    highcharts: "*"
+  checksum: 5ccc6675e8ae148cf93fb0d3e689df4c409ee430495f61b08d7e569e89e1d283868fa686de19db610dc5b1cfbe6b0d51b62558a0de9b8f1475af04630682e11a
+  languageName: node
+  linkType: hard
+
 "@types/json-schema@npm:*, @types/json-schema@npm:^7.0.6, @types/json-schema@npm:^7.0.9":
   version: 7.0.11
   resolution: "@types/json-schema@npm:7.0.11"
@@ -2946,6 +2959,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@upstash/redis@npm:1.21.0":
+  version: 1.21.0
+  resolution: "@upstash/redis@npm:1.21.0"
+  dependencies:
+    isomorphic-fetch: ^3.0.0
+  checksum: ba2ba971c1f6d0297afddf73aba0817a39fcf8d71e51131030a24541e4564138a11bae50b78da7dd0eca5a11baa1322888688cb206f078603ea3a8d0a639a30e
+  languageName: node
+  linkType: hard
+
 "@vanilla-extract/css@npm:1.9.1":
   version: 1.9.1
   resolution: "@vanilla-extract/css@npm:1.9.1"
@@ -3033,6 +3055,15 @@ __metadata:
   version: 0.0.48
   resolution: "@vercel/hydrogen@npm:0.0.48"
   checksum: cf6242c68403adff45b5badd69371db160ec4a9982423e6a354b55f1868c3143160d129761da1111cc10ca411d37838e90c38863f641ce573be37e1a7155f313
+  languageName: node
+  linkType: hard
+
+"@vercel/kv@npm:^0.2.2":
+  version: 0.2.2
+  resolution: "@vercel/kv@npm:0.2.2"
+  dependencies:
+    "@upstash/redis": 1.21.0
+  checksum: ba724fe25cc4f2eba6b94ff7cc057e9e30481beb89ada5a9c121544f284e47eed5586996ed1fb3c11b5455e8f67b281713805638c215fb172b3f566e4ad509d1
   languageName: node
   linkType: hard
 
@@ -8261,6 +8292,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"highcharts-react-official@npm:^3.2.1":
+  version: 3.2.1
+  resolution: "highcharts-react-official@npm:3.2.1"
+  peerDependencies:
+    highcharts: ">=6.0.0"
+    react: ">=16.8.0"
+  checksum: 615f1a352eb95f0e78189506e7d551071438fc11eabff78c55aeb6cc63658f4c284f4920f9e9c85113b319661bf5745c668ef22b71920c1a9f24749e49584aaf
+  languageName: node
+  linkType: hard
+
+"highcharts@npm:*, highcharts@npm:^11.1.0":
+  version: 11.1.0
+  resolution: "highcharts@npm:11.1.0"
+  checksum: f9b8cdc38b3b41bcc4c3a2331d9b1c769400639e2d0094484a0f5274aaba619551b95b442a69f7f4e47c2c8445681e3651f6036207fe1928a1a982f5278ae85e
+  languageName: node
+  linkType: hard
+
 "hmac-drbg@npm:^1.0.1":
   version: 1.0.1
   resolution: "hmac-drbg@npm:1.0.1"
@@ -8857,6 +8905,16 @@ __metadata:
   version: 2.0.0
   resolution: "isexe@npm:2.0.0"
   checksum: 26bf6c5480dda5161c820c5b5c751ae1e766c587b1f951ea3fcfc973bafb7831ae5b54a31a69bd670220e42e99ec154475025a468eae58ea262f813fdc8d1c62
+  languageName: node
+  linkType: hard
+
+"isomorphic-fetch@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "isomorphic-fetch@npm:3.0.0"
+  dependencies:
+    node-fetch: ^2.6.1
+    whatwg-fetch: ^3.4.1
+  checksum: e5ab79a56ce5af6ddd21265f59312ad9a4bc5a72cebc98b54797b42cb30441d5c5f8d17c5cd84a99e18101c8af6f90c081ecb8d12fd79e332be1778d58486d75
   languageName: node
   linkType: hard
 
@@ -13777,6 +13835,13 @@ __metadata:
     rtcpeerconnection-shim: ^1.2.15
     sdp: ^2.12.0
   checksum: 16534a721794bf375753b031e538f5c1ce84df3a272085069bbce7fa1b085e5a2d33b92096256a6fdacdf6f9e30f8543e2478a293ccf5a3849bc7143b10b38d3
+  languageName: node
+  linkType: hard
+
+"whatwg-fetch@npm:^3.4.1":
+  version: 3.6.17
+  resolution: "whatwg-fetch@npm:3.6.17"
+  checksum: 0a8785dc2d1515c17ee9365d3f6438cf8fd281567426652fc6c55fc99e58cc6287ae5d1add5b8b1dd665f149e38d3de4ebe3812fd7170438ba0681d03b88b4dd
   languageName: node
   linkType: hard
 
