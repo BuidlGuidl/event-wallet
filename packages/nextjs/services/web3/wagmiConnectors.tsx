@@ -9,7 +9,7 @@ import {
 } from "@rainbow-me/rainbowkit/wallets";
 import { configureChains } from "wagmi";
 import * as chains from "wagmi/chains";
-import { alchemyProvider } from "wagmi/providers/alchemy";
+import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
 import { publicProvider } from "wagmi/providers/public";
 import scaffoldConfig from "~~/scaffold.config";
 import { burnerWalletConfig } from "~~/services/web3/wagmi-burner/burnerWalletConfig";
@@ -28,9 +28,12 @@ const enabledChains =
 export const appChains = configureChains(
   enabledChains,
   [
-    alchemyProvider({
-      apiKey: scaffoldConfig.alchemyApiKey,
-      priority: 1,
+    jsonRpcProvider({
+      rpc: () => {
+        return {
+          http: process.env.GNOSIS_RPC_URL ? process.env.GNOSIS_RPC_URL : "",
+        };
+      },
     }),
     publicProvider({ priority: 2 }),
   ],
