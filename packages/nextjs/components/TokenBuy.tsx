@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { BigNumber, ethers } from "ethers";
+import { useDebouncedCallback } from "use-debounce";
 import { useAccount } from "wagmi";
 import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import { InputBase } from "~~/components/scaffold-eth";
@@ -26,6 +27,7 @@ export const TokenBuy = ({
   const { address } = useAccount();
   const [amountIn, setAmountIn] = useState<string>(defaultAmountIn);
   const [amountOut, setAmountOut] = useState<string>(defaultAmountOut);
+  const [priceLoading, setPriceLoading] = useState<boolean>(false);
 
   const tokenName: TokenName = token.replace("Token", "") as TokenName;
   const tokenEmoji = scaffoldConfig.tokens.find(t => token === t.contractName)?.emoji;
@@ -84,6 +86,7 @@ export const TokenBuy = ({
       setAmountOut("");
       setAmountIn("");
     }
+    setPriceLoading(false);
   };
 
   const changeAmountIn = async (amount: string) => {
@@ -132,6 +135,12 @@ export const TokenBuy = ({
     }
   };
 
+  const debouncedChangeAmountOut = useDebouncedCallback(async v => {
+    if (v.length < 21) {
+      await changeAmountOut(v);
+    }
+  }, 1000);
+
   return (
     <div className="flex flex-col gap-2 m-8">
       <div className="flex justify-center text-2xl">Buy {tokenEmoji}</div>
@@ -140,11 +149,10 @@ export const TokenBuy = ({
           <InputBase
             type="number"
             value={amountOut}
-            onChange={async v => {
-              // Protect underflow (e.g. 0.0000000000000000001)
-              if (v.length < 21) {
-                await changeAmountOut(v);
-              }
+            onChange={v => {
+              debouncedChangeAmountOut(v);
+              setAmountOut(v);
+              setPriceLoading(true);
             }}
             placeholder="0"
           />
@@ -164,10 +172,14 @@ export const TokenBuy = ({
       </div>
       <div className="flex justify-center">
         <div className="w-[200px]">
-          {saltEmoji}{" "}
-          <span className={`${ethers.utils.parseEther(amountIn || "0").gt(balanceSalt) ? "text-red-600" : ""}`}>
-            {amountIn.slice(0, amountIn.indexOf(".") + 5)}
-          </span>
+          {saltEmoji}
+          {priceLoading ? (
+            <span className="animate-pulse">...</span>
+          ) : (
+            <span className={`${ethers.utils.parseEther(amountIn || "0").gt(balanceSalt) ? "text-red-600" : ""}`}>
+              {amountIn.slice(0, amountIn.indexOf(".") + 5)}
+            </span>
+          )}
         </div>
       </div>
       <div>
