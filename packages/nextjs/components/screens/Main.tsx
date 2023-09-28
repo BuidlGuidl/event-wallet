@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { InputBase } from "../scaffold-eth";
 import { BigNumber, ethers } from "ethers";
+import { useInterval } from "usehooks-ts";
 import { useAccount } from "wagmi";
 import { BackwardIcon } from "@heroicons/react/24/outline";
 import PriceChart from "~~/components/PriceChart";
@@ -8,7 +9,7 @@ import { TokenBuy } from "~~/components/TokenBuy";
 import { TokenSell } from "~~/components/TokenSell";
 import { BurnerSigner } from "~~/components/scaffold-eth/BurnerSigner";
 import { TokenBalanceRow } from "~~/components/scaffold-eth/TokenBalanceRow";
-import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
+import { useScaffoldContract, useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 import scaffoldConfig from "~~/scaffold.config";
 import { TTokenBalance, TTokenInfo } from "~~/types/wallet";
 import { notification } from "~~/utils/scaffold-eth";
@@ -29,6 +30,9 @@ export const Main = () => {
   const [showBuy, setShowBuy] = useState(false);
   const [showSell, setShowSell] = useState(false);
   const [selectedTokenName, setSelectedTokenName] = useState<string>(tokens[0].name);
+  const [tokensData, setTokensData] = useState<{ [key: string]: TTokenBalance }>({});
+  const [loadingTokensData, setLoadingTokensData] = useState<boolean>(true);
+  const [totalNetWorth, setTotalNetWorth] = useState<BigNumber>(BigNumber.from("0"));
 
   const message = {
     action: "user-checkin",
@@ -42,48 +46,74 @@ export const Main = () => {
     args: [address],
   });
 
-  const tokensData: { [key: string]: TTokenBalance } = {};
+  const tokenContracts: { [key: string]: ethers.Contract } = {};
+  const dexContracts: { [key: string]: ethers.Contract } = {};
+
+  const saltEmoji = scaffoldConfig.tokens[0].emoji;
 
   tokens.forEach(token => {
-    tokensData[token.symbol] = {
-      balance: BigNumber.from(0),
-    };
     const contractName: ContractName = `${token.name}Token` as ContractName;
     const contractDexName: ContractName = `BasicDex${token.name}` as ContractName;
+
     // The tokens array should not change, so this should be safe. Anyway, we can refactor this later.
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const { data: balance } = useScaffoldContractRead({
-      contractName: contractName,
-      functionName: "balanceOf",
-      args: [address],
-    });
-    if (balance) {
-      tokensData[token.symbol].balance = balance;
+    const { data } = useScaffoldContract({ contractName });
+    if (data) {
+      tokenContracts[token.symbol] = data;
     }
+
     // The tokens array should not change, so this should be safe. Anyway, we can refactor this later.
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const { data: price } = useScaffoldContractRead({
-      contractName: contractDexName,
-      functionName: "assetOutPrice",
-      args: [ethers.utils.parseEther("1")],
-    });
-    if (price) {
-      tokensData[token.symbol].price = price;
-    }
-    if (price && balance) {
-      tokensData[token.symbol].value = price.mul(balance).div(ethers.utils.parseEther("1"));
-    }
-    // The tokens array should not change, so this should be safe. Anyway, we can refactor this later.
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const { data: priceIn } = useScaffoldContractRead({
-      contractName: contractDexName,
-      functionName: "assetInPrice",
-      args: [ethers.utils.parseEther("1")],
-    });
-    if (priceIn) {
-      tokensData[token.symbol].priceIn = priceIn;
+    const { data: dex } = useScaffoldContract({ contractName: contractDexName });
+    if (dex) {
+      dexContracts[token.symbol] = dex;
     }
   });
+
+  const updateTokensData = async () => {
+    const newTokenData: { [key: string]: TTokenBalance } = {};
+    let total = balanceSalt || BigNumber.from("0");
+
+    for (let i = 0; i < tokens.length; i++) {
+      const token = tokens[i];
+      const tokenContract = tokenContracts[token.symbol];
+      const dexContract = dexContracts[token.symbol];
+
+      if (tokenContract && dexContract) {
+        const balance = await tokenContract.balanceOf(address);
+        const price = await dexContract.assetOutPrice(ethers.utils.parseEther("1"));
+        const priceIn = await dexContract.assetInPrice(ethers.utils.parseEther("1"));
+        const value = price.mul(balance).div(ethers.utils.parseEther("1"));
+
+        newTokenData[token.symbol] = {
+          balance: balance,
+          price: price,
+          priceIn: priceIn,
+          value: value,
+        };
+
+        total = total.add(value);
+      }
+    }
+
+    setTokensData(newTokenData);
+    setTotalNetWorth(total);
+    setLoadingTokensData(false);
+  };
+
+  useEffect(() => {
+    (async () => {
+      if (Object.keys(tokenContracts).length === tokens.length && Object.keys(dexContracts).length === tokens.length) {
+        await updateTokensData();
+      }
+    })();
+  }, [Object.keys(tokenContracts).length, Object.keys(dexContracts).length]);
+
+  useInterval(async () => {
+    if (Object.keys(tokenContracts).length === tokens.length && Object.keys(dexContracts).length === tokens.length) {
+      await updateTokensData();
+    }
+  }, scaffoldConfig.pollingInterval);
 
   useEffect(() => {
     const updateCheckedIn = async () => {
@@ -158,6 +188,10 @@ export const Main = () => {
     <>
       <div className="flex flex-col gap-2 max-w-[430px] text-center m-auto">
         <p className="font-bold">Welcome to {scaffoldConfig.eventName}!</p>
+        <p className="font-bold">
+          Total Net Worth: {saltEmoji}{" "}
+          {loadingTokensData ? "..." : ethers.utils.formatEther(totalNetWorth.sub(totalNetWorth.mod(1e14)))}
+        </p>
 
         {!checkedIn && !loadingCheckedIn && (
           <div>
@@ -203,6 +237,7 @@ export const Main = () => {
                       tokenBalance={tokensData[token.symbol]}
                       handleShowBuy={handleShowBuy}
                       handleShowSell={handleShowSell}
+                      loading={loadingTokensData}
                     />
                   ))}
                 </tbody>
