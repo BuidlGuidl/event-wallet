@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { BigNumber, ethers } from "ethers";
 import { useDebouncedCallback } from "use-debounce";
+import { useInterval } from "usehooks-ts";
 import { useAccount } from "wagmi";
 import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import { InputBase } from "~~/components/scaffold-eth";
@@ -87,6 +88,17 @@ export const TokenSell = ({
     setPriceLoading(false);
   };
 
+  const updateAmountOut = async () => {
+    const currentAmountIn = ethers.utils.parseEther(amountIn || "0");
+
+    if (dexContract && amountIn !== "") {
+      let price = 0;
+      price = await dexContract.assetInPrice(currentAmountIn);
+
+      setAmountOut(ethers.utils.formatUnits(price));
+    }
+  };
+
   const handleSend = async () => {
     const parsedAmountOut = ethers.utils.parseEther(amountOut || "0");
     if (parsedAmountOut.lte(0)) {
@@ -123,6 +135,10 @@ export const TokenSell = ({
       await changeAmountIn(v);
     }
   }, 1000);
+
+  useInterval(async () => {
+    await updateAmountOut();
+  }, scaffoldConfig.pollingInterval);
 
   return (
     <div className="flex flex-col gap-2 m-8">
