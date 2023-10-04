@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts/highstock";
+import scaffoldConfig from "~~/scaffold.config";
 
 type TPricePoint = { price: string; timestamp: number };
 
@@ -28,6 +29,33 @@ const PriceChart = ({ tokenName }: { tokenName: string }) => {
           setOptions({
             title: {
               text: `${tokenName} Price`,
+            },
+            chart: {
+              events: {
+                load: function () {
+                  // set up the updating of the chart each second
+                  const series = this.series[0];
+                  setInterval(async function () {
+                    const response = await fetch(`/api/recent-price/${tokenName}`, {
+                      method: "GET",
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
+                    });
+
+                    if (response.ok) {
+                      const rawPrice = await response.json();
+                      console.log("rawPrice", rawPrice);
+                      const formatedPrice = [rawPrice.timestamp, parseFloat(rawPrice.price)];
+                      try {
+                        series.addPoint(formatedPrice, true, true);
+                      } catch (e) {
+                        // console.log("Error adding point: ", e);
+                      }
+                    }
+                  }, scaffoldConfig.tokenLeaderboardPollingInterval);
+                },
+              },
             },
             series: [
               {
@@ -72,7 +100,7 @@ const PriceChart = ({ tokenName }: { tokenName: string }) => {
                 },
               ],
               inputEnabled: false,
-              selected: 0,
+              selected: 4,
             },
             time: {
               useUTC: false,
