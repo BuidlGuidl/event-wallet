@@ -118,50 +118,58 @@ export const AddressMain = ({ address, disableAddressLink, format }: TAddressPro
 
   return (
     <>
-      <div className="flex flex-col items-center">
+      <div className="flex flex-row items-center justify-center">
         <div className="flex-shrink-0">
-          <Blockies className="mx-auto rounded-full" size={8} seed={address.toLowerCase()} scale={10} />
+          <Blockies
+            className="mx-auto border border-black rounded-full"
+            size={8}
+            seed={address.toLowerCase()}
+            scale={8}
+          />
         </div>
-        <div className="flex items-center mt-2">
-          {disableAddressLink ? (
-            <span className="ml-1.5 text-2xl font-normal">{displayAddress}</span>
-          ) : (
-            <a
-              className="ml-1.5 text-2xl font-normal"
-              target="_blank"
-              href={blockExplorerAddressLink}
-              rel="noopener noreferrer"
-            >
-              {displayAddress}
-            </a>
-          )}
-          {addressCopied ? (
-            <CheckCircleIcon
-              className="ml-1.5 text-xl font-normal text-sky-600 h-5 w-5 cursor-pointer"
-              aria-hidden="true"
-            />
-          ) : (
-            <>
-              <CopyToClipboard
-                text={address}
-                onCopy={() => {
-                  setAddressCopied(true);
-                  setTimeout(() => {
-                    setAddressCopied(false);
-                  }, 800);
-                }}
+        <div className="flex-col ml-4 py-2">
+          <p className="my-0 mb-2">username</p>
+          <div className="flex items-center">
+            {disableAddressLink ? (
+              <span className="text-base font-normal">{displayAddress}</span>
+            ) : (
+              <a
+                className="ml-1.5 text-base font-normal"
+                target="_blank"
+                href={blockExplorerAddressLink}
+                rel="noopener noreferrer"
               >
-                <DocumentDuplicateIcon
-                  className="ml-1.5 text-xl font-normal text-gray-500 h-5 w-5 cursor-pointer"
-                  aria-hidden="true"
-                />
-              </CopyToClipboard>
-              <PencilSquareIcon
-                onClick={() => setAliasModalOpen(true)}
+                {displayAddress}
+              </a>
+            )}
+            {addressCopied ? (
+              <CheckCircleIcon
                 className="ml-1.5 text-xl font-normal text-sky-600 h-5 w-5 cursor-pointer"
+                aria-hidden="true"
               />
-            </>
-          )}
+            ) : (
+              <>
+                <CopyToClipboard
+                  text={address}
+                  onCopy={() => {
+                    setAddressCopied(true);
+                    setTimeout(() => {
+                      setAddressCopied(false);
+                    }, 800);
+                  }}
+                >
+                  <DocumentDuplicateIcon
+                    className="ml-1.5 text-xl font-normal text-gray-500 h-5 w-5 cursor-pointer"
+                    aria-hidden="true"
+                  />
+                </CopyToClipboard>
+                <PencilSquareIcon
+                  onClick={() => setAliasModalOpen(true)}
+                  className="ml-1.5 text-xl font-normal text-sky-600 h-5 w-5 cursor-pointer"
+                />
+              </>
+            )}
+          </div>
         </div>
       </div>
       <div

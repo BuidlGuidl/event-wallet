@@ -95,13 +95,13 @@ const Home: NextPage = () => {
       </Head>
 
       <div className="flex flex-col items-center justify-center py-2">
-        <div className="max-w-96 p-8">
-          <Image src="/bg.png" alt="Event Wallet Logo" width={30} height={43} className="absolute top-0 left-0 m-5" />
+        <div className="md:min-w-[24rem] p-8 my-16 w-full">
+          <Image src="/bg.svg" alt="Event Wallet Logo" width={30} height={43} className="absolute top-0 left-0 m-5" />
           <div className="absolute top-0 right-0 m-5">
             <div className="flex items-center">
-              <div className="flex items-center">
+              <div className="flex items-center border border-[#000] rounded-full">
                 <Balance className="pr-1" address={address} />
-                <span className="text-sm">⛽</span>
+                <span className="text-sm pr-4">⛽</span>
               </div>
               <FaucetButton />
             </div>
@@ -110,7 +110,7 @@ const Home: NextPage = () => {
             <>
               <div className="flex flex-col items-center mb-6 gap-4">
                 <AddressMain address={address} disableAddressLink={true} />
-                <div className="flex gap-4 items-center">
+                <div className="flex gap-4 items-center bg-white w-full py-2 px-3 rounded-2xl">
                   <TokenBalance key={saltToken.symbol} emoji={saltToken.emoji} amount={balance} />
                   <div className="text-xl font-bold flex gap-1">
                     {loadingUserData ? (
@@ -133,28 +133,30 @@ const Home: NextPage = () => {
               </div>
               <div className="flex gap-6 justify-center mb-8">
                 <button
-                  className={`${screen === "main" ? "bg-primary" : "bg-secondary"} text-white rounded-full p-3`}
+                  className={`${screen === "main" ? "bg-white" : "bg-white"} text-[#0D0D0D] rounded-full p-3`}
                   onClick={() => setScreen("main")}
                 >
-                  <HomeIcon className="w-8" />
+                  <HomeIcon className="w-6" />
                 </button>
                 <button
-                  className={`${screen === "receive" ? "bg-primary" : "bg-secondary"} text-white rounded-full p-3`}
+                  className={`${screen === "receive" ? "bg-white" : "bg-white"} text-white rounded-full p-3`}
                   onClick={() => setScreen("receive")}
                 >
-                  <ArrowDownTrayIcon className="w-8" />
+                  <ArrowDownTrayIcon className="w-6 text-[#0D0D0D]" />
                 </button>
                 <button
-                  className={`${screen === "send" ? "bg-primary" : "bg-secondary"} text-white rounded-full p-3`}
+                  className={`${screen === "send" ? "bg-white" : "bg-white"} text-[text-[#0D0D0D]] rounded-full p-3`}
                   onClick={() => setScreen("send")}
                 >
-                  <PaperAirplaneIcon className="w-8" />
+                  <PaperAirplaneIcon className="w-6" />
                 </button>
               </div>
             </>
           </div>
 
-          <div>{screenRender}</div>
+          <div className="fixed bottom-0 left-0 w-full pb-4 bg-white h-[50vh] overflow-y-scroll rounded-t-3xl p-4">
+            {screenRender}
+          </div>
         </div>
       </div>
     </>
