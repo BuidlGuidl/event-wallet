@@ -13,3 +13,5 @@ node_modules
 .vscode/**
 .DS_Store
 .vercel
+packages/nextjs/pages/.env
+.env
