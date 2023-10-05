@@ -86,8 +86,12 @@ export const useTransactor = (_signer?: Signer): TTransactionFunc => {
       }
       // TODO handle error properly
       console.error("⚡️ ~ file: useTransactor.ts ~ error", error);
-      const message = getParsedEthersError(error);
-      notification.error(message);
+      if (error && error.message && error.message.includes("Reverted 0x1a840b42")) {
+        notification.error("Slippage error");
+      } else {
+        const message = getParsedEthersError(error);
+        notification.error(message);
+      }
     }
 
     return transactionResponse;

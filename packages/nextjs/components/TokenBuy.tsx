@@ -60,6 +60,8 @@ export const TokenBuy = ({
     contractName: dexContractName,
     functionName: "creditToAsset",
     args: [ethers.utils.parseEther(amountIn || "0").mul(slippage), ethers.utils.parseEther(amountOut || "0")],
+    // @ts-ignore
+    gas: 1000000,
   });
 
   const { writeAsync: approveSalt, isMining: isMiningApproveSalt } = useScaffoldContractWrite({
