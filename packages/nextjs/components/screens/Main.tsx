@@ -187,7 +187,10 @@ export const Main = () => {
   return (
     <>
       <div className="flex flex-col gap-2 text-center m-auto overflow-x-hidden">
-        {/*  <p className="font-bold">Welcome to {scaffoldConfig.eventName}!</p> */}
+        <div className="flex flex-col gap-2">
+          <h1 className="font-medium text-xl"> Your Tokens </h1>
+        </div>
+
         <p className="font-medium flex justify-between w-3/4 mx-auto">
           Total Net Worth:{" "}
           <span>
@@ -253,9 +256,8 @@ export const Main = () => {
                   {tokens.map(token => (
                     <label
                       key={token.symbol}
-                      className={`p-2 cursor-pointer ${
-                        selectedTokenName === token.name ? "bg-primary outline outline-2 outline-black" : ""
-                      }`}
+                      className={`p-2 cursor-pointer ${selectedTokenName === token.name ? "bg-primary outline outline-2 outline-black" : ""
+                        }`}
                     >
                       <input
                         type="radio"

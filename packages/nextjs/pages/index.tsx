@@ -135,28 +135,28 @@ const Home: NextPage = () => {
               </div>
               <div className="flex gap-6 justify-center mb-8">
                 <button
-                  className={`${screen === "main" ? "bg-white" : "bg-white "} text-[#0D0D0D] rounded-full p-3`}
+                  className={`${screen === "main" ? "bg-white scale-110" : "bg-white "} text-[#0D0D0D] rounded-full p-3 `}
                   onClick={() => setScreen("main")}
                 >
-                  <HomeIcon width="22" height="22" />
+                  <HomeIcon width="22" height="22" fill={`${screen === "main" ? "#629FFC" : "#0D0D0D"}`} />
                 </button>
                 <button
-                  className={`${screen === "send" ? "bg-white" : "bg-white"} text-[#0D0D0D] rounded-full p-3`}
+                  className={`${screen === "send" ? "bg-white scale-110" : "bg-white"} text-[#0D0D0D] rounded-full p-3`}
                   onClick={() => setScreen("send")}
                 >
-                  <SendIcon width="22" height="22" />
+                  <SendIcon width="22" height="22" fill={`${screen === "send" ? "#629FFC" : "#0D0D0D"}`} />
                 </button>
                 <button
-                  className={`${screen === "games" ? "bg-white" : "bg-white"} text-[#0D0D0D] rounded-full p-3`}
+                  className={`${screen === "games" ? "bg-white scale-110" : "bg-white"} text-[#0D0D0D] rounded-full p-3`}
                   onClick={() => setScreen("games")}
                 >
-                  <GameIcon width="22" height="22" />
+                  <GameIcon width="24" height="22" fill={`${screen === "games" ? "#629FFC" : "#0D0D0D"}`} />
                 </button>
                 <button
-                  className={`${screen === "medals" ? "bg-white" : "bg-white"} text-[#0D0D0D] rounded-full p-3`}
+                  className={`${screen === "medals" ? "bg-white scale-110" : "bg-white"} text-[#0D0D0D] rounded-full p-3`}
                   onClick={() => setScreen("medals")}
                 >
-                  <MedelsIcon width="22" height="22" />
+                  <MedelsIcon width="22" height="22" fill={`${screen === "medals" ? "#629FFC" : "#0D0D0D"}`} />
                 </button>
               </div>
             </>
