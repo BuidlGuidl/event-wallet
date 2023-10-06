@@ -8,7 +8,7 @@ module.exports = {
     themes: [
       {
         scaffoldEth: {
-          primary: "#629FFC",
+          primary: "#000",
           "primary-content": "#FFF",
           secondary: "#eeb14e",
           "secondary-content": "#FFF",
@@ -25,6 +25,8 @@ module.exports = {
           warning: "#FFCF72",
           error: "#c4461b",
           "custom-dark": "#0D0D0D",
+          green: "#5DE347",
+          lightgray: "#F5F5F5",
 
           "--rounded-btn": "9999rem",
 
@@ -50,6 +52,15 @@ module.exports = {
             opacity: "1",
           },
         },
+      },
+      padding: {
+        "btn-xs": "0.4rem",
+      },
+      minHeight: {
+        "btn-xs": "1.5rem",
+      },
+      fontSize: {
+        "btn-xs": "0.75rem",
       },
     },
   },

@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import Blockies from "react-blockies";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import { CheckCircleIcon, DocumentDuplicateIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
+import { CheckCircleIcon, DocumentDuplicateIcon } from "@heroicons/react/24/outline";
+import { Cog6ToothIcon } from "@heroicons/react/24/solid";
 import { InputBase } from "~~/components/scaffold-eth/Input";
 import { loadBurnerSK } from "~~/hooks/scaffold-eth";
 import { getBlockExplorerAddressLink, getTargetNetwork, notification } from "~~/utils/scaffold-eth";
@@ -118,7 +119,7 @@ export const AddressMain = ({ address, disableAddressLink, format }: TAddressPro
 
   return (
     <>
-      <div className="flex flex-row items-center justify-center">
+      <div className="flex flex-row items-center justify-start w-full px-5 relative">
         <div className="flex-shrink-0">
           <Blockies
             className="mx-auto border border-black rounded-full"
@@ -163,15 +164,17 @@ export const AddressMain = ({ address, disableAddressLink, format }: TAddressPro
                     aria-hidden="true"
                   />
                 </CopyToClipboard>
-                <PencilSquareIcon
-                  onClick={() => setAliasModalOpen(true)}
-                  className="ml-1.5 text-xl font-normal text-sky-600 h-5 w-5 cursor-pointer"
-                />
               </>
             )}
           </div>
         </div>
+
+        <Cog6ToothIcon
+          onClick={() => setAliasModalOpen(true)}
+          className="ml-1.5 text-xl font-normal text-black h-5 w-5 cursor-pointer absolute top-1 right-4"
+        />
       </div>
+
       <div
         className={`modal z-20 ${aliasModalOpen ? "modal-open" : ""}`}
         onClick={e => {

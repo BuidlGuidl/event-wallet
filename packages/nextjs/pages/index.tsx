@@ -3,28 +3,23 @@ import Head from "next/head";
 import Image from "next/image";
 import type { NextPage } from "next";
 import { useAccount } from "wagmi";
-import {
-  CheckCircleIcon,
-  EllipsisHorizontalCircleIcon,
-  ExclamationCircleIcon,
-} from "@heroicons/react/24/outline";
+import { CheckCircleIcon, EllipsisHorizontalCircleIcon, ExclamationCircleIcon } from "@heroicons/react/24/outline";
+import GameIcon from "~~/Icons/GamesIcon";
+import GasIcon from "~~/Icons/GasIcon";
+import HomeIcon from "~~/Icons/HomeIcon";
+import MedelsIcon from "~~/Icons/MedelsIcon";
+import SendIcon from "~~/Icons/SendIcon";
 import { Balance, FaucetButton } from "~~/components/scaffold-eth";
 import { AddressMain } from "~~/components/scaffold-eth/AddressMain";
 import { TokenBalance } from "~~/components/scaffold-eth/TokenBalance";
 import { CheckedIn, Collectibles, Main, Receive, Send, Swap } from "~~/components/screens";
+import Games from "~~/components/screens/Games";
+import Medals from "~~/components/screens/Medals";
 import { Mint } from "~~/components/screens/Mint";
 import { useAutoConnect, useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 import scaffoldConfig from "~~/scaffold.config";
 import { useAppStore } from "~~/services/store/store";
 import { notification } from "~~/utils/scaffold-eth";
-import HomeIcon from "~~/Icons/HomeIcon";
-import SendIcon from "~~/Icons/SendIcon";
-import GameIcon from "~~/Icons/GamesIcon";
-import MedelsIcon from "~~/Icons/MedelsIcon";
-import Games from "~~/components/screens/Games";
-import Medals from "~~/components/screens/Medals";
-import GasIcon from "~~/Icons/GasIcon";
-
 
 const screens = {
   main: <Main />,
@@ -143,25 +138,25 @@ const Home: NextPage = () => {
                   className={`${screen === "main" ? "bg-white" : "bg-white "} text-[#0D0D0D] rounded-full p-3`}
                   onClick={() => setScreen("main")}
                 >
-                  <HomeIcon className="w-8" width="28" height="28" />
+                  <HomeIcon width="22" height="22" />
                 </button>
                 <button
                   className={`${screen === "send" ? "bg-white" : "bg-white"} text-[#0D0D0D] rounded-full p-3`}
                   onClick={() => setScreen("send")}
                 >
-                  <SendIcon className="w-6" width="18" height="18" />
+                  <SendIcon width="22" height="22" />
                 </button>
                 <button
                   className={`${screen === "games" ? "bg-white" : "bg-white"} text-[#0D0D0D] rounded-full p-3`}
                   onClick={() => setScreen("games")}
                 >
-                  <GameIcon className="w-6" width="18" height="18" />
+                  <GameIcon width="22" height="22" />
                 </button>
                 <button
                   className={`${screen === "medals" ? "bg-white" : "bg-white"} text-[#0D0D0D] rounded-full p-3`}
                   onClick={() => setScreen("medals")}
                 >
-                  <MedelsIcon className="w-6" width="18" height="18" />
+                  <MedelsIcon width="22" height="22" />
                 </button>
               </div>
             </>

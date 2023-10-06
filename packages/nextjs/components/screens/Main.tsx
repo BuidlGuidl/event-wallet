@@ -188,9 +188,11 @@ export const Main = () => {
     <>
       <div className="flex flex-col gap-2 text-center m-auto overflow-x-hidden">
         {/*  <p className="font-bold">Welcome to {scaffoldConfig.eventName}!</p> */}
-        <p className="font-bold">
-          Total Net Worth: {saltEmoji}{" "}
-          {loadingTokensData ? "..." : ethers.utils.formatEther(totalNetWorth.sub(totalNetWorth.mod(1e14)))}
+        <p className="font-medium flex justify-between w-3/4 mx-auto">
+          Total Net Worth:{" "}
+          <span>
+            {loadingTokensData ? "..." : ethers.utils.formatEther(totalNetWorth.sub(totalNetWorth.mod(1e14)))}
+          </span>
         </p>
 
         {!checkedIn && !loadingCheckedIn && (
@@ -219,9 +221,9 @@ export const Main = () => {
 
         {checkedIn && !showBuy && !showSell && (
           <>
-            <div className="bg-base-300 rounded-xl overflow-x-scroll w-[350px]">
-              <table className="table-auto border-separate border-spacing-4 text-[0.8rem] ">
-                <thead>
+            <div className="rounded-xl overflow-x-scroll w-[350px]">
+              <table className="table-auto text-[0.8rem] border-seperate">
+                <thead className="bg-[#F5F5F5]">
                   <tr>
                     <th>Token</th>
                     <th>Price</th>

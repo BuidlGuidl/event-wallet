@@ -44,10 +44,18 @@ export const TokenBalanceRow = ({
             ethers.utils.formatEther(tokenBalance.value.sub(tokenBalance.value.mod(1e14)))}
       </td>
       <td className="flex">
-        <button onClick={() => handleShowBuy(tokenInfo)} className="btn btn-primary btn-sm" disabled={loading}>
+        <button
+          onClick={() => handleShowBuy(tokenInfo)}
+          className="btn bg-black btn-xs text-[0.75rem] btn-ghost text-[#5DE347] min-h-6 h-6 capitalize"
+          disabled={loading}
+        >
           Buy
         </button>
-        <button onClick={() => handleShowSell(tokenInfo)} className="btn btn-primary btn-sm ml-2" disabled={loading}>
+        <button
+          onClick={() => handleShowSell(tokenInfo)}
+          className="btn btn-secondary btn-xs ml-2 text-[0.75rem] bg-[#B5B5B5] btn-ghost min-h-6 h-6 capitalize"
+          disabled={loading}
+        >
           Sell
         </button>
       </td>
