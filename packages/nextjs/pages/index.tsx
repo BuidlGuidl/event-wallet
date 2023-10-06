@@ -46,7 +46,7 @@ const Home: NextPage = () => {
 
   const { address } = useAccount();
 
-  const saltToken = scaffoldConfig.tokens[0];
+  const saltToken = scaffoldConfig.saltToken;
 
   const { data: balance } = useScaffoldContractRead({
     contractName: "SaltToken",
@@ -111,7 +111,7 @@ const Home: NextPage = () => {
               <div className="flex flex-col items-center mb-6 gap-4">
                 <AddressMain address={address} disableAddressLink={true} />
                 <div className="flex gap-4 items-center">
-                  <TokenBalance key={saltToken.symbol} emoji={saltToken.emoji} amount={balance} />
+                  <TokenBalance key={saltToken.name} emoji={saltToken.emoji} amount={balance} />
                   <div className="text-xl font-bold flex gap-1">
                     {loadingUserData ? (
                       <EllipsisHorizontalCircleIcon className="w-4" />

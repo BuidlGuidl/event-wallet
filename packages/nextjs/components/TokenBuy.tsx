@@ -32,7 +32,7 @@ export const TokenBuy = ({
 
   const tokenName: TokenName = token.replace("Token", "") as TokenName;
   const tokenEmoji = scaffoldConfig.tokens.find(t => token === t.contractName)?.emoji;
-  const saltEmoji = scaffoldConfig.tokens[0].emoji;
+  const saltEmoji = scaffoldConfig.saltToken.emoji;
 
   const dexContractName: ContractName = `BasicDex${tokenName}` as ContractName;
 

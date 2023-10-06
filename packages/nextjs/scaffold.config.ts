@@ -1,3 +1,4 @@
+import tokensConfig from "./tokens.config";
 import * as chains from "wagmi/chains";
 import { TTokenInfo } from "~~/types/wallet";
 
@@ -10,6 +11,7 @@ export type ScaffoldConfig = {
   tokenEmoji: string;
   eventName: string;
   hideHeader: boolean;
+  saltToken: TTokenInfo;
   tokens: TTokenInfo[];
   showChart: boolean;
   burnerWallet: {
@@ -34,12 +36,9 @@ const scaffoldConfig = {
   eventName: "Game",
   hideHeader: true,
 
-  tokens: [
-    { contractName: "SaltToken", name: "Salt", symbol: "SALT", emoji: "💸" },
-    { contractName: "AvocadoToken", name: "Avocado", symbol: "AVC", emoji: "🥑" },
-    { contractName: "BananaToken", name: "Banana", symbol: "BNN", emoji: "🍌" },
-    { contractName: "TomatoToken", name: "Tomato", symbol: "TMT", emoji: "🍅" },
-  ],
+  saltToken: { contractName: "SaltToken", name: "Salt", emoji: "💸" },
+
+  tokens: tokensConfig,
 
   showChart: false,
 

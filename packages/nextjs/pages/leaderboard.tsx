@@ -36,7 +36,7 @@ const Leaderboard: NextPage = () => {
   const PAGE_SIZE = 100;
 
   const { data: tokenContract } = useScaffoldContract({
-    contractName: scaffoldConfig.tokens[0].contractName as ContractName,
+    contractName: scaffoldConfig.saltToken.contractName as ContractName,
   });
 
   useEffect(() => {

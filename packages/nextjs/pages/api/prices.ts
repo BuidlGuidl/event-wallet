@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import scaffoldConfig from "~~/scaffold.config";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const tokens = scaffoldConfig.tokens.slice(1);
+  const tokens = scaffoldConfig.tokens;
 
   type TokenPrices = {
     [key: string]: string;
