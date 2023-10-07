@@ -50,14 +50,16 @@ export const Send = () => {
   };
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 text-center m-auto overflow-x-hidden">
+      <div className="flex flex-col gap-2">
+        <h1 className="font-medium text-xl"> Send Tokens </h1>
+      </div>
       <div className="flex gap-4 text-3xl">
         {scaffoldConfig.tokens.map(token => (
           <label
             key={token.symbol}
-            className={`p-2 cursor-pointer ${
-              selectedToken === token.contractName ? "bg-primary outline outline-2 outline-black" : ""
-            }`}
+            className={`p-2 cursor-pointer ${selectedToken === token.contractName ? "bg-primary outline outline-2 outline-black" : ""
+              }`}
           >
             <input
               type="radio"
