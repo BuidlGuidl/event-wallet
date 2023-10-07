@@ -189,124 +189,124 @@ export const Main = () => {
       <div className="flex flex-col gap-2 text-center m-auto overflow-x-hidden">
         <div className="flex flex-col gap-2">
           <h1 className="font-medium text-xl"> Your Tokens </h1>
-       </div>
-      <div className="flex flex-col gap-2 max-w-[430px] text-center m-auto">
-        <p className="font-bold">
-          Total Net Worth: {saltEmoji}{" "}
-          {loadingTokensData ? "..." : ethers.utils.formatEther(totalNetWorth.sub(totalNetWorth.mod(1e14)))}
-        </p>
+        </div>
+        <div className="flex flex-col gap-2 max-w-[430px] text-center m-auto">
+          <p className="font-bold">
+            Total Net Worth: {saltEmoji}{" "}
+            {loadingTokensData ? "..." : ethers.utils.formatEther(totalNetWorth.sub(totalNetWorth.mod(1e14)))}
+          </p>
 
-        {!checkedIn && !loadingCheckedIn && (
-          <div>
-            <h2>Sign Up to Play the Game</h2>
+          {!checkedIn && !loadingCheckedIn && (
             <div>
-              <InputBase
-                value={alias}
-                onChange={v => {
-                  setAlias(v);
-                }}
-                placeholder={alias ? alias : "Username"}
+              <h2>Sign Up to Play the Game</h2>
+              <div>
+                <InputBase
+                  value={alias}
+                  onChange={v => {
+                    setAlias(v);
+                  }}
+                  placeholder={alias ? alias : "Username"}
+                />
+              </div>
+
+              <BurnerSigner
+                className={`btn btn-primary w-full mt-4 ${processing || loadingCheckedIn ? "loading" : ""}`}
+                disabled={processing || loadingCheckedIn || checkedIn}
+                message={message}
+                handleSignature={handleSignature}
+              >
+                {loadingCheckedIn ? "..." : checkedIn ? "Checked-in" : "Check-in"}
+              </BurnerSigner>
+            </div>
+          )}
+
+          {checkedIn && !showBuy && !showSell && (
+            <>
+              <div className="rounded-xl overflow-x-scroll w-[350px]">
+                <table className="table-auto text-[0.8rem] border-seperate">
+                  <thead className="bg-[#F5F5F5]">
+                    <tr>
+                      <th>Token</th>
+                      <th>Price</th>
+                      <th>Balance</th>
+                      <th>Value</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {tokens.map(token => (
+                      <TokenBalanceRow
+                        key={token.name}
+                        tokenInfo={token}
+                        tokenBalance={tokensData[token.name]}
+                        handleShowBuy={handleShowBuy}
+                        handleShowSell={handleShowSell}
+                        loading={loadingTokensData}
+                      />
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              {scaffoldConfig.showChart && (
+                <>
+                  <div className="flex gap-4 text-3xl mt-8">
+                    {tokens.map(token => (
+                      <label
+                        key={token.name}
+                        className={`p-2 cursor-pointer ${selectedTokenName === token.name ? "bg-primary outline outline-2 outline-black" : ""
+                          }`}
+                      >
+                        <input
+                          type="radio"
+                          name="token"
+                          value={token.name}
+                          className="w-0 h-0"
+                          onChange={t => setSelectedTokenName(t.target.value)}
+                        />
+                        {token.emoji}
+                      </label>
+                    ))}
+                  </div>
+
+                  <PriceChart tokenName={selectedTokenName} />
+                </>
+              )}
+            </>
+          )}
+
+          {checkedIn && showBuy && (
+            <div className="bg-base-300 rounded-xl p-4">
+              <button className="btn btn-primary" onClick={() => setShowBuy(false)}>
+                <BackwardIcon className="h-5 w-5 mr-2" /> Go Back
+              </button>
+              <TokenBuy
+                token={swapToken.contractName as ContractName}
+                defaultAmountOut={"1"}
+                defaultAmountIn={ethers.utils.formatEther(
+                  tokensData[swapToken.name].price.sub(tokensData[swapToken.name].price.mod(1e14)).add(1e14),
+                )}
+                balanceSalt={balanceSalt || BigNumber.from("0")}
+                close={() => setShowBuy(false)}
               />
             </div>
+          )}
 
-            <BurnerSigner
-              className={`btn btn-primary w-full mt-4 ${processing || loadingCheckedIn ? "loading" : ""}`}
-              disabled={processing || loadingCheckedIn || checkedIn}
-              message={message}
-              handleSignature={handleSignature}
-            >
-              {loadingCheckedIn ? "..." : checkedIn ? "Checked-in" : "Check-in"}
-            </BurnerSigner>
-          </div>
-        )}
-
-        {checkedIn && !showBuy && !showSell && (
-          <>
-            <div className="rounded-xl overflow-x-scroll w-[350px]">
-              <table className="table-auto text-[0.8rem] border-seperate">
-                <thead className="bg-[#F5F5F5]">
-                  <tr>
-                    <th>Token</th>
-                    <th>Price</th>
-                    <th>Balance</th>
-                    <th>Value</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {tokens.map(token => (
-                    <TokenBalanceRow
-                      key={token.name}
-                      tokenInfo={token}
-                      tokenBalance={tokensData[token.name]}
-                      handleShowBuy={handleShowBuy}
-                      handleShowSell={handleShowSell}
-                      loading={loadingTokensData}
-                    />
-                  ))}
-                </tbody>
-              </table>
+          {checkedIn && showSell && (
+            <div className="bg-base-300 rounded-xl p-4">
+              <button className="btn btn-primary" onClick={() => setShowSell(false)}>
+                <BackwardIcon className="h-5 w-5 mr-2" /> Go Back
+              </button>
+              <TokenSell
+                token={swapToken.contractName as ContractName}
+                defaultAmountOut={ethers.utils.formatUnits(tokensData[swapToken.name].priceIn)}
+                defaultAmountIn={"1"}
+                balanceToken={tokensData[swapToken.name].balance}
+                close={() => setShowSell(false)}
+              />
             </div>
-
-            {scaffoldConfig.showChart && (
-              <>
-                <div className="flex gap-4 text-3xl mt-8">
-                  {tokens.map(token => (
-                    <label
-                      key={token.name}
-                      className={`p-2 cursor-pointer ${
-                        selectedTokenName === token.name ? "bg-primary outline outline-2 outline-black" : ""
-                      }`}
-                    >
-                      <input
-                        type="radio"
-                        name="token"
-                        value={token.name}
-                        className="w-0 h-0"
-                        onChange={t => setSelectedTokenName(t.target.value)}
-                      />
-                      {token.emoji}
-                    </label>
-                  ))}
-                </div>
-
-                <PriceChart tokenName={selectedTokenName} />
-              </>
-            )}
-          </>
-        )}
-
-        {checkedIn && showBuy && (
-          <div className="bg-base-300 rounded-xl p-4">
-            <button className="btn btn-primary" onClick={() => setShowBuy(false)}>
-              <BackwardIcon className="h-5 w-5 mr-2" /> Go Back
-            </button>
-            <TokenBuy
-              token={swapToken.contractName as ContractName}
-              defaultAmountOut={"1"}
-              defaultAmountIn={ethers.utils.formatEther(
-                tokensData[swapToken.name].price.sub(tokensData[swapToken.name].price.mod(1e14)).add(1e14),
-              )}
-              balanceSalt={balanceSalt || BigNumber.from("0")}
-              close={() => setShowBuy(false)}
-            />
-          </div>
-        )}
-
-        {checkedIn && showSell && (
-          <div className="bg-base-300 rounded-xl p-4">
-            <button className="btn btn-primary" onClick={() => setShowSell(false)}>
-              <BackwardIcon className="h-5 w-5 mr-2" /> Go Back
-            </button>
-            <TokenSell
-              token={swapToken.contractName as ContractName}
-              defaultAmountOut={ethers.utils.formatUnits(tokensData[swapToken.name].priceIn)}
-              defaultAmountIn={"1"}
-              balanceToken={tokensData[swapToken.name].balance}
-              close={() => setShowSell(false)}
-            />
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </>
   );
