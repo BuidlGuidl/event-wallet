@@ -1,5 +1,6 @@
 import { DeployFunction } from "hardhat-deploy/types";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
+import tokensConfig from "../../nextjs/tokens.config";
 
 /**
  * Deploys a contract named "YourContract" using the deployer account and
@@ -25,15 +26,6 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   const ownerAddress = deployer;
   const frontendAddress = "0x92C8Fd39A4582E6Fe8bb5Be6e7Fdf6533566EA69";
 
-  await deploy("EventAliases", {
-    from: deployer,
-    // Contract constructor arguments
-    log: true,
-    // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
-    // automatically mining the contract deployment transaction. There is no effect on live networks.
-    autoMine: true,
-  });
-
   const salt = await deploy("SaltToken", {
     from: deployer,
     args: [ownerAddress],
@@ -41,26 +33,19 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
     autoMine: true,
   });
 
-  const avocado = await deploy("AvocadoToken", {
-    from: deployer,
-    args: [ownerAddress],
-    log: true,
-    autoMine: true,
-  });
+  const tokens = tokensConfig;
 
-  const banana = await deploy("BananaToken", {
-    from: deployer,
-    args: [ownerAddress],
-    log: true,
-    autoMine: true,
-  });
+  for (let i = 0; i < tokens.length; i++) {
+    const token = tokens[i];
 
-  const tomato = await deploy("TomatoToken", {
-    from: deployer,
-    args: [ownerAddress],
-    log: true,
-    autoMine: true,
-  });
+    await deploy(token.contractName, {
+      from: deployer,
+      args: [token.name, token.emoji, ownerAddress],
+      log: true,
+      autoMine: true,
+      contract: "FruitToken",
+    });
+  }
 
   const eventSBT = await deploy("EventSBT", {
     from: deployer,
@@ -73,9 +58,12 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   });
 
   const saltContract = await hre.ethers.getContract("SaltToken", deployer);
-  const avocadoContract = await hre.ethers.getContract("AvocadoToken", deployer);
-  const bananaContract = await hre.ethers.getContract("BananaToken", deployer);
-  const tomatoContract = await hre.ethers.getContract("TomatoToken", deployer);
+
+  const tokensContracts = [];
+
+  for (let i = 0; i < tokens.length; i++) {
+    tokensContracts.push(await hre.ethers.getContract(tokens[i].contractName, deployer));
+  }
 
   await saltContract.grantRole(
     hre.ethers.utils.keccak256(hre.ethers.utils.toUtf8Bytes("MINTER_ROLE")),
@@ -104,59 +92,28 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   });
   sendXDai.wait();
 
-  const avocadoDex = await deploy("BasicDexAvocado", {
-    from: deployer,
-    args: [salt.address, avocado.address],
-    log: true,
-    autoMine: true,
-    contract: "BasicDex",
-  });
+  for (let i = 0; i < tokens.length; i++) {
+    const token = tokens[i];
 
-  const bananaDex = await deploy("BasicDexBanana", {
-    from: deployer,
-    args: [salt.address, banana.address],
-    log: true,
-    autoMine: true,
-    contract: "BasicDex",
-  });
+    const dex = await deploy(`BasicDex${token.name}`, {
+      from: deployer,
+      args: [salt.address, tokensContracts[i].address],
+      log: true,
+      autoMine: true,
+      contract: "BasicDex",
+    });
 
-  const tomatoDex = await deploy("BasicDexTomato", {
-    from: deployer,
-    args: [salt.address, tomato.address],
-    log: true,
-    autoMine: true,
-    contract: "BasicDex",
-  });
+    const dexContract = await hre.ethers.getContractAt("BasicDex", dex.address, deployer);
 
-  const avocadoDexContract = await hre.ethers.getContractAt("BasicDex", avocadoDex.address, deployer);
-  const bananaDexContract = await hre.ethers.getContractAt("BasicDex", bananaDex.address, deployer);
-  const tomatoDexContract = await hre.ethers.getContractAt("BasicDex", tomatoDex.address, deployer);
+    await saltContract.approve(dex.address, hre.ethers.constants.MaxUint256);
+    await tokensContracts[i].approve(dex.address, hre.ethers.constants.MaxUint256);
 
-  await saltContract.approve(avocadoDex.address, hre.ethers.constants.MaxUint256);
-  await saltContract.approve(bananaDex.address, hre.ethers.constants.MaxUint256);
-  await saltContract.approve(tomatoDex.address, hre.ethers.constants.MaxUint256);
-
-  await avocadoContract.approve(avocadoDex.address, hre.ethers.constants.MaxUint256);
-  await bananaContract.approve(bananaDex.address, hre.ethers.constants.MaxUint256);
-  await tomatoContract.approve(tomatoDex.address, hre.ethers.constants.MaxUint256);
-
-  await avocadoDexContract.init(hre.ethers.utils.parseEther("100"));
-  await bananaDexContract.init(hre.ethers.utils.parseEther("100"));
-  await tomatoDexContract.init(hre.ethers.utils.parseEther("100"));
-
-  await deploy("CongratsVIPLounge", {
-    from: deployer,
-    // Contract constructor arguments
-    args: [],
-    log: true,
-    // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
-    // automatically mining the contract deployment transaction. There is no effect on live networks.
-    autoMine: true,
-  });
+    await dexContract.init(hre.ethers.utils.parseEther("100"));
+  }
 };
 
 export default deployYourContract;
 
 // Tags are useful if you have multiple deploy files and only want to run one of them.
 // e.g. yarn deploy --tags YourContract
-deployYourContract.tags = ["EventGems"];
+deployYourContract.tags = ["GameWallet"];

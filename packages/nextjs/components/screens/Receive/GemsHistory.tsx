@@ -22,7 +22,7 @@ export const GemHistory = () => {
   const [newInboundTransferEvents, setNewInboundTransferEvents] = useState<EventData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedToken, setSelectedToken] = useState<ContractName>(
-    scaffoldConfig.tokens[0].contractName as ContractName,
+    scaffoldConfig.saltToken.contractName as ContractName,
   );
 
   // Starting block to fetch events from
@@ -67,9 +67,9 @@ export const GemHistory = () => {
   return (
     <div className="flex flex-col gap-2 items-center mt-6">
       <div className="flex gap-4 text-3xl">
-        {scaffoldConfig.tokens.map(token => (
+        {[scaffoldConfig.saltToken].concat(scaffoldConfig.tokens).map(token => (
           <label
-            key={token.symbol}
+            key={token.name}
             className={`p-2 cursor-pointer ${
               selectedToken === token.contractName ? "bg-primary outline outline-2 outline-black" : ""
             }`}

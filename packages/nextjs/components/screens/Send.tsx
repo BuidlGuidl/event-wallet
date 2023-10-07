@@ -17,7 +17,7 @@ export const Send = () => {
   const [toAddress, setToAddress] = useState("");
   const [amount, setAmount] = useState("");
   const [selectedToken, setSelectedToken] = useState<ContractName>(
-    scaffoldConfig.tokens[0].contractName as ContractName,
+    scaffoldConfig.saltToken.contractName as ContractName,
   );
   const payload = useAppStore(state => state.screenPayload);
 
@@ -55,11 +55,12 @@ export const Send = () => {
         <h1 className="font-medium text-xl"> Send Tokens </h1>
       </div>
       <div className="flex gap-4 text-3xl">
-        {scaffoldConfig.tokens.map(token => (
+        {[scaffoldConfig.saltToken].concat(scaffoldConfig.tokens).map(token => (
           <label
-            key={token.symbol}
-            className={`p-2 cursor-pointer ${selectedToken === token.contractName ? "bg-primary outline outline-2 outline-black" : ""
-              }`}
+            key={token.name}
+            className={`p-2 cursor-pointer ${
+              selectedToken === token.contractName ? "bg-primary outline outline-2 outline-black" : ""
+            }`}
           >
             <input
               type="radio"

@@ -9,7 +9,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (req.method === "POST") {
     // TODO: Add signature verification or secret key
 
-    const tokens = scaffoldConfig.tokens.slice(1);
+    const tokens = scaffoldConfig.tokens;
     const tokensData: { [key: string]: { price: BigNumber; priceFormatted: string } } = {};
 
     const targetNetwork = getTargetNetwork();
@@ -42,8 +42,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const tokenContracts: ethers.Contract[] = [];
 
-    for (let i = 0; i < scaffoldConfig.tokens.length; i++) {
-      const token = scaffoldConfig.tokens[i];
+    const tokensConfig = [scaffoldConfig.saltToken].concat(scaffoldConfig.tokens);
+
+    for (let i = 0; i < tokensConfig.length; i++) {
+      const token = tokensConfig[i];
 
       const contractTokenName: ContractName = token.contractName as ContractName;
       const deployedTokenContract = contracts?.[scaffoldConfig.targetNetwork.id]?.[0]?.contracts?.[
@@ -61,8 +63,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     for (let i = 0; i < addresses.length; i++) {
       const address = addresses[i];
       let balance = BigNumber.from(0);
-      for (let j = 0; j < scaffoldConfig.tokens.length; j++) {
-        const token = scaffoldConfig.tokens[j];
+      for (let j = 0; j < tokensConfig.length; j++) {
+        const token = tokensConfig[j];
         const tokenName = token.name;
         const tokenBalance: BigNumber = await tokenContracts[j].balanceOf(address);
         if (tokenBalance.isZero()) continue;

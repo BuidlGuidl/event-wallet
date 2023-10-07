@@ -29,7 +29,7 @@ export const Board = ({ leaderboard, isLoading }: { leaderboard: any[]; isLoadin
             <tr className="text-center">
               <th>#</th>
               <th>Address</th>
-              <th>{scaffoldConfig.tokens[0].emoji}</th>
+              <th>{scaffoldConfig.saltToken.emoji}</th>
             </tr>
           </thead>
           <tbody>

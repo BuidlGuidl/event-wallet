@@ -5,7 +5,7 @@ import { TokenLeaderboard } from "~~/components/TokenLeaderboard";
 import scaffoldConfig from "~~/scaffold.config";
 
 const Dashboard: NextPage = () => {
-  const tokens = scaffoldConfig.tokens.slice(1);
+  const tokens = scaffoldConfig.tokens;
 
   return (
     <div className="flex flex-row">

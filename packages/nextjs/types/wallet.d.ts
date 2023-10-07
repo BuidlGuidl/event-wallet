@@ -1,7 +1,6 @@
 export type TTokenInfo = {
   contractName: string;
   name: string;
-  symbol: string;
   emoji: string;
 };
 

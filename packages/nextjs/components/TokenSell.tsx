@@ -32,7 +32,7 @@ export const TokenSell = ({
 
   const tokenName: TokenName = token.replace("Token", "") as TokenName;
   const tokenEmoji = scaffoldConfig.tokens.find(t => token === t.contractName)?.emoji;
-  const saltEmoji = scaffoldConfig.tokens[0].emoji;
+  const saltEmoji = scaffoldConfig.saltToken.emoji;
 
   const dexContractName: ContractName = `BasicDex${tokenName}` as ContractName;
 
@@ -60,6 +60,8 @@ export const TokenSell = ({
     contractName: dexContractName,
     functionName: "assetToCredit",
     args: [ethers.utils.parseEther(amountIn || "0").mul(slippage), ethers.utils.parseEther(amountOut || "0")],
+    // @ts-ignore
+    gas: 1000000,
   });
 
   const { writeAsync: approveToken, isMining: isMiningApproveToken } = useScaffoldContractWrite({

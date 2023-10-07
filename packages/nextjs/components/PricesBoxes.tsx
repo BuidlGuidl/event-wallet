@@ -11,8 +11,8 @@ const PricesBoxes = () => {
   const [prices, setPrices] = useState<TokenPrices>({});
   const [isLoading, setIsLoading] = useState(true);
 
-  const tokens = scaffoldConfig.tokens.slice(1);
-  const saltEmoji = scaffoldConfig.tokens[0].emoji;
+  const tokens = scaffoldConfig.tokens;
+  const saltEmoji = scaffoldConfig.saltToken.emoji;
 
   const fetchPrices = async () => {
     try {

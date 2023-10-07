@@ -19,14 +19,14 @@ import { ContractName } from "~~/utils/scaffold-eth/contract";
  * Main Screen
  */
 export const Main = () => {
-  const tokens = scaffoldConfig.tokens.slice(1);
+  const tokens = scaffoldConfig.tokens;
 
   const { address } = useAccount();
   const [processing, setProcessing] = useState(false);
   const [loadingCheckedIn, setLoadingCheckedIn] = useState(true);
   const [checkedIn, setCheckedIn] = useState(false);
   const [alias, setAlias] = useState("");
-  const [swapToken, setSwapToken] = useState<TTokenInfo>(scaffoldConfig.tokens[1]);
+  const [swapToken, setSwapToken] = useState<TTokenInfo>(scaffoldConfig.tokens[0]);
   const [showBuy, setShowBuy] = useState(false);
   const [showSell, setShowSell] = useState(false);
   const [selectedTokenName, setSelectedTokenName] = useState<string>(tokens[0].name);
@@ -49,7 +49,7 @@ export const Main = () => {
   const tokenContracts: { [key: string]: ethers.Contract } = {};
   const dexContracts: { [key: string]: ethers.Contract } = {};
 
-  const saltEmoji = scaffoldConfig.tokens[0].emoji;
+  const saltEmoji = scaffoldConfig.saltToken.emoji;
 
   tokens.forEach(token => {
     const contractName: ContractName = `${token.name}Token` as ContractName;
@@ -59,14 +59,14 @@ export const Main = () => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const { data } = useScaffoldContract({ contractName });
     if (data) {
-      tokenContracts[token.symbol] = data;
+      tokenContracts[token.name] = data;
     }
 
     // The tokens array should not change, so this should be safe. Anyway, we can refactor this later.
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const { data: dex } = useScaffoldContract({ contractName: contractDexName });
     if (dex) {
-      dexContracts[token.symbol] = dex;
+      dexContracts[token.name] = dex;
     }
   });
 
@@ -76,8 +76,8 @@ export const Main = () => {
 
     for (let i = 0; i < tokens.length; i++) {
       const token = tokens[i];
-      const tokenContract = tokenContracts[token.symbol];
-      const dexContract = dexContracts[token.symbol];
+      const tokenContract = tokenContracts[token.name];
+      const dexContract = dexContracts[token.name];
 
       if (tokenContract && dexContract) {
         const balance = await tokenContract.balanceOf(address);
@@ -85,7 +85,7 @@ export const Main = () => {
         const priceIn = await dexContract.assetInPrice(ethers.utils.parseEther("1"));
         const value = price.mul(balance).div(ethers.utils.parseEther("1"));
 
-        newTokenData[token.symbol] = {
+        newTokenData[token.name] = {
           balance: balance,
           price: price,
           priceIn: priceIn,
@@ -189,13 +189,11 @@ export const Main = () => {
       <div className="flex flex-col gap-2 text-center m-auto overflow-x-hidden">
         <div className="flex flex-col gap-2">
           <h1 className="font-medium text-xl"> Your Tokens </h1>
-        </div>
-
-        <p className="font-medium flex justify-between w-3/4 mx-auto">
-          Total Net Worth:{" "}
-          <span>
-            {loadingTokensData ? "..." : ethers.utils.formatEther(totalNetWorth.sub(totalNetWorth.mod(1e14)))}
-          </span>
+       </div>
+      <div className="flex flex-col gap-2 max-w-[430px] text-center m-auto">
+        <p className="font-bold">
+          Total Net Worth: {saltEmoji}{" "}
+          {loadingTokensData ? "..." : ethers.utils.formatEther(totalNetWorth.sub(totalNetWorth.mod(1e14)))}
         </p>
 
         {!checkedIn && !loadingCheckedIn && (
@@ -238,9 +236,9 @@ export const Main = () => {
                 <tbody>
                   {tokens.map(token => (
                     <TokenBalanceRow
-                      key={token.symbol}
+                      key={token.name}
                       tokenInfo={token}
-                      tokenBalance={tokensData[token.symbol]}
+                      tokenBalance={tokensData[token.name]}
                       handleShowBuy={handleShowBuy}
                       handleShowSell={handleShowSell}
                       loading={loadingTokensData}
@@ -255,9 +253,10 @@ export const Main = () => {
                 <div className="flex gap-4 text-3xl mt-8">
                   {tokens.map(token => (
                     <label
-                      key={token.symbol}
-                      className={`p-2 cursor-pointer ${selectedTokenName === token.name ? "bg-primary outline outline-2 outline-black" : ""
-                        }`}
+                      key={token.name}
+                      className={`p-2 cursor-pointer ${
+                        selectedTokenName === token.name ? "bg-primary outline outline-2 outline-black" : ""
+                      }`}
                     >
                       <input
                         type="radio"
@@ -286,7 +285,7 @@ export const Main = () => {
               token={swapToken.contractName as ContractName}
               defaultAmountOut={"1"}
               defaultAmountIn={ethers.utils.formatEther(
-                tokensData[swapToken.symbol].price.sub(tokensData[swapToken.symbol].price.mod(1e14)).add(1e14),
+                tokensData[swapToken.name].price.sub(tokensData[swapToken.name].price.mod(1e14)).add(1e14),
               )}
               balanceSalt={balanceSalt || BigNumber.from("0")}
               close={() => setShowBuy(false)}
@@ -301,9 +300,9 @@ export const Main = () => {
             </button>
             <TokenSell
               token={swapToken.contractName as ContractName}
-              defaultAmountOut={ethers.utils.formatUnits(tokensData[swapToken.symbol].priceIn)}
+              defaultAmountOut={ethers.utils.formatUnits(tokensData[swapToken.name].priceIn)}
               defaultAmountIn={"1"}
-              balanceToken={tokensData[swapToken.symbol].balance}
+              balanceToken={tokensData[swapToken.name].balance}
               close={() => setShowSell(false)}
             />
           </div>
