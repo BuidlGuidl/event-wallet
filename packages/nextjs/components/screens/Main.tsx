@@ -222,7 +222,7 @@ export const Main = () => {
 
           {checkedIn && !showBuy && !showSell && (
             <>
-              <div className="rounded-xl overflow-x-scroll w-[350px]">
+              <div className="rounded-xl overflow-x-scroll">
                 <table className="table-auto text-[0.8rem] border-seperate">
                   <thead className="bg-[#F5F5F5]">
                     <tr>
@@ -254,8 +254,9 @@ export const Main = () => {
                     {tokens.map(token => (
                       <label
                         key={token.name}
-                        className={`p-2 cursor-pointer ${selectedTokenName === token.name ? "bg-primary outline outline-2 outline-black" : ""
-                          }`}
+                        className={`p-2 cursor-pointer ${
+                          selectedTokenName === token.name ? "bg-primary outline outline-2 outline-black" : ""
+                        }`}
                       >
                         <input
                           type="radio"

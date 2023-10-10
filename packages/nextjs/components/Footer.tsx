@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import ScanIcon from "~~/Icons/ScanIcon";
+import ScanIcon from "~~/icons/ScanIcon";
 import { useAppStore } from "~~/services/store/store";
 
 /**

@@ -4,11 +4,6 @@ import Image from "next/image";
 import type { NextPage } from "next";
 import { useAccount } from "wagmi";
 import { CheckCircleIcon, EllipsisHorizontalCircleIcon, ExclamationCircleIcon } from "@heroicons/react/24/outline";
-import GameIcon from "~~/Icons/GamesIcon";
-import GasIcon from "~~/Icons/GasIcon";
-import HomeIcon from "~~/Icons/HomeIcon";
-import MedelsIcon from "~~/Icons/MedelsIcon";
-import SendIcon from "~~/Icons/SendIcon";
 import { Balance, FaucetButton } from "~~/components/scaffold-eth";
 import { AddressMain } from "~~/components/scaffold-eth/AddressMain";
 import { TokenBalance } from "~~/components/scaffold-eth/TokenBalance";
@@ -17,6 +12,11 @@ import Games from "~~/components/screens/Games";
 import Medals from "~~/components/screens/Medals";
 import { Mint } from "~~/components/screens/Mint";
 import { useAutoConnect, useScaffoldContractRead } from "~~/hooks/scaffold-eth";
+import GameIcon from "~~/icons/GamesIcon";
+import GasFilledIcon from "~~/icons/GasFilledIcon";
+import HomeIcon from "~~/icons/HomeIcon";
+import MedelsIcon from "~~/icons/MedelsIcon";
+import SendIcon from "~~/icons/SendIcon";
 import scaffoldConfig from "~~/scaffold.config";
 import { useAppStore } from "~~/services/store/store";
 import { notification } from "~~/utils/scaffold-eth";
@@ -103,7 +103,10 @@ const Home: NextPage = () => {
             <div className="flex items-center">
               <div className="flex items-center border border-[#000] rounded-full">
                 <Balance className="pr-1" address={address} />
-                <span className="text-sm pr-4">⛽</span>
+                <span className="text-sm pr-4">
+                  {" "}
+                  <GasFilledIcon width={"20"} height={"20"} fill="black" />
+                </span>
               </div>
               <FaucetButton />
             </div>
@@ -135,7 +138,9 @@ const Home: NextPage = () => {
               </div>
               <div className="flex gap-6 justify-center mb-8">
                 <button
-                  className={`${screen === "main" ? "bg-white scale-110" : "bg-white "} text-[#0D0D0D] rounded-full p-3 `}
+                  className={`${
+                    screen === "main" ? "bg-white scale-110" : "bg-white "
+                  } text-[#0D0D0D] rounded-full p-3 `}
                   onClick={() => setScreen("main")}
                 >
                   <HomeIcon width="22" height="22" fill={`${screen === "main" ? "#629FFC" : "#0D0D0D"}`} />
@@ -147,13 +152,17 @@ const Home: NextPage = () => {
                   <SendIcon width="22" height="22" fill={`${screen === "send" ? "#629FFC" : "#0D0D0D"}`} />
                 </button>
                 <button
-                  className={`${screen === "games" ? "bg-white scale-110" : "bg-white"} text-[#0D0D0D] rounded-full p-3`}
+                  className={`${
+                    screen === "games" ? "bg-white scale-110" : "bg-white"
+                  } text-[#0D0D0D] rounded-full p-3`}
                   onClick={() => setScreen("games")}
                 >
                   <GameIcon width="24" height="22" fill={`${screen === "games" ? "#629FFC" : "#0D0D0D"}`} />
                 </button>
                 <button
-                  className={`${screen === "medals" ? "bg-white scale-110" : "bg-white"} text-[#0D0D0D] rounded-full p-3`}
+                  className={`${
+                    screen === "medals" ? "bg-white scale-110" : "bg-white"
+                  } text-[#0D0D0D] rounded-full p-3`}
                   onClick={() => setScreen("medals")}
                 >
                   <MedelsIcon width="22" height="22" fill={`${screen === "medals" ? "#629FFC" : "#0D0D0D"}`} />
