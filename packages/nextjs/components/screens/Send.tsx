@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import { isAddress } from "ethers/lib/utils";
 import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
+import { TokenInput } from "~~/components/game-wallet/Input/TokenInput";
 import { AddressInput, InputBase } from "~~/components/scaffold-eth";
 import { GemHistory } from "~~/components/screens/Send/GemsHistory";
 import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
@@ -77,6 +78,7 @@ export const Send = () => {
         <AddressInput value={toAddress} onChange={v => setToAddress(v)} placeholder="To Address" />
       </div>
       <div>
+        <TokenInput value={amount} onChange={v => setAmount(v)} placeholder="Amount" />
         <InputBase
           type="number"
           value={amount}
