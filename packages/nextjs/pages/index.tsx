@@ -15,7 +15,7 @@ import { useAutoConnect, useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 import GameIcon from "~~/icons/GamesIcon";
 import GasFilledIcon from "~~/icons/GasFilledIcon";
 import HomeIcon from "~~/icons/HomeIcon";
-import MedelsIcon from "~~/icons/MedelsIcon";
+import MedalsIcon from "~~/icons/MedalsIcon";
 import SendIcon from "~~/icons/SendIcon";
 import scaffoldConfig from "~~/scaffold.config";
 import { useAppStore } from "~~/services/store/store";
@@ -165,7 +165,7 @@ const Home: NextPage = () => {
                   } text-[#0D0D0D] rounded-full p-3`}
                   onClick={() => setScreen("medals")}
                 >
-                  <MedelsIcon width="22" height="22" fill={`${screen === "medals" ? "#629FFC" : "#0D0D0D"}`} />
+                  <MedalsIcon width="22" height="22" fill={`${screen === "medals" ? "#629FFC" : "#0D0D0D"}`} />
                 </button>
               </div>
             </>
