@@ -15,6 +15,7 @@ body {
   width: 100%;
   overflow-x: hidden;
   font-family: "Inter", sans-serif;
+  background-color: red;
 }
 
 main {

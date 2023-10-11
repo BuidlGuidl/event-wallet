@@ -140,13 +140,15 @@ const Home: NextPage = () => {
                 <button
                   className={`${
                     screen === "main" ? "bg-white scale-110" : "bg-white "
-                  } text-[#0D0D0D] rounded-full p-3 flex`}
+                  } text-custom-black rounded-full p-3 flex`}
                   onClick={() => setScreen("main")}
                 >
                   <HomeIcon width="22" height="22" fill={`${screen === "main" ? "#629FFC" : "#0D0D0D"}`} />
                 </button>
                 <button
-                  className={`${screen === "send" ? "bg-white scale-110" : "bg-white"} text-[#0D0D0D] rounded-full p-3`}
+                  className={`${
+                    screen === "send" ? "bg-white scale-110" : "bg-white"
+                  } text-custom-black rounded-full p-3`}
                   onClick={() => setScreen("send")}
                 >
                   <SendIcon width="22" height="22" fill={`${screen === "send" ? "#629FFC" : "#0D0D0D"}`} />
@@ -154,7 +156,7 @@ const Home: NextPage = () => {
                 <button
                   className={`${
                     screen === "games" ? "bg-white scale-110" : "bg-white"
-                  } text-[#0D0D0D] rounded-full p-3`}
+                  } text-custom-black rounded-full p-3`}
                   onClick={() => setScreen("games")}
                 >
                   <GameIcon width="24" height="22" fill={`${screen === "games" ? "#629FFC" : "#0D0D0D"}`} />
@@ -162,7 +164,7 @@ const Home: NextPage = () => {
                 <button
                   className={`${
                     screen === "medals" ? "bg-white scale-110" : "bg-white"
-                  } text-[#0D0D0D] rounded-full p-3`}
+                  } text-custom-black rounded-full p-3`}
                   onClick={() => setScreen("medals")}
                 >
                   <MedalsIcon width="22" height="22" fill={`${screen === "medals" ? "#629FFC" : "#0D0D0D"}`} />
@@ -171,7 +173,7 @@ const Home: NextPage = () => {
             </>
           </div>
 
-          <div className="md:static fixed bottom-0 left-0 w-full pb-4 bg-white md:bg-[#ffffff00] h-[50vh] overflow-y-scroll rounded-t-3xl p-4">
+          <div className="md:static fixed bottom-0 left-0 w-full pb-4 bg-white md:bg-[#ffffff00] h-[50vh] md:h-full overflow-y-scroll rounded-t-3xl p-4">
             {screenRender}
           </div>
         </div>
