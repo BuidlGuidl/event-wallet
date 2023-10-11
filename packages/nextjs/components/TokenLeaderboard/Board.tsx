@@ -25,13 +25,6 @@ export const Board = ({ leaderboard, isLoading }: { leaderboard: any[]; isLoadin
     <div className="flex flex-col">
       <div className="flex gap-x-20 justify-center">
         <table className="table table-zebra self-start">
-          <thead>
-            <tr className="text-center">
-              <th>#</th>
-              <th>Address</th>
-              <th>{scaffoldConfig.saltToken.emoji}</th>
-            </tr>
-          </thead>
           <tbody>
             {leaderboard.map((data, index) => (
               <tr key={JSON.stringify(leaderboard[0]) + index} className="text-center">
@@ -39,7 +32,9 @@ export const Board = ({ leaderboard, isLoading }: { leaderboard: any[]; isLoadin
                 <td>
                   <Address address={data.address} alias={aliases[data.address]} />
                 </td>
-                <td>{data.balance}</td>
+                <td className="text-right">
+                  {scaffoldConfig.saltToken.emoji} {data.balance}
+                </td>
               </tr>
             ))}
           </tbody>
