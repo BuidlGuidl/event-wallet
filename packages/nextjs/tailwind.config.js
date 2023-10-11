@@ -29,7 +29,6 @@ module.exports = {
           lightgray: "#F5F5F5",
 
           "--rounded-btn": "9999rem",
-
           ".tooltip": {
             "--tooltip-tail": "6px",
           },
@@ -54,13 +53,19 @@ module.exports = {
         },
       },
       padding: {
-        "btn-xs": "0.4rem",
+        "btn-xs": "0.6rem",
       },
       minHeight: {
         "btn-xs": "1.5rem",
       },
       fontSize: {
         "btn-xs": "0.75rem",
+      },
+      colors: {
+        "grey-dark": "#686868",
+        "grey-light": "#F5F5F5",
+        "grey-btn": "#B5B5B5",
+        "custom-green": "#5DE347",
       },
     },
   },

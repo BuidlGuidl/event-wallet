@@ -171,7 +171,7 @@ export const AddressMain = ({ address, disableAddressLink, format }: TAddressPro
 
         <Cog6ToothIcon
           onClick={() => setAliasModalOpen(true)}
-          className="ml-1.5 text-xl font-normal text-black h-5 w-5 cursor-pointer absolute top-1 right-4"
+          className="ml-1.5 text-xl font-normal text-black h-6 w-6 cursor-pointer absolute top-1 right-4"
         />
       </div>
 

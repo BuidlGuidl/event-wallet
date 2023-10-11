@@ -66,21 +66,15 @@ table td {
   padding: 0.4rem 0rem;
 }
 
-tr td:first-child {
+tr td:first-child,
+tr th:first-child {
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
 }
-tr td:last-child {
+tr td:last-child,
+tr th:last-child {
   border-top-right-radius: 10px;
-}
-
-tr td:first-child {
-  border-bottom-left-radius: 10px;
-}
-
-tr td:last-child {
   border-bottom-right-radius: 10px;
-  border-top-right-radius: 10px;
 }
 
 tr:first-child td {

@@ -97,8 +97,8 @@ const Home: NextPage = () => {
       </Head>
 
       <div className="flex flex-col items-center justify-center py-2">
-        <div className="md:min-w-[24rem] p-8 my-16 w-full">
-          <Image src="/bg.svg" alt="Event Wallet Logo" width={30} height={43} className="absolute top-0 left-0 m-5" />
+        <div className="md:min-w-[32rem] p-8 my-16 w-full md:w-[35%]">
+          <Image src="/bg.svg" alt="Event Wallet Logo" width={21} height={28} className="absolute top-0 left-0 m-5" />
           <div className="absolute top-0 right-0 m-5">
             <div className="flex items-center">
               <div className="flex items-center border border-[#000] rounded-full">
@@ -115,7 +115,7 @@ const Home: NextPage = () => {
             <>
               <div className="flex flex-col items-center mb-6 gap-4">
                 <AddressMain address={address} disableAddressLink={true} />
-                <div className="flex gap-4 items-center">
+                <div className="flex gap-4 items-center w-full bg-white py-3 px-2 rounded-xl mt-4">
                   <TokenBalance key={saltToken.name} emoji={saltToken.emoji} amount={balance} />
                   <div className="text-xl font-bold flex gap-1">
                     {loadingUserData ? (
@@ -136,11 +136,11 @@ const Home: NextPage = () => {
                   </div>
                 </div>
               </div>
-              <div className="flex gap-6 justify-center mb-8">
+              <div className="flex gap-6 justify-around mb-8">
                 <button
                   className={`${
                     screen === "main" ? "bg-white scale-110" : "bg-white "
-                  } text-[#0D0D0D] rounded-full p-3 `}
+                  } text-[#0D0D0D] rounded-full p-3 flex`}
                   onClick={() => setScreen("main")}
                 >
                   <HomeIcon width="22" height="22" fill={`${screen === "main" ? "#629FFC" : "#0D0D0D"}`} />
@@ -171,7 +171,7 @@ const Home: NextPage = () => {
             </>
           </div>
 
-          <div className="fixed bottom-0 left-0 w-full pb-4 bg-white h-[50vh] overflow-y-scroll rounded-t-3xl p-4">
+          <div className="md:static fixed bottom-0 left-0 w-full pb-4 bg-white md:bg-[#ffffff00] h-[50vh] overflow-y-scroll rounded-t-3xl p-4">
             {screenRender}
           </div>
         </div>

@@ -190,9 +190,10 @@ export const Main = () => {
         <div className="flex flex-col gap-2">
           <h1 className="font-medium text-xl"> Your Tokens </h1>
         </div>
-        <div className="flex flex-col gap-2 max-w-[430px] text-center m-auto">
-          <p className="font-bold">
-            Total Net Worth: {saltEmoji}{" "}
+        <div className="flex flex-col gap-2 max-w-[430px] text-center mx-auto w-full">
+          <p className="font-medium text-lg flex w-4/5 justify-between mx-auto">
+            <span> Total Net Worth:</span>
+            {saltEmoji}{" "}
             {loadingTokensData ? "..." : ethers.utils.formatEther(totalNetWorth.sub(totalNetWorth.mod(1e14)))}
           </p>
 
@@ -222,15 +223,15 @@ export const Main = () => {
 
           {checkedIn && !showBuy && !showSell && (
             <>
-              <div className="rounded-xl overflow-x-scroll">
-                <table className="table-auto text-[0.8rem] border-seperate">
-                  <thead className="bg-[#F5F5F5]">
+              <div className="rounded-xl w-full overflow-x-auto">
+                <table className="table-auto text-xs md:text-sm border-seperate w-full">
+                  <thead className="bg-grey-light text-grey-dark">
                     <tr>
                       <th>Token</th>
                       <th>Price</th>
                       <th>Balance</th>
                       <th>Value</th>
-                      <th></th>
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -277,7 +278,7 @@ export const Main = () => {
           )}
 
           {checkedIn && showBuy && (
-            <div className="bg-base-300 rounded-xl p-4">
+            <div className="bg-grey-light rounded-xl p-4">
               <button className="btn btn-primary" onClick={() => setShowBuy(false)}>
                 <BackwardIcon className="h-5 w-5 mr-2" /> Go Back
               </button>
@@ -294,7 +295,7 @@ export const Main = () => {
           )}
 
           {checkedIn && showSell && (
-            <div className="bg-base-300 rounded-xl p-4">
+            <div className="bg-grey-light rounded-xl p-4">
               <button className="btn btn-primary" onClick={() => setShowSell(false)}>
                 <BackwardIcon className="h-5 w-5 mr-2" /> Go Back
               </button>

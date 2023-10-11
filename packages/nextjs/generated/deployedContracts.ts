@@ -12091,7 +12091,7 @@ const contracts = {
             },
           ],
         },
-      }
+      },
     },
   ],
 } as const;
