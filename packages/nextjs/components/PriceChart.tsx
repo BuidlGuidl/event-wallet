@@ -5,7 +5,21 @@ import scaffoldConfig from "~~/scaffold.config";
 
 type TPricePoint = { price: string; timestamp: number };
 
-const PriceChart = ({ tokenName }: { tokenName: string }) => {
+const PriceChart = ({
+  tokenName,
+  tokenEmoji,
+  navigator,
+  rangeSelector,
+  scrollbar,
+  height,
+}: {
+  tokenName: string;
+  tokenEmoji: string;
+  navigator?: boolean;
+  rangeSelector?: boolean;
+  scrollbar?: boolean;
+  height?: number;
+}) => {
   const chartComponentRef = useRef<HighchartsReact.RefObject>(null);
   const [loading, setLoading] = useState(true);
   const [options, setOptions] = useState<Highcharts.Options>({});
@@ -28,7 +42,10 @@ const PriceChart = ({ tokenName }: { tokenName: string }) => {
           });
           setOptions({
             title: {
-              text: `${tokenName} Price`,
+              text: tokenEmoji,
+              style: {
+                fontSize: "1.3em",
+              },
             },
             chart: {
               events: {
@@ -56,6 +73,7 @@ const PriceChart = ({ tokenName }: { tokenName: string }) => {
                   }, scaffoldConfig.tokenLeaderboardPollingInterval);
                 },
               },
+              height: height || null,
             },
             series: [
               {
@@ -67,7 +85,12 @@ const PriceChart = ({ tokenName }: { tokenName: string }) => {
             credits: {
               enabled: false,
             },
+            navigator: {
+              enabled: navigator || false,
+            },
+            scrollbar: { enabled: scrollbar || false },
             rangeSelector: {
+              enabled: rangeSelector || false,
               buttons: [
                 {
                   count: 1,

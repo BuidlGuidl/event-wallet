@@ -34,6 +34,8 @@ export const Main = () => {
   const [loadingTokensData, setLoadingTokensData] = useState<boolean>(true);
   const [totalNetWorth, setTotalNetWorth] = useState<BigNumber>(BigNumber.from("0"));
 
+  const selectedTokenEmoji = scaffoldConfig.tokens.find(t => selectedTokenName === t.name)?.emoji;
+
   const message = {
     action: "user-checkin",
     address: address,
@@ -265,7 +267,14 @@ export const Main = () => {
                   ))}
                 </div>
 
-                <PriceChart tokenName={selectedTokenName} />
+                {selectedTokenEmoji && (
+                  <PriceChart
+                    tokenName={selectedTokenName}
+                    tokenEmoji={selectedTokenEmoji}
+                    rangeSelector={true}
+                    navigator={true}
+                  />
+                )}
               </>
             )}
           </>
