@@ -98,7 +98,7 @@ const Home: NextPage = () => {
       </Head>
 
       <div className="flex flex-col items-center justify-center py-2">
-        <div className="md:min-w-[32rem] p-8 my-16 w-full md:w-[35%]">
+        <div className="md:min-w-[32rem] p-6 my-14 w-full md:w-[35%]">
           <Image src="/bg.svg" alt="Event Wallet Logo" width={21} height={28} className="absolute top-0 left-0 m-5" />
           <div className="absolute top-0 right-0 m-5">
             <div className="flex items-center">
@@ -142,7 +142,7 @@ const Home: NextPage = () => {
                 <button
                   className={`${
                     screen === "main" ? "bg-white scale-110" : "bg-white "
-                  } text-custom-black rounded-full p-3 flex`}
+                  } text-custom-black rounded-full p-2 `}
                   onClick={() => setScreen("main")}
                 >
                   <HomeIcon width="22" height="22" fill={`${screen === "main" ? "#629FFC" : "#0D0D0D"}`} />
@@ -150,7 +150,7 @@ const Home: NextPage = () => {
                 <button
                   className={`${
                     screen === "send" ? "bg-white scale-110" : "bg-white"
-                  } text-custom-black rounded-full p-3`}
+                  } text-custom-black rounded-full p-2`}
                   onClick={() => setScreen("send")}
                 >
                   <SendIcon width="22" height="22" fill={`${screen === "send" ? "#629FFC" : "#0D0D0D"}`} />
@@ -158,7 +158,7 @@ const Home: NextPage = () => {
                 <button
                   className={`${
                     screen === "games" ? "bg-white scale-110" : "bg-white"
-                  } text-custom-black rounded-full p-3`}
+                  } text-custom-black rounded-full p-2`}
                   onClick={() => setScreen("games")}
                 >
                   <GameIcon width="24" height="22" fill={`${screen === "games" ? "#629FFC" : "#0D0D0D"}`} />
@@ -166,7 +166,7 @@ const Home: NextPage = () => {
                 <button
                   className={`${
                     screen === "medals" ? "bg-white scale-110" : "bg-white"
-                  } text-custom-black rounded-full p-3`}
+                  } text-custom-black rounded-full p-2`}
                   onClick={() => setScreen("medals")}
                 >
                   <MedalsIcon width="22" height="22" fill={`${screen === "medals" ? "#629FFC" : "#0D0D0D"}`} />
