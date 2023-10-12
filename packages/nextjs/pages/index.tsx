@@ -4,6 +4,7 @@ import Image from "next/image";
 import type { NextPage } from "next";
 import { useAccount } from "wagmi";
 import { CheckCircleIcon, EllipsisHorizontalCircleIcon, ExclamationCircleIcon } from "@heroicons/react/24/outline";
+import { QrCodeButton } from "~~/components/game-wallet/QrCodeButton";
 import { Balance, FaucetButton } from "~~/components/scaffold-eth";
 import { AddressMain } from "~~/components/scaffold-eth/AddressMain";
 import { TokenBalance } from "~~/components/scaffold-eth/TokenBalance";
@@ -101,6 +102,7 @@ const Home: NextPage = () => {
           <Image src="/bg.svg" alt="Event Wallet Logo" width={21} height={28} className="absolute top-0 left-0 m-5" />
           <div className="absolute top-0 right-0 m-5">
             <div className="flex items-center">
+              <QrCodeButton />
               <div className="flex items-center border border-[#000] rounded-full">
                 <Balance className="pr-1" address={address} />
                 <span className="text-sm pr-4">
