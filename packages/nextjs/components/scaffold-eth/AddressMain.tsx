@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
+import { PunkBlockie } from "../game-wallet/PunkBlockie";
 import { ethers } from "ethers";
-import Blockies from "react-blockies";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { CheckCircleIcon, DocumentDuplicateIcon } from "@heroicons/react/24/outline";
 import { Cog6ToothIcon } from "@heroicons/react/24/solid";
@@ -121,15 +121,9 @@ export const AddressMain = ({ address, disableAddressLink, format }: TAddressPro
     <>
       <div className="flex flex-row items-center justify-start w-full px-5 relative">
         <div className="flex-shrink-0">
-          <Blockies
-            className="mx-auto border border-black rounded-full"
-            size={8}
-            seed={address.toLowerCase()}
-            scale={8}
-          />
+          <PunkBlockie address={address} />
         </div>
         <div className="flex-col ml-4 py-2">
-          <p className="my-0 mb-2">username</p>
           <div className="flex items-center">
             {disableAddressLink ? (
               <span className="text-base font-normal">{displayAddress}</span>
