@@ -7,6 +7,7 @@ type TTokenBalanceProps = {
   handleShowBuy: (selectedToken: TTokenInfo) => void;
   handleShowSell: (selectedToken: TTokenInfo) => void;
   loading?: boolean;
+  paused?: boolean;
 };
 
 /**
@@ -18,6 +19,7 @@ export const TokenBalanceRow = ({
   handleShowBuy,
   handleShowSell,
   loading,
+  paused,
 }: TTokenBalanceProps) => {
   return (
     <tr>
@@ -43,13 +45,23 @@ export const TokenBalanceRow = ({
             tokenBalance.value &&
             ethers.utils.formatEther(tokenBalance.value.sub(tokenBalance.value.mod(1e14)))}
       </td>
-      <td className="flex">
-        <button onClick={() => handleShowBuy(tokenInfo)} className="btn btn-primary btn-sm" disabled={loading}>
-          Buy
-        </button>
-        <button onClick={() => handleShowSell(tokenInfo)} className="btn btn-primary btn-sm ml-2" disabled={loading}>
-          Sell
-        </button>
+      <td className="flex flex-row place-content-center">
+        {paused ? (
+          <div>PAUSED</div>
+        ) : (
+          <>
+            <button onClick={() => handleShowBuy(tokenInfo)} className="btn btn-primary btn-sm" disabled={loading}>
+              Buy
+            </button>
+            <button
+              onClick={() => handleShowSell(tokenInfo)}
+              className="btn btn-primary btn-sm ml-2"
+              disabled={loading}
+            >
+              Sell
+            </button>
+          </>
+        )}
       </td>
     </tr>
   );
