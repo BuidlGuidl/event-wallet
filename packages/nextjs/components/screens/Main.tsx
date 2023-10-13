@@ -15,6 +15,8 @@ import { TTokenBalance, TTokenInfo } from "~~/types/wallet";
 import { notification } from "~~/utils/scaffold-eth";
 import { ContractName } from "~~/utils/scaffold-eth/contract";
 
+type DexesPaused = { [key: string]: boolean };
+
 /**
  * Main Screen
  */
@@ -33,6 +35,7 @@ export const Main = () => {
   const [tokensData, setTokensData] = useState<{ [key: string]: TTokenBalance }>({});
   const [loadingTokensData, setLoadingTokensData] = useState<boolean>(true);
   const [totalNetWorth, setTotalNetWorth] = useState<BigNumber>(BigNumber.from("0"));
+  const [dexesPaused, setDexesPaused] = useState<DexesPaused>({});
 
   const selectedTokenEmoji = scaffoldConfig.tokens.find(t => selectedTokenName === t.name)?.emoji;
 
@@ -102,6 +105,37 @@ export const Main = () => {
     setTotalNetWorth(total);
     setLoadingTokensData(false);
   };
+
+  const updateDexesData = async () => {
+    const pausedData: { [key: string]: boolean } = {};
+
+    for (let i = 0; i < tokens.length; i++) {
+      const token = tokens[i];
+      const dexContract = dexContracts[token.name];
+
+      if (dexContract) {
+        const paused = await dexContract.paused();
+
+        pausedData[token.name] = paused;
+      }
+    }
+
+    setDexesPaused(pausedData);
+  };
+
+  useEffect(() => {
+    (async () => {
+      if (Object.keys(dexContracts).length === tokens.length) {
+        await updateDexesData();
+      }
+    })();
+  }, [Object.keys(dexContracts).length]);
+
+  useInterval(async () => {
+    if (Object.keys(dexContracts).length === tokens.length) {
+      await updateDexesData();
+    }
+  }, scaffoldConfig.tokenLeaderboardPollingInterval);
 
   useEffect(() => {
     (async () => {
@@ -239,6 +273,7 @@ export const Main = () => {
                       handleShowBuy={handleShowBuy}
                       handleShowSell={handleShowSell}
                       loading={loadingTokensData}
+                      paused={dexesPaused[token.name]}
                     />
                   ))}
                 </tbody>
