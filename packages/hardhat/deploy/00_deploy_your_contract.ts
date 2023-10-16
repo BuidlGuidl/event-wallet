@@ -24,7 +24,10 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   const signer = await hre.ethers.getSigner(deployer);
 
   const ownerAddress = deployer;
-  const frontendAddress = "0x92C8Fd39A4582E6Fe8bb5Be6e7Fdf6533566EA69";
+  const dexOwner = "0x92C8Fd39A4582E6Fe8bb5Be6e7Fdf6533566EA69";
+  const dispenserOwner = dexOwner;
+  const dexPausers = [dexOwner];
+  const dispersers = dexPausers;
 
   const salt = await deploy("SaltToken", {
     from: deployer,
@@ -79,10 +82,16 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
 
   const disperseFundsContract = await hre.ethers.getContract("DisperseFunds", deployer);
 
-  await disperseFundsContract.grantRole(
-    hre.ethers.utils.keccak256(hre.ethers.utils.toUtf8Bytes("DISPENSER_ROLE")),
-    frontendAddress,
-  );
+  for (let i = 0; i < dispersers.length; i++) {
+    await disperseFundsContract.grantRole(
+      hre.ethers.utils.keccak256(hre.ethers.utils.toUtf8Bytes("DISPENSER_ROLE")),
+      dispersers[i],
+    );
+  }
+
+  if (dispenserOwner !== deployer) {
+    await disperseFundsContract.transferOwnership(dispenserOwner);
+  }
 
   await saltContract.transfer(disperseFunds.address, hre.ethers.utils.parseEther("10000"));
 
@@ -109,6 +118,17 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
     await tokensContracts[i].approve(dex.address, hre.ethers.constants.MaxUint256);
 
     await dexContract.init(hre.ethers.utils.parseEther("100"));
+
+    for (let i = 0; i < dexPausers.length; i++) {
+      await dexContract.grantRole(
+        hre.ethers.utils.keccak256(hre.ethers.utils.toUtf8Bytes("PAUSER_ROLE")),
+        dexPausers[i],
+      );
+    }
+
+    if (dexOwner !== deployer) {
+      await dexContract.transferOwnership(dexOwner);
+    }
   }
 };
 

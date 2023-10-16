@@ -9,7 +9,9 @@ import create from "zustand";
  * Think about it as a global useState.
  */
 
-export type TWalletScreens = "main" | "send" | "games" | "medals"| "receive" | "collectibles" | "mint" | "swap" | "checkedIn";
+
+export type TWalletScreens = "main" | "send" | "games" | "medals"| "receive" | "collectibles" | "mint" | "swap" | "checkedIn" | "dexPause";
+
 
 export type TScreenPayload = {
   toAddress?: string;

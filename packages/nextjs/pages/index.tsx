@@ -8,7 +8,7 @@ import { QrCodeButton } from "~~/components/game-wallet/QrCodeButton";
 import { Balance, FaucetButton } from "~~/components/scaffold-eth";
 import { AddressMain } from "~~/components/scaffold-eth/AddressMain";
 import { TokenBalance } from "~~/components/scaffold-eth/TokenBalance";
-import { CheckedIn, Collectibles, Main, Receive, Send, Swap } from "~~/components/screens";
+import { CheckedIn, Collectibles, DexPause, Main, Receive, Send, Swap } from "~~/components/screens";
 import Games from "~~/components/screens/Games";
 import Medals from "~~/components/screens/Medals";
 import { Mint } from "~~/components/screens/Mint";
@@ -32,6 +32,7 @@ const screens = {
   mint: <Mint />,
   swap: <Swap />,
   checkedIn: <CheckedIn />,
+  dexPause: <DexPause />,
 };
 
 type UserData = {

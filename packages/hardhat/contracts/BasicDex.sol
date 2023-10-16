@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.19;
 
+import {Pausable} from "@openzeppelin/contracts/security/Pausable.sol";
+import "@openzeppelin/contracts/access/AccessControl.sol";
+
 interface IERC20 {
   function transfer(address receiver, uint256 amount) external returns (bool);
 
@@ -12,7 +15,7 @@ interface IERC20 {
 /// @title Token-Token DEX
 /// @author mctoady.eth
 /// @notice A simple token to token DEX with built in slippage protection
-contract BasicDex {
+contract BasicDex is Pausable, AccessControl {
   /* ========== CUSTOM ERRORS ========== */
   error InitError();
   error TokenTransferError(address _token);
@@ -21,6 +24,8 @@ contract BasicDex {
   error InsufficientLiquidityError(uint256 _liquidityAvailable);
 
   /* ========== STATE VARS ========== */
+
+  bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
 
   IERC20 public creditToken;
   IERC20 public assetToken;
@@ -41,8 +46,31 @@ contract BasicDex {
 
   /* ========== CONSTRUCTOR ========== */
   constructor(address _creditToken, address _assetToken) {
+    _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
     creditToken = IERC20(_creditToken);
     assetToken = IERC20(_assetToken);
+  }
+
+  /// @notice allows the owner to transfer ownership of the contract
+  /// @dev only the owner can transfer ownership
+  /// @param newOwner the address of the new owner
+  function transferOwnership(address newOwner) public onlyRole(DEFAULT_ADMIN_ROLE) {
+    require(!hasRole(DEFAULT_ADMIN_ROLE, newOwner), "Ownable: new owner already have admin role");
+
+    grantRole(DEFAULT_ADMIN_ROLE, newOwner);
+    renounceRole(DEFAULT_ADMIN_ROLE, msg.sender);
+  }
+
+  /// @notice pause the contract
+  /// @dev only addresses with the pauser role can pause the contract
+  function pause() external onlyRole(PAUSER_ROLE) {
+    _pause();
+  }
+
+  /// @notice unpause the contract
+  /// @dev only addresses with the pauser role can unpause the contract
+  function unpause() external onlyRole(PAUSER_ROLE) {
+    _unpause();
   }
 
   /// @notice initializes amount of liquidity in the dex, will start with a balanced 1:1 ratio of creditToken to assetToken TODO: make this optional?
@@ -149,7 +177,7 @@ contract BasicDex {
   /// @param tokensIn the number of credit tokens to be sold
   /// @param minTokensBack the minimum number of asset tokens the user will accept in return (for slippage protection)
   /// @return tokenOutput the number of asset tokens received by the user
-  function creditToAsset(uint256 tokensIn, uint256 minTokensBack) public returns (uint256 tokenOutput) {
+  function creditToAsset(uint256 tokensIn, uint256 minTokensBack) public whenNotPaused returns (uint256 tokenOutput) {
     if (tokensIn == 0) revert ZeroQuantityError();
     uint256 creditTokenReserve = creditToken.balanceOf(address(this));
     uint256 assetTokenReserve = assetToken.balanceOf(address(this));
@@ -175,7 +203,7 @@ contract BasicDex {
   /// @param tokensIn the number of asset tokens to be sold
   /// @param minTokensBack the minimum number of credit tokens the user will accept in return (for slippage protection)
   /// @return tokenOutput the number of credit tokens received by the user
-  function assetToCredit(uint256 tokensIn, uint256 minTokensBack) public returns (uint256 tokenOutput) {
+  function assetToCredit(uint256 tokensIn, uint256 minTokensBack) public whenNotPaused returns (uint256 tokenOutput) {
     if (tokensIn == 0) revert ZeroQuantityError();
     uint256 assetTokenReserve = assetToken.balanceOf(address(this));
     uint256 creditTokenReserve = creditToken.balanceOf(address(this));
