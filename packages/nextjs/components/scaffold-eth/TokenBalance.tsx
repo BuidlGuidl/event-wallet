@@ -14,7 +14,6 @@ export const TokenBalance = ({ amount }: TTokenBalanceProps) => {
     <div className="w-full flex items-center justify-between">
       <>
         <span className="text-3xl font-bold mr-1">
-          {" "}
           <CashIcon width="53" height="35" />
         </span>
         <div className="flex flex-col">

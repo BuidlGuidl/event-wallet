@@ -118,7 +118,7 @@ const Home: NextPage = () => {
             <>
               <div className="flex flex-col items-center mb-6 gap-4">
                 <AddressMain address={address} disableAddressLink={true} />
-                <div className="flex gap-4 items-center w-full bg-white py-3 px-2 rounded-xl mt-4">
+                <div className="flex gap-4 items-center w-11/12 bg-white py-1 px-2 rounded-xl mt-4">
                   <TokenBalance key={saltToken.name} emoji={saltToken.emoji} amount={balance} />
                   <div className="text-xl font-bold flex gap-1">
                     {loadingUserData ? (
