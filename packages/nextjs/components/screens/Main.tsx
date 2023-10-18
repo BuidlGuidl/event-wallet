@@ -253,8 +253,8 @@ export const Main = () => {
 
         {checkedIn && !showBuy && !showSell && (
           <>
-            <div className="bg-base-300 rounded-xl">
-              <table className="table-auto border-separate border-spacing-4">
+            <div className="rounded-xl">
+              <table className="table-auto border-separate ">
                 <thead>
                   <tr>
                     <th>Token</th>

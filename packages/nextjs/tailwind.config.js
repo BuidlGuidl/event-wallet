@@ -8,7 +8,7 @@ module.exports = {
     themes: [
       {
         scaffoldEth: {
-          primary: "#1c69d2",
+          primary: "#000",
           "primary-content": "#FFF",
           secondary: "#eeb14e",
           "secondary-content": "#FFF",
@@ -17,16 +17,18 @@ module.exports = {
           neutral: "#212638",
           "neutral-content": "#ffffff",
           "base-100": "#ffffff",
-          "base-200": "#F9FBFF",
+          "base-200": "#ffffff",
           "base-300": "#DAE8FF",
           "base-content": "#212638",
           info: "#93BBFB",
           success: "#13b081",
           warning: "#FFCF72",
           error: "#c4461b",
+          "custom-dark": "#0D0D0D",
+          green: "#5DE347",
+          lightgray: "#F5F5F5",
 
           "--rounded-btn": "9999rem",
-
           ".tooltip": {
             "--tooltip-tail": "6px",
           },
@@ -49,6 +51,23 @@ module.exports = {
             opacity: "1",
           },
         },
+      },
+      padding: {
+        "btn-xs": "0.6rem",
+      },
+      minHeight: {
+        "btn-xs": "1.5rem",
+      },
+      fontSize: {
+        "btn-xs": "0.75rem",
+      },
+      colors: {
+        "grey-dark": "#686868",
+        "grey-medium": "#d1d1d",
+        "grey-light": "#F5F5F5",
+        "grey-btn": "#B5B5B5",
+        "custom-green": "#5DE347",
+        "custom-black": "#0D0D0D",
       },
     },
   },

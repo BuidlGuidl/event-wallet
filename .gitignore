@@ -1,5 +1,6 @@
 packages/hardhat/generated
 node_modules
+.env
 
 # dependencies, yarn, etc
 # yarn / eslint
@@ -12,3 +13,5 @@ node_modules
 .eslintcache
 .vscode/**
 .DS_Store
+.vercel
+packages/nextjs/pages/.env
