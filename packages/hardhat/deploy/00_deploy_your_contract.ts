@@ -24,10 +24,19 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   const signer = await hre.ethers.getSigner(deployer);
 
   const ownerAddress = deployer;
-  const dexOwner = "0x92C8Fd39A4582E6Fe8bb5Be6e7Fdf6533566EA69";
+  const dexOwner = "0xEC1A970311702f3d356eB010A500EE4B5ab5C3Bb";
   const dispenserOwner = dexOwner;
-  const dexPausers = [dexOwner];
+  const dexPausers = [
+    dexOwner,
+    "0xd6f85d9d79E3a87eCFe98d907495f85Fb6DAF74f", //Damu
+    "0xD26536C559B10C5f7261F3FfaFf728Fe1b3b0dEE", //Damu
+    "0x6CE015E312e7240e85323A2a506cbD799534aB68", //Toady
+    "0xD26536C559B10C5f7261F3FfaFf728Fe1b3b0dEE", //Toady
+    "0xA7430Da2932cf53B329B4eE1307edb361B5852ea", //Austin
+    "0x9312Ead97CD5cfDd43EEd47261FB69081e2e17c3", //Austin
+  ];
   const dispersers = dexPausers;
+  const minters = dexPausers;
 
   const salt = await deploy("SaltToken", {
     from: deployer,
@@ -50,7 +59,7 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
     });
   }
 
-  const eventSBT = await deploy("EventSBT", {
+  await deploy("EventSBT", {
     from: deployer,
     // Contract constructor arguments
     args: [ownerAddress, salt.address],
@@ -68,10 +77,18 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
     tokensContracts.push(await hre.ethers.getContract(tokens[i].contractName, deployer));
   }
 
-  await saltContract.grantRole(
-    hre.ethers.utils.keccak256(hre.ethers.utils.toUtf8Bytes("MINTER_ROLE")),
-    eventSBT.address,
-  );
+  for (let i = 0; i < minters.length; i++) {
+    await saltContract.grantRole(hre.ethers.utils.keccak256(hre.ethers.utils.toUtf8Bytes("MINTER_ROLE")), minters[i]);
+  }
+
+  for (let i = 0; i < tokens.length; i++) {
+    for (let i = 0; i < minters.length; i++) {
+      await tokensContracts[i].grantRole(
+        hre.ethers.utils.keccak256(hre.ethers.utils.toUtf8Bytes("MINTER_ROLE")),
+        minters[i],
+      );
+    }
+  }
 
   const disperseFunds = await deploy("DisperseFunds", {
     from: deployer,
@@ -117,7 +134,7 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
     await saltContract.approve(dex.address, hre.ethers.constants.MaxUint256);
     await tokensContracts[i].approve(dex.address, hre.ethers.constants.MaxUint256);
 
-    await dexContract.init(hre.ethers.utils.parseEther("100"));
+    await dexContract.init(hre.ethers.utils.parseEther("2"));
 
     for (let i = 0; i < dexPausers.length; i++) {
       await dexContract.grantRole(
