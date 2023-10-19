@@ -223,10 +223,12 @@ export const Main = () => {
   return (
     <>
       <div className="flex flex-col gap-2 max-w-[430px] text-center m-auto">
-        <p className="font-bold">
-          Total Net Worth: {saltEmoji}{" "}
-          {loadingTokensData ? "..." : ethers.utils.formatEther(totalNetWorth.sub(totalNetWorth.mod(1e14)))}
-        </p>
+        {checkedIn && (
+          <p className="font-bold">
+            Total Net Worth: {saltEmoji}{" "}
+            {loadingTokensData ? "..." : ethers.utils.formatEther(totalNetWorth.sub(totalNetWorth.mod(1e14)))}
+          </p>
+        )}
 
         {!checkedIn && !loadingCheckedIn && (
           <div>
