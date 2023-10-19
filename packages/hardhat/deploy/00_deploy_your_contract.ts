@@ -82,10 +82,10 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   }
 
   for (let i = 0; i < tokens.length; i++) {
-    for (let i = 0; i < minters.length; i++) {
+    for (let j = 0; j < minters.length; j++) {
       await tokensContracts[i].grantRole(
         hre.ethers.utils.keccak256(hre.ethers.utils.toUtf8Bytes("MINTER_ROLE")),
-        minters[i],
+        minters[j],
       );
     }
   }
