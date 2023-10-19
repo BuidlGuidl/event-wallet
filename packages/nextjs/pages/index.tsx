@@ -13,7 +13,6 @@ import Games from "~~/components/screens/Games";
 import Medals from "~~/components/screens/Medals";
 import { Mint } from "~~/components/screens/Mint";
 import { useAutoConnect, useScaffoldContractRead } from "~~/hooks/scaffold-eth";
-import GameIcon from "~~/icons/GamesIcon";
 import GasFilledIcon from "~~/icons/GasFilledIcon";
 import HomeIcon from "~~/icons/HomeIcon";
 import MedalsIcon from "~~/icons/MedalsIcon";
@@ -155,14 +154,6 @@ const Home: NextPage = () => {
                   onClick={() => setScreen("send")}
                 >
                   <SendIcon width="22" height="22" fill={`${screen === "send" ? "#629FFC" : "#0D0D0D"}`} />
-                </button>
-                <button
-                  className={`${
-                    screen === "games" ? "bg-white scale-110" : "bg-white"
-                  } text-custom-black rounded-full p-2`}
-                  onClick={() => setScreen("games")}
-                >
-                  <GameIcon width="24" height="22" fill={`${screen === "games" ? "#629FFC" : "#0D0D0D"}`} />
                 </button>
                 <button
                   className={`${
