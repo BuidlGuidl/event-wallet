@@ -134,7 +134,7 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
     await saltContract.approve(dex.address, hre.ethers.constants.MaxUint256);
     await tokensContracts[i].approve(dex.address, hre.ethers.constants.MaxUint256);
 
-    await dexContract.init(hre.ethers.utils.parseEther("2"));
+    await dexContract.init(hre.ethers.utils.parseEther("100"));
 
     for (let i = 0; i < dexPausers.length; i++) {
       await dexContract.grantRole(
