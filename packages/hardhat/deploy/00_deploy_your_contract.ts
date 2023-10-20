@@ -71,6 +71,13 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
 
   const saltContract = await hre.ethers.getContract("SaltToken", deployer);
 
+  await deploy("CreditNwCalc", {
+    from: deployer,
+    args: [saltContract.address],
+    log: true,
+    autoMine: true,
+  });
+
   const tokensContracts = [];
 
   for (let i = 0; i < tokens.length; i++) {
