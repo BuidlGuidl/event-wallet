@@ -9283,6 +9283,70 @@ const contracts = {
           ],
         },
       },
+      CreditNwCalc: {
+        address: "0xc4Fe39a1588807CfF8d8897050c39F065eBAb0B8",
+        abi: [
+          {
+            inputs: [
+              {
+                internalType: "address",
+                name: "_creditToken",
+                type: "address",
+              },
+            ],
+            stateMutability: "nonpayable",
+            type: "constructor",
+          },
+          {
+            inputs: [
+              {
+                internalType: "address",
+                name: "user",
+                type: "address",
+              },
+              {
+                internalType: "address[]",
+                name: "dexAddrs",
+                type: "address[]",
+              },
+            ],
+            name: "getNetWorth",
+            outputs: [
+              {
+                internalType: "uint256",
+                name: "",
+                type: "uint256",
+              },
+            ],
+            stateMutability: "view",
+            type: "function",
+          },
+          {
+            inputs: [
+              {
+                internalType: "address[]",
+                name: "users",
+                type: "address[]",
+              },
+              {
+                internalType: "address[]",
+                name: "dexAddrs",
+                type: "address[]",
+              },
+            ],
+            name: "getNetWorths",
+            outputs: [
+              {
+                internalType: "uint256[]",
+                name: "",
+                type: "uint256[]",
+              },
+            ],
+            stateMutability: "view",
+            type: "function",
+          },
+        ],
+      },
     },
   ],
   11155111: [
@@ -22527,6 +22591,70 @@ const contracts = {
             },
           ],
         },
+      },
+      CreditNwCalc: {
+        address: "0xB15B179a4d206E2A8Fb1bFDD2a6c39Fd7A192E92",
+        abi: [
+          {
+            inputs: [
+              {
+                internalType: "address",
+                name: "_creditToken",
+                type: "address",
+              },
+            ],
+            stateMutability: "nonpayable",
+            type: "constructor",
+          },
+          {
+            inputs: [
+              {
+                internalType: "address",
+                name: "user",
+                type: "address",
+              },
+              {
+                internalType: "address[]",
+                name: "dexAddrs",
+                type: "address[]",
+              },
+            ],
+            name: "getNetWorth",
+            outputs: [
+              {
+                internalType: "uint256",
+                name: "",
+                type: "uint256",
+              },
+            ],
+            stateMutability: "view",
+            type: "function",
+          },
+          {
+            inputs: [
+              {
+                internalType: "address[]",
+                name: "users",
+                type: "address[]",
+              },
+              {
+                internalType: "address[]",
+                name: "dexAddrs",
+                type: "address[]",
+              },
+            ],
+            name: "getNetWorths",
+            outputs: [
+              {
+                internalType: "uint256[]",
+                name: "",
+                type: "uint256[]",
+              },
+            ],
+            stateMutability: "view",
+            type: "function",
+          },
+        ],
       },
     },
   ],
