@@ -42,11 +42,10 @@ export const TokenInput = <T extends { toString: () => string } = string>({
         defaultValue={scaffoldConfig.saltToken.contractName}
         disabled={disabled}
         onChange={e => onTokenChange(e.target.value)}
-        className="select rounded-none mx-3 rounded-r-lg  focus:outline-0  w-3/6"
+        className=" rounded-none mx-4 rounded-r-lg  focus:outline-0  w-3/8"
       >
         <option className="text-lg" disabled selected>
-          {" "}
-          Ξ Token Name{" "}
+          Ξ Token Name
         </option>
         {tokens.map(token => (
           <option key={token.contractName} value={token.contractName} className="text-base">
@@ -55,7 +54,7 @@ export const TokenInput = <T extends { toString: () => string } = string>({
         ))}
       </select>
       <input
-        className="w-3/6 input input-ghost focus:outline-none focus:bg-transparent focus:text-gray-400 h-[2.2rem] min-h-[2.2rem] px-4 border w-full font-medium placeholder:text-accent/50 text-gray-300"
+        className="w-5/8 input input-ghost focus:outline-none focus:bg-transparent focus:text-gray-400 h-[2.2rem] min-h-[2.2rem] px-4 border w-full font-medium placeholder:text-accent/50 text-gray-300"
         name={name}
         type="number"
         value={value}

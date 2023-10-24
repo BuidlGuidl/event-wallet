@@ -69,7 +69,7 @@ export const Send = () => {
         />
       </div>
       <div>
-        <button onClick={handleSend} className={`btn btn-accent w-full mt-4 text-white ${isMining ? "loading" : ""}`}>
+        <button onClick={handleSend} className={`btn btn-primary w-full mt-4 text-white ${isMining ? "loading" : ""}`}>
           Send
         </button>
       </div>
