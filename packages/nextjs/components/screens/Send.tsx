@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
+import { TokenInput, TokenListTypes } from "../game-wallet/Input/TokenInput";
 import { ethers } from "ethers";
 import { isAddress } from "ethers/lib/utils";
-import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
-import { AddressInput, InputBase } from "~~/components/scaffold-eth";
+import { AddressInput } from "~~/components/scaffold-eth";
 import { GemHistory } from "~~/components/screens/Send/GemsHistory";
 import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 import scaffoldConfig from "~~/scaffold.config";
@@ -54,44 +54,22 @@ export const Send = () => {
       <div className="flex flex-col gap-2">
         <h1 className="font-medium text-xl"> Send Tokens </h1>
       </div>
-      <div className="flex gap-4 text-3xl">
-        {[scaffoldConfig.saltToken].concat(scaffoldConfig.tokens).map(token => (
-          <label
-            key={token.name}
-            className={`p-2 cursor-pointer ${
-              selectedToken === token.contractName ? "bg-primary outline outline-2 outline-black" : ""
-            }`}
-          >
-            <input
-              type="radio"
-              name="token"
-              value={token.contractName}
-              className="w-0 h-0"
-              onChange={t => setSelectedToken(t.target.value as ContractName)}
-            />
-            {token.emoji}
-          </label>
-        ))}
-      </div>
       <div>
         <AddressInput value={toAddress} onChange={v => setToAddress(v)} placeholder="To Address" />
       </div>
       <div>
-        <InputBase
-          type="number"
-          value={amount}
+        <TokenInput
+          name="tokenInput"
           onChange={v => {
-            // Protect underflow (e.g. 0.0000000000000000001)
-            if (v.length < 21) {
-              setAmount(v);
-            }
+            setAmount(v);
           }}
-          placeholder="Amount"
+          value={amount}
+          onTokenChange={value => setSelectedToken(value as ContractName)}
+          tokens={[scaffoldConfig.saltToken].concat(scaffoldConfig.tokens) as TokenListTypes[]}
         />
       </div>
       <div>
-        <button onClick={handleSend} className={`btn btn-primary w-full mt-4 ${isMining ? "loading" : ""}`}>
-          <PaperAirplaneIcon className="h-5 w-5 mr-2" aria-hidden="true" />
+        <button onClick={handleSend} className={`btn btn-primary w-full mt-4 text-white ${isMining ? "loading" : ""}`}>
           Send
         </button>
       </div>
