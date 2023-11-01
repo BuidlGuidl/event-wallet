@@ -68,6 +68,8 @@ yarn start
 ![image](https://github.com/BuidlGuidl/event-wallet/assets/2653167/09a019de-8112-4912-9889-d1fa47cb0d4d)
 
 
+---
+
 ## Charts and Leaderboard
 
 If you want to keep the charts and leaderboard updated you have to run a cron job requesting /api/admin/track-prices:
@@ -79,6 +81,49 @@ If you want to keep the charts and leaderboard updated you have to run a cron jo
 Or you can set the cron job at Vercel using the /packages/nextjs/vercel.json config file.
 
 (On localhost you can just use the browser to hit `http://localhost:3000/api/admin/track-prices` manually) 
+
+
+---
+
+## Trading Bots 
+
+If you want prices to randomly fluctuate you need to run bots that have a bunch of liquidity and trade randomly:
+
+```bash
+git clone https://github.com/McCoady/bg-game-scripts
+
+cd bg-game-scripts
+
+yarn install
+```
+
+> 💾 you will need to copy your `packages/nextjs/generated/deployedContracts.ts` into this `bg-game-scripts/deployedContracts.js`
+
+(this tells your bots about the new contracts you've deployed)
+
+> 🧑‍🎤 next, create a `punkwallet.io` and point it at `localhost` and grab a bunch of funds from the faucet:
+
+ ![image](https://github.com/BuidlGuidl/event-wallet/assets/2653167/64bb4db8-4032-4e8c-9e5f-0e3efde9c937)
+
+> ✏️ create a `.env` file in the `bg-game-scripts` dir with the following info filled in:
+
+```
+DEPLOYER_PRIVATE_KEY=0xYOUR_PRIVATE_KEY_FROM_YOUR_LOCAL_PUNK_WALLET
+GNOSIS_RPC=http://127.0.0.1:8545
+```
+
+⛽️ if your "deployer" punkwallet is loaded up with local funds, you should be good to run:
+
+```bash
+node batchPrep.js
+```
+
+⚙️ this is going to generate a bunch of trader accounts and load the private keys up in your `.env` file:
+
+![image](https://github.com/BuidlGuidl/event-wallet/assets/2653167/d59b9c72-0a6d-4029-8257-0f4d0b8212dd)
+
+
+
 
 
 
