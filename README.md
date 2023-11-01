@@ -16,7 +16,7 @@ yarn install
 
 ✏️ first, check out the `packages/nextjs/.env.example` file for ENV vars 
 
-> 📡 you'll need to spin up a KV (key value storage) in vercel and copy/paste in the env.local fields:
+> 💿 you'll need to spin up a KV (key value storage) in vercel and copy/paste in the env.local fields:
 
 
 ```
@@ -28,18 +28,7 @@ KV_REST_API_TOKEN=
 KV_REST_API_READ_ONLY_TOKEN=
 ```
 
-
-
-📝  next, check out the `packages/hardhat/.env.example` file for ENV vars 
-
-
-```
-ALCHEMY_API_KEY=
-DEPLOYER_PRIVATE_KEY=
-ETHERSCAN_API_KEY=
-PINATA_JWT_KEY=
-```
-
+> ⚙️ bring up the chain and deploy your contracts 
 
 ```bash
 
@@ -50,3 +39,9 @@ yarn deploy
 yarn start
 
 ```
+
+
+> 📝  next, inspect the `targetNetwork` var in `packages/nextjs/scaffold.config.ts` 
+
+(if you are deploying locally it needs to be `chains.hardhat` or `chains.gnosis` out in prod)
+
