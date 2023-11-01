@@ -28,6 +28,7 @@ KV_REST_API_TOKEN=
 KV_REST_API_READ_ONLY_TOKEN=
 ```
 
+
 > ⚙️ bring up the chain and deploy your contracts 
 
 ```bash
@@ -50,14 +51,17 @@ yarn start
 
 > 💁‍♂️ login as with your nickname:
 
-
 ![image](https://github.com/BuidlGuidl/event-wallet/assets/2653167/bfbbe1a3-8fee-4b73-8ff9-12954827a962)
 
 > 🏷 now you can use the browser to navigate to the `/checkedIn` route to drop tokens and gas to players:
 
 ![image](https://github.com/BuidlGuidl/event-wallet/assets/2653167/1d1e19e1-35fb-4302-9bd6-780fed7af7cf)
 
+⚠️ your frontend address will need to be an admin to drop tokens to players
 
+> 📝 edit `packages/hardhat/deploy/00_deploy_your_contract.ts` and add your address to `dexPausers`
+
+> ⚙️ redeploy the whole stack with `yarn deploy --reset`
 
 
 
