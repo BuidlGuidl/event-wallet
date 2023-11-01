@@ -63,6 +63,11 @@ yarn start
 
 > ⚙️ redeploy the whole stack with `yarn deploy --reset`
 
+⚖️ at this point, player should be able to trade credits for resources on the dexes:
+
+![image](https://github.com/BuidlGuidl/event-wallet/assets/2653167/09a019de-8112-4912-9889-d1fa47cb0d4d)
+
+
 ## Charts and Leaderboard
 
 If you want to keep the charts and leaderboard updated you have to run a cron job requesting /api/admin/track-prices:
