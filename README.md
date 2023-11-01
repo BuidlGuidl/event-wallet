@@ -134,6 +134,11 @@ node batchPrep.js
 
 (if anything fails here it probably means your burner is not correctly funded with credits and assets and you can debug balances using http://localhost:3000/debug)
 
+> 🍎 now you can start a trading bot for each resource like:
+
+```bash
+node tradeDex.js Apple
+```
 
 
 
