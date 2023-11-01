@@ -78,3 +78,7 @@ If you want to keep the charts and leaderboard updated you have to run a cron jo
 
 Or you can set the cron job at Vercel using the /packages/nextjs/vercel.json config file.
 
+(On localhost you can just use the browser to hit `http://localhost:3000/api/admin/track-prices` manually) 
+
+
+
