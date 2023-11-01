@@ -132,7 +132,7 @@ node batchPrep.js
 
 ![image](https://github.com/BuidlGuidl/event-wallet/assets/2653167/d59b9c72-0a6d-4029-8257-0f4d0b8212dd)
 
-
+(if anything fails here it probably means your burner is not correctly funded with credits and assets and you can debug balances using http://localhost:3000/debug)
 
 
 
