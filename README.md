@@ -63,5 +63,13 @@ yarn start
 
 > ⚙️ redeploy the whole stack with `yarn deploy --reset`
 
+## Charts and Leaderboard
 
+If you want to keep the charts and leaderboard updated you have to run a cron job requesting /api/admin/track-prices:
+
+```
+* * * * * /usr/bin/curl https://domain/api/admin/track-prices >> prices.log
+```
+
+Or you can set the cron job at Vercel using the /packages/nextjs/vercel.json config file.
 
