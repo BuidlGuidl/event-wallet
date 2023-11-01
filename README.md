@@ -107,6 +107,13 @@ yarn install
 
  ![image](https://github.com/BuidlGuidl/event-wallet/assets/2653167/64bb4db8-4032-4e8c-9e5f-0e3efde9c937)
 
+
+⚠️ you will want to add this burner address into your `packages/hardhat/deploy/00_deploy_your_contract.ts` file as `YOUR_LOCAL_BURNER_ADDRESS`
+
+(this will setup an account with credits so we can fund our trading bots)
+
+☢️ Notice: now you probably need to `yarn deploy --reset` and recopy over your `deployedContracts.js` 
+
 > ✏️ create a `.env` file in the `bg-game-scripts` dir with the following info filled in:
 
 ```
