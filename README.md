@@ -99,7 +99,7 @@ yarn install
 
 > 💾 you will need to copy your `packages/nextjs/generated/deployedContracts.ts` into this `bg-game-scripts/deployedContracts.js`
 
-⚠️ notice it changes from `.ts` to `.js`
+⚠️ notice it changes from `.ts` to `.js` - you will also have to remove the `as const` from the end
 
 (this tells your bots about the new contracts you've deployed)
 
@@ -112,6 +112,7 @@ yarn install
 ```
 DEPLOYER_PRIVATE_KEY=0xYOUR_PRIVATE_KEY_FROM_YOUR_LOCAL_PUNK_WALLET
 GNOSIS_RPC=http://127.0.0.1:8545
+GNOSIS_NETWORK_ID=31337
 ```
 
 ⛽️ if your "deployer" punkwallet is loaded up with local funds, you should be good to run:
