@@ -99,6 +99,8 @@ yarn install
 
 > 💾 you will need to copy your `packages/nextjs/generated/deployedContracts.ts` into this `bg-game-scripts/deployedContracts.js`
 
+⚠️ notice it changes from `.ts` to `.js`
+
 (this tells your bots about the new contracts you've deployed)
 
 > 🧑‍🎤 next, create a `punkwallet.io` and point it at `localhost` and grab a bunch of funds from the faucet:
